@@ -22,8 +22,6 @@ import java.util.List;
 
 
 public class LoginActivity extends ActionBarActivity {
-
-    private HashMap<String, String> users;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Parse.enableLocalDatastore(this);
