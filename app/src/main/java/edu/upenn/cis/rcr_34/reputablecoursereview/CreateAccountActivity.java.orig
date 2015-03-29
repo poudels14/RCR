@@ -72,9 +72,24 @@ public class CreateAccountActivity extends ActionBarActivity {
         // Check if password matches
         if (!password.equals(passwordConfirm)) {
             Toast.makeText(getApplicationContext(), "Password doesn't match!", Toast.LENGTH_SHORT).show();
+<<<<<<< HEAD
             passwordField.setText("");
             passwordConfirmField.setText("");
+        } else if (firstName.equals("")){
+            Toast.makeText(getApplicationContext(), "Please Enter first name", Toast.LENGTH_SHORT).show();
+        } else if (lastName.equals("")){
+            Toast.makeText(getApplicationContext(), "Please Enter last name", Toast.LENGTH_SHORT).show();
+        } else if (email.equals("")){
+            Toast.makeText(getApplicationContext(), "Please Enter email", Toast.LENGTH_SHORT).show();
+        } else if (year.equals("")){
+            Toast.makeText(getApplicationContext(), "Please Enter year of graduation", Toast.LENGTH_SHORT).show();
+        } else if (major.equals("")){
+            Toast.makeText(getApplicationContext(), "Please Enter major", Toast.LENGTH_SHORT).show();
+=======
+            password.setText("");
+            passwordConfirm.setText("");
 
+>>>>>>> 191189b8f9f9fe8f2a3fcfd61da83f01ee1cc69e
         } else {
             createNewUser(firstName, lastName, email, major, year, password);
         }
