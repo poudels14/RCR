@@ -7,7 +7,7 @@ import com.parse.ParseQuery;
  */
 public class LoginAndSession {
     public static boolean isLoggedIn(String username){
-        ParseQuery query = ParseQuery.getQuery()
+//        ParseQuery query = ParseQuery.getQuery()
         return true;
     }
 
