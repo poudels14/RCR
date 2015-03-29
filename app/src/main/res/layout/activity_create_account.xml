@@ -22,19 +22,57 @@
                     android:inputType="textEmailAddress" android:maxLines="1"
                     android:singleLine="true" />
 
-                <EditText android:id="@+id/password" android:layout_width="match_parent"
+                <EditText android:id="@+id/createaccount_firstname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="First Name"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+                <EditText android:id="@+id/createaccount_lastname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Last Name"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+                <EditText android:id="@+id/createaccount_major"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Major"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+                <EditText android:id="@+id/createaccount_year"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Year of Graduation"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+                <EditText android:id="@+id/createaccount_password"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:hint="@string/prompt_password"
+                    android:imeActionId="@+id/login"
+                    android:imeActionLabel="@string/action_sign_in"
+                    android:imeOptions="actionUnspecified"
+                    android:inputType="textPassword"
+                    android:maxLines="1" android:singleLine="true" />
+
+                <EditText android:id="@+id/createaccount_passwordconfirmation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:hint="Password Confirmation"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign_in"
                     android:imeOptions="actionUnspecified" android:inputType="textPassword"
                     android:maxLines="1" android:singleLine="true" />
 
-                <Button android:id="@+id/sign_in_button" style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp" android:text="@string/action_sign_in"
-                    android:textStyle="bold" android:onClick="signInClicked"/>
-
-                <Button android:id="@+id/register_button" style="?android:textAppearanceSmall"
+                <Button android:id="@+id/createaccount_register_button"
+                    style="?android:textAppearanceSmall"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:layout_marginTop="16dp" android:text="@string/action_register"
                     android:textStyle="bold" android:onClick="registerClicked"/>
