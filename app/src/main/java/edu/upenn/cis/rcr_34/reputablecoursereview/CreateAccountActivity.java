@@ -74,15 +74,23 @@ public class CreateAccountActivity extends ActionBarActivity {
             Toast.makeText(getApplicationContext(), "Password doesn't match!", Toast.LENGTH_SHORT).show();
             passwordField.setText("");
             passwordConfirmField.setText("");
-
+        }
+        else if (firstName.equals("")){
+            Toast.makeText(getApplicationContext(), "Please Enter first name", Toast.LENGTH_SHORT).show();
+        } else if (lastName.equals("")){
+            Toast.makeText(getApplicationContext(), "Please Enter last name", Toast.LENGTH_SHORT).show();
+        } else if (email.equals("")){
+            Toast.makeText(getApplicationContext(), "Please Enter email", Toast.LENGTH_SHORT).show();
+        } else if (year.equals("")){
+            Toast.makeText(getApplicationContext(), "Please Enter year of graduation", Toast.LENGTH_SHORT).show();
+        } else if (major.equals("")){
+            Toast.makeText(getApplicationContext(), "Please Enter major", Toast.LENGTH_SHORT).show();
         } else {
             createNewUser(firstName, lastName, email, major, year, password);
+            Intent i = new Intent();
+            setResult(RESULT_OK, i);
+            finish();
         }
-
-        Intent i = new Intent();
-        setResult(RESULT_OK, i);
-        finish();
-
     }
 
     public void cancelClicked(View v) {
