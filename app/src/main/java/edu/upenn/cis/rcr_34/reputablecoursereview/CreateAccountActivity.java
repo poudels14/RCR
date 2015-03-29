@@ -72,7 +72,7 @@ public class CreateAccountActivity extends ActionBarActivity {
         Intent i = new Intent();
         setResult(RESULT_OK, i);
         finish();
-        
+
     }
 
     public void cancelClicked(View v) {
@@ -90,7 +90,7 @@ public class CreateAccountActivity extends ActionBarActivity {
         newObject.put("password", password);
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("userDetails");
-        query.whereEqualTo("username", email);
+        query.whereEqualTo("email", email);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List list, com.parse.ParseException e) {
