@@ -33,6 +33,8 @@ public class MainActivity extends ActionBarActivity {
 
     public void manageAccountClicked(View view){
         Toast.makeText(getApplicationContext(), "Manage account selected", Toast.LENGTH_SHORT).show();
+        Intent intent2 = new Intent(this, ManageAccountActivity.class);
+        startActivity(intent2);
     }
 
     public void signOutClicked(View view){
