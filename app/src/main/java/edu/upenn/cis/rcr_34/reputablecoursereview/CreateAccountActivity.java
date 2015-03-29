@@ -70,7 +70,12 @@ public class CreateAccountActivity extends ActionBarActivity {
 //        Button register = (Button) findViewById(R.id.createacccout_register_button);
 
         // Check if password matches
-        if (!password.equals(passwordConfirm)) {
+        if (password.length() < 5) {
+            Toast.makeText(getApplicationContext(), "Password should be atleast 5 character long", Toast.LENGTH_SHORT).show();
+            passwordField.setText("");
+            passwordConfirmField.setText("");
+        }
+        else if (!password.equals(passwordConfirm)) {
             Toast.makeText(getApplicationContext(), "Password doesn't match!", Toast.LENGTH_SHORT).show();
             passwordField.setText("");
             passwordConfirmField.setText("");
