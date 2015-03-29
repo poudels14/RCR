@@ -4,13 +4,10 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.HashMap;
-
 
 public class MainActivity extends ActionBarActivity {
 
@@ -18,6 +15,17 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        TextView friendList = (TextView)findViewById(R.id.friendList);
+        String[] friends = {"Andrew Remec", "Daniel McCann", "Tahmid Shahriar", "Sagar Poudel",
+                "Alex Harelick", "Chris Murphy", "Amy Gutmann", "James Kirk", "John Rambo",
+                "Alan \"Dutch\" Schaefer", "Michael Scott", "Jack Bauer", "Creed Bratton",
+                "Troy Barnes", "Abed Nadir", "Dr. Ján Ïtor", "Loch Ness Monster"};
+        for(int x = 0; x < friends.length; x++){
+            friendList.append(friends[x]);
+            if(x != (friends.length - 1)){
+                friendList.append("\n");
+            }
+        }
     }
 
     @Override
