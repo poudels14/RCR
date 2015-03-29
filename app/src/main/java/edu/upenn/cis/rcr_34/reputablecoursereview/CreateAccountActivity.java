@@ -1,5 +1,6 @@
 package edu.upenn.cis.rcr_34.reputablecoursereview;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -63,10 +64,21 @@ public class CreateAccountActivity extends ActionBarActivity {
             Toast.makeText(getApplicationContext(), "Password doesn't match!", Toast.LENGTH_SHORT).show();
             password.setText("");
             passwordConfirm.setText("");
+
         } else {
             createNewUser(firstName.getText().toString(), lastName.getText().toString(), email.getText().toString(), year.getText().toString(), password.getText().toString());
         }
+
+        Intent i = new Intent();
+        setResult(RESULT_OK, i);
+        finish();
         
+    }
+
+    public void cancelClicked(View v) {
+        Intent i = new Intent();
+        setResult(RESULT_OK, i);
+        finish();
     }
 
     private void createNewUser(String firstName, String lastName, String email, String year, final String password) {

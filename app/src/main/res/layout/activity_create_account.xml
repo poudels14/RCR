@@ -82,6 +82,12 @@
                     android:layout_marginTop="16dp" android:text="@string/action_register"
                     android:textStyle="bold" android:onClick="registerClicked"/>
 
+                <Button android:id="@+id/createaccount_cancel_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp" android:text="Cancel Registration"
+                    android:textStyle="bold" android:onClick="cancelClicked"/>
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
