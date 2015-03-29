@@ -53,7 +53,7 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     public void registerClicked(View view){
-        Intent intent = new Intent(this, CreateAccountActivityBAc.class);
+        Intent intent = new Intent(this, CreateAccountActivity.class);
         startActivity(intent);
     }
 
