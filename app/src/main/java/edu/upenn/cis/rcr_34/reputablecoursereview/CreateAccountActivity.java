@@ -49,31 +49,52 @@ public class CreateAccountActivity extends ActionBarActivity {
     }
 
     public void registerClicked(View v) {
-        EditText firstName = (EditText) findViewById(R.id.createaccount_firstname);
-        EditText lastName = (EditText) findViewById(R.id.createaccount_lastname);
-        EditText email = (EditText) findViewById(R.id.createaccount_email);
-        EditText year = (EditText) findViewById(R.id.createaccount_year);
-        EditText major = (EditText) findViewById(R.id.createaccount_major);
-        EditText password = (EditText) findViewById(R.id.createaccount_password);
-        EditText passwordConfirm = (EditText) findViewById(R.id.createaccount_passwordconfirmation);
+
+        EditText firstNameField = (EditText) findViewById(R.id.createaccount_firstname);
+        EditText lastNameField = (EditText) findViewById(R.id.createaccount_lastname);
+        EditText emailField = (EditText) findViewById(R.id.createaccount_email);
+        EditText yearField = (EditText) findViewById(R.id.createaccount_year);
+        EditText majorField = (EditText) findViewById(R.id.createaccount_major);
+        EditText passwordField = (EditText) findViewById(R.id.createaccount_password);
+        EditText passwordConfirmField = (EditText) findViewById(R.id.createaccount_passwordconfirmation);
+
+
+        String firstName = firstNameField.getText().toString();
+        String lastName = lastNameField.getText().toString();
+        String email = emailField.getText().toString();
+        String year = yearField.getText().toString();
+        String major = majorField.getText().toString();
+        String password = passwordField.getText().toString();
+        String passwordConfirm = passwordConfirmField.getText().toString();
 //        Button register = (Button) findViewById(R.id.createacccout_register_button);
 
         // Check if password matches
-        if (!password.getText().toString().equals(passwordConfirm.getText().toString())) {
+        if (!password.equals(passwordConfirm)) {
             Toast.makeText(getApplicationContext(), "Password doesn't match!", Toast.LENGTH_SHORT).show();
-            password.setText("");
-            passwordConfirm.setText("");
+            passwordField.setText("");
+            passwordConfirmField.setText("");
+        } else if (firstName.equals("")){
+            Toast.makeText(getApplicationContext(), "Please Enter first name", Toast.LENGTH_SHORT).show();
+        } else if (lastName.equals("")){
+            Toast.makeText(getApplicationContext(), "Please Enter last name", Toast.LENGTH_SHORT).show();
+        } else if (email.equals("")){
+            Toast.makeText(getApplicationContext(), "Please Enter email", Toast.LENGTH_SHORT).show();
+        } else if (year.equals("")){
+            Toast.makeText(getApplicationContext(), "Please Enter year of graduation", Toast.LENGTH_SHORT).show();
+        } else if (major.equals("")){
+            Toast.makeText(getApplicationContext(), "Please Enter major", Toast.LENGTH_SHORT).show();
         } else {
-            createNewUser(firstName.getText().toString(), lastName.getText().toString(), email.getText().toString(), year.getText().toString(), password.getText().toString());
+            createNewUser(firstName, lastName, email, major, year, password);
         }
 
     }
 
-    private void createNewUser(String firstName, String lastName, String email, String year, final String password) {
+    private void createNewUser(String firstName, String lastName, String email, String major, String year, final String password) {
         final ParseObject newObject = new ParseObject("userDetails");
         newObject.put("firstName", firstName);
         newObject.put("lastName", lastName);
         newObject.put("email", email);
+        newObject.put("major", major);
         newObject.put("year", year);
         newObject.put("password", password);
 
