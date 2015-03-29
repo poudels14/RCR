@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -47,7 +48,7 @@ public class CreateAccountActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    protected void registerClicked() {
+    public void registerClicked(View v) {
         EditText firstName = (EditText) findViewById(R.id.createaccount_firstname);
         EditText lastName = (EditText) findViewById(R.id.createaccount_lastname);
         EditText email = (EditText) findViewById(R.id.createaccount_email);
@@ -58,13 +59,14 @@ public class CreateAccountActivity extends ActionBarActivity {
 //        Button register = (Button) findViewById(R.id.createacccout_register_button);
 
         // Check if password matches
-        if (!password.getText().equals(passwordConfirm.getText())) {
+        if (!password.getText().toString().equals(passwordConfirm.getText().toString())) {
             Toast.makeText(getApplicationContext(), "Password doesn't match!", Toast.LENGTH_SHORT).show();
             password.setText("");
             passwordConfirm.setText("");
         } else {
             createNewUser(firstName.getText().toString(), lastName.getText().toString(), email.getText().toString(), year.getText().toString(), password.getText().toString());
         }
+        
     }
 
     private void createNewUser(String firstName, String lastName, String email, String year, final String password) {
