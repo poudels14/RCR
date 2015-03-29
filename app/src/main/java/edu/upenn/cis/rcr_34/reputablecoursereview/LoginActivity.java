@@ -5,7 +5,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,7 +16,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -55,7 +53,7 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     public void registerClicked(View view){
-        Intent intent = new Intent(this, CreateAccountActivity.class);
+        Intent intent = new Intent(this, CreateAccountActivityBAc.class);
         startActivity(intent);
     }
 

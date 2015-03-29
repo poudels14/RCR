@@ -13,5 +13,6 @@
     <string name="return_main">Return to main</string>
     <string name="sign_out">Sign out</string>
     <string name="prompt_course">Course</string>
+    <string name="title_activity_create_account">CreateAccountActivity</string>
 
 </resources>
