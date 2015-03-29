@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content" android:layout_width="fill_parent" />
 
             <ScrollView android:id="@+id/friendListView" android:visibility="visible"
-                android:layout_height="447dp" android:layout_width="match_parent"
+                android:layout_height="387dp" android:layout_width="match_parent"
                 android:scrollbars="vertical" android:scrollbarStyle="insideInset"
                 android:keepScreenOn="true" android:fadeScrollbars="false">
                 <TextView android:id="@+id/friendList" android:isScrollContainer="true"
