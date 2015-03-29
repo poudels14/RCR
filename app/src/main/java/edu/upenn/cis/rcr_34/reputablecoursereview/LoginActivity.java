@@ -1,5 +1,6 @@
 package edu.upenn.cis.rcr_34.reputablecoursereview;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -35,6 +36,7 @@ public class LoginActivity extends ActionBarActivity {
             if(users.get(name).equals(word)){
                 Toast.makeText(getApplicationContext(), "Signed in", Toast.LENGTH_SHORT).show();
                 username.setText("");
+                logIn();
             }
             else{
                 Toast.makeText(getApplicationContext(), "Wrong password", Toast.LENGTH_SHORT).show();
@@ -44,6 +46,11 @@ public class LoginActivity extends ActionBarActivity {
             Toast.makeText(getApplicationContext(), "Invalid username", Toast.LENGTH_SHORT).show();
         }
         password.setText("");
+    }
+
+    private void logIn(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     public void registerClicked(View view){
@@ -65,6 +72,7 @@ public class LoginActivity extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(), "Account created", Toast.LENGTH_SHORT).show();
                 users.put(name, word);
                 username.setText("");
+                logIn();
             }
         }
         password.setText("");

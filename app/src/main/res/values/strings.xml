@@ -4,5 +4,13 @@
     <string name="app_name">ReputableCourseReview</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="search_classes">Search</string>
+    <string name="manage_account">Manage account</string>
+    <string name="manage_friends">Manage account</string>
+    <string name="future_courses">Manage future courses</string>
+    <string name="past_courses">Manage past courses</string>
+    <string name="return_main">Return to main</string>
+    <string name="sign_out">Sign out</string>
+    <string name="prompt_course">Course</string>
 
 </resources>
