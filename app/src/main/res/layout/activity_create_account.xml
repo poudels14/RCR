@@ -17,9 +17,12 @@
             <LinearLayout android:id="@+id/email_login_form" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:orientation="vertical">
 
-                <EditText android:id="@+id/username" android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:hint="@string/prompt_username"
-                    android:inputType="textEmailAddress" android:maxLines="1"
+                <EditText android:id="@+id/createaccount_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="pennkey@school.upenn.edu"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
                     android:singleLine="true" />
 
                 <EditText android:id="@+id/createaccount_firstname"
