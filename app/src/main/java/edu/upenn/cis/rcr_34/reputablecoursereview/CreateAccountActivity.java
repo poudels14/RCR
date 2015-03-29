@@ -66,7 +66,7 @@ public class CreateAccountActivity extends ActionBarActivity {
         } else {
             createNewUser(firstName.getText().toString(), lastName.getText().toString(), email.getText().toString(), year.getText().toString(), password.getText().toString());
         }
-        
+
     }
 
     private void createNewUser(String firstName, String lastName, String email, String year, final String password) {
@@ -78,7 +78,7 @@ public class CreateAccountActivity extends ActionBarActivity {
         newObject.put("password", password);
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("userDetails");
-        query.whereEqualTo("username", email);
+        query.whereEqualTo("email", email);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List list, com.parse.ParseException e) {
