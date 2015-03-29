@@ -35,8 +35,8 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     public void signInClicked(View view){
-        EditText username = (EditText)findViewById(R.id.username);
-        EditText password = (EditText)findViewById(R.id.password);
+        EditText username = (EditText)findViewById(R.id.login_email);
+        EditText password = (EditText)findViewById(R.id.login_password);
         String name = username.getText().toString();
         String word = password.getText().toString();
 
@@ -58,18 +58,18 @@ public class LoginActivity extends ActionBarActivity {
     }
 
 
-    private void checkLoginDetails(final String username, final String password){
+    private void checkLoginDetails(final String email, final String password){
         ParseQuery query = ParseQuery.getQuery("userDetails");
-        query.whereEqualTo("username", username);
+        query.whereEqualTo("email", email);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List list, ParseException e) {
                 if (e == null) {
                     if (list.size() > 0){
                         ParseObject po = (ParseObject) list.get(0);
-                        String cloudUsername = (String) po.get("username");
+                        String cloudEmail = (String) po.get("email");
                         String cloudPassword = (String) po.get("password");
-                        if (cloudPassword.equals(password) && cloudUsername.equals(username)){
+                        if (cloudPassword.equals(password) && cloudEmail.equals(email)){
                             logIn();
                             Log.d("Database", "Logged in");
                         }
@@ -83,35 +83,6 @@ public class LoginActivity extends ActionBarActivity {
 
                 } else {
                     Log.d("Database", "Error: " + e.getMessage());
-                }
-            }
-        });
-    }
-
-
-    private void createNewUser(final String username, final String password){
-        final ParseObject newObject = new ParseObject("userDetails");
-        newObject.put("username", username);
-        newObject.put("password", password);
-
-        ParseQuery query = ParseQuery.getQuery("userDetails");
-        query.whereEqualTo("username", username);
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List list, ParseException e) {
-                if (e == null) {
-                    if (list.size() > 0){
-                        Toast.makeText(getApplicationContext(), "User Already Exists!", Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                        newObject.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                Toast.makeText(getApplicationContext(), "Account created", Toast.LENGTH_SHORT).show();
-                                logIn();
-                            }
-                        });
-                    }
                 }
             }
         });
