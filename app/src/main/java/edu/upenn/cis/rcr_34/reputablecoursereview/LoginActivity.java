@@ -55,26 +55,8 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     public void registerClicked(View view){
-        EditText username = (EditText)findViewById(R.id.username);
-        EditText password = (EditText)findViewById(R.id.password);
-        String name = username.getText().toString();
-        String word = password.getText().toString();
-
-        password.setText("");
-        username.setText("");
-
-
-        if(name.length() == 0){
-            Toast.makeText(getApplicationContext(), "You must enter a username", Toast.LENGTH_SHORT).show();
-        }
-        else if(word.length() == 0){
-            Toast.makeText(getApplicationContext(), "You must enter a password", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            this.createNewUser(name, word);
-
-        }
-
+        Intent intent = new Intent(this, CreateAccountActivity.class);
+        startActivity(intent);
     }
 
 
