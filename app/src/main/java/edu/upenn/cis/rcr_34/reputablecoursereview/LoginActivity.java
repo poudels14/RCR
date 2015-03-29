@@ -31,17 +31,14 @@ public class LoginActivity extends ActionBarActivity {
         EditText password = (EditText)findViewById(R.id.password);
         String name = username.getText().toString();
         String word = password.getText().toString();
-        if(users.containsKey(name)){
-            if(users.get(name).equals(word)){
-                Toast.makeText(getApplicationContext(), "Signed in", Toast.LENGTH_SHORT).show();
-                username.setText("");
-            }
-            else{
-                Toast.makeText(getApplicationContext(), "Wrong password", Toast.LENGTH_SHORT).show();
-            }
+
+        //username and password should be checked at same time to prevent guessing
+        if(LoginAndSession.checkLoginDetails(name, word)){
+            Toast.makeText(getApplicationContext(), "Signed in", Toast.LENGTH_SHORT).show();
+            username.setText("");
         }
         else{
-            Toast.makeText(getApplicationContext(), "Invalid username", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Invalid username or wrong password", Toast.LENGTH_SHORT).show();
         }
         password.setText("");
     }
