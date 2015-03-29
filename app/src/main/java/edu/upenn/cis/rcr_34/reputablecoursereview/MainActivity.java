@@ -3,12 +3,20 @@ package edu.upenn.cis.rcr_34.reputablecoursereview;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -68,6 +76,21 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void signOutClicked(){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("localStorage");
+        query.fromLocalDatastore();
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List list, ParseException e) {
+                if (e == null) {
+                    if (list.size() > 0) {
+                        ParseObject p = (ParseObject) list.get(0);
+                        p.unpinInBackground();
+                        Log.d("LOGGED OUT", (String) p.get("sessionID") + " logged out");
+                    }
+                }
+            }
+        });
+
         Toast.makeText(getApplicationContext(), "Signing out", Toast.LENGTH_SHORT).show();
         Intent i = new Intent();
         setResult(RESULT_OK, i);

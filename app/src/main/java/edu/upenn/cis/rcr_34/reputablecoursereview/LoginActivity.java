@@ -25,6 +25,24 @@ public class LoginActivity extends ActionBarActivity {
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "W5JnCKDZoSYR2AHncCRPZ7TZ94e3x9RJcAQjoc0a", "9vWs3BE45BCEtigsvl9ezo14wAg2ECoPxADTxtoC");
 
+        //Check if user is already logged in
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("localStorage");
+        query.fromLocalDatastore();
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List list, ParseException e) {
+                if (e == null) {
+
+                    if (list.size() > 0) {
+                        ParseObject p =  (ParseObject) list.get(0);
+
+                        Log.d("LOGIN LOCAL", "Got sth from local");
+                        Log.d("SESSION ID", (String) p.get("sessionID"));
+                        logIn();
+                    }
+                }
+            }
+        });
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
     }
@@ -70,6 +88,9 @@ public class LoginActivity extends ActionBarActivity {
                         String cloudEmail = (String) po.get("email");
                         String cloudPassword = (String) po.get("password");
                         if (cloudPassword.equals(password) && cloudEmail.equals(email)){
+                            ParseObject lS = new ParseObject("localStorage");
+                            lS.put("sessionID", email);
+                            lS.pinInBackground();
                             logIn();
                             Log.d("Database", "Logged in");
                         }
