@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -30,7 +31,28 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity_main_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.manage_account_item) {
+            manageAccountClicked();
+        }
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.sign_out) {
+            signOutClicked();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void searchClassesClicked(View view){
@@ -39,13 +61,13 @@ public class MainActivity extends ActionBarActivity {
         Toast.makeText(getApplicationContext(), "Searching for course: " + course, Toast.LENGTH_SHORT).show();
     }
 
-    public void manageAccountClicked(View view){
+    public void manageAccountClicked(){
         Toast.makeText(getApplicationContext(), "Manage account selected", Toast.LENGTH_SHORT).show();
         Intent intent2 = new Intent(this, ManageAccountActivity.class);
         startActivity(intent2);
     }
 
-    public void signOutClicked(View view){
+    public void signOutClicked(){
         Toast.makeText(getApplicationContext(), "Signing out", Toast.LENGTH_SHORT).show();
         Intent i = new Intent();
         setResult(RESULT_OK, i);

@@ -2,6 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="edu.upenn.cis.rcr_34.reputablecoursereview.CreateAccountActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/manage_account_item" android:title="Manage Account" />
+    <item android:id="@+id/sign_out" android:title="Sign Out" />
 </menu>

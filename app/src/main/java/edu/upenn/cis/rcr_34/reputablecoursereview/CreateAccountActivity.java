@@ -26,29 +26,6 @@ public class CreateAccountActivity extends ActionBarActivity {
         setContentView(R.layout.activity_create_account);
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_create_account, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     public void registerClicked(View v) {
 
         EditText firstNameField = (EditText) findViewById(R.id.createaccount_firstname);
@@ -69,32 +46,35 @@ public class CreateAccountActivity extends ActionBarActivity {
         String passwordConfirm = passwordConfirmField.getText().toString();
 //        Button register = (Button) findViewById(R.id.createacccout_register_button);
 
-        // Check if password matches
-        if (password.length() < 5) {
-            Toast.makeText(getApplicationContext(), "Password should be atleast 5 character long", Toast.LENGTH_SHORT).show();
-            passwordField.setText("");
-            passwordConfirmField.setText("");
-        }
-        else if (!password.equals(passwordConfirm)) {
-            Toast.makeText(getApplicationContext(), "Password doesn't match!", Toast.LENGTH_SHORT).show();
-            passwordField.setText("");
-            passwordConfirmField.setText("");
+        if (email.equals("")){
+            Toast.makeText(getApplicationContext(), "Please Enter email", Toast.LENGTH_SHORT).show();
         }
         else if (firstName.equals("")){
             Toast.makeText(getApplicationContext(), "Please Enter first name", Toast.LENGTH_SHORT).show();
         } else if (lastName.equals("")){
             Toast.makeText(getApplicationContext(), "Please Enter last name", Toast.LENGTH_SHORT).show();
-        } else if (email.equals("")){
-            Toast.makeText(getApplicationContext(), "Please Enter email", Toast.LENGTH_SHORT).show();
-        } else if (year.equals("")){
-            Toast.makeText(getApplicationContext(), "Please Enter year of graduation", Toast.LENGTH_SHORT).show();
-        } else if (major.equals("")){
+        }else if (major.equals("")){
             Toast.makeText(getApplicationContext(), "Please Enter major", Toast.LENGTH_SHORT).show();
-        } else {
-            createNewUser(firstName, lastName, email, major, year, password);
-            Intent i = new Intent();
-            setResult(RESULT_OK, i);
-            finish();
+        }  else if (year.equals("")){
+            Toast.makeText(getApplicationContext(), "Please Enter year of graduation", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            // Check if password matches
+            if (password.length() < 5) {
+                Toast.makeText(getApplicationContext(), "Password should be at least 5 character long", Toast.LENGTH_SHORT).show();
+                passwordField.setText("");
+                passwordConfirmField.setText("");
+            }
+            else if (!password.equals(passwordConfirm)) {
+                Toast.makeText(getApplicationContext(), "Password doesn't match!", Toast.LENGTH_SHORT).show();
+                passwordField.setText("");
+                passwordConfirmField.setText("");
+            }else {
+                createNewUser(firstName, lastName, email, major, year, password);
+                Intent i = new Intent();
+                setResult(RESULT_OK, i);
+                finish();
+            }
         }
     }
 
