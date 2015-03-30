@@ -24,18 +24,28 @@ import java.util.List;
 public class LoginActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "W5JnCKDZoSYR2AHncCRPZ7TZ94e3x9RJcAQjoc0a",
-                "9vWs3BE45BCEtigsvl9ezo14wAg2ECoPxADTxtoC");
+        ParseAPI.init(this);
 
         //Check if user is already logged in
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        if (currentUser != null) {
+        if (isLoggedIn()) {
             logIn();
         }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+    }
+
+    @Override
+    public void onResume(){
+        ParseAPI.init(this);
+
+        super.onResume();
+
+
+        //Check if user is already logged in
+        if (isLoggedIn()) {
+            logIn();
+        }
     }
 
     @Override
@@ -79,5 +89,13 @@ public class LoginActivity extends ActionBarActivity {
                 }
             }
         });
+    }
+
+    private boolean isLoggedIn(){
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            return true;
+        }
+        return false;
     }
 }

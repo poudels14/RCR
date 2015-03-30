@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
+import com.parse.LogInCallback;
+import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -24,6 +26,7 @@ public class CreateAccountActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ParseAPI.init(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
     }
@@ -46,7 +49,6 @@ public class CreateAccountActivity extends ActionBarActivity {
         String major = majorField.getText().toString();
         String password = passwordField.getText().toString();
         String passwordConfirm = passwordConfirmField.getText().toString();
-//        Button register = (Button) findViewById(R.id.createacccout_register_button);
 
         if (email.equals("")){
             Toast.makeText(getApplicationContext(), "Please Enter Email",
@@ -80,9 +82,6 @@ public class CreateAccountActivity extends ActionBarActivity {
                 passwordConfirmField.setText("");
             }else {
                 createNewUser(firstName, lastName, email, major, year, password);
-                Intent i = new Intent();
-                setResult(RESULT_OK, i);
-                finish();
             }
         }
     }
@@ -93,7 +92,7 @@ public class CreateAccountActivity extends ActionBarActivity {
         finish();
     }
 
-    private void createNewUser(String firstName, String lastName, String email, String major,
+    private void createNewUser(String firstName, String lastName, final String email, String major,
                                String year, final String password) {
         final ParseUser user = new ParseUser();
         user.put("firstName", firstName);
@@ -105,7 +104,7 @@ public class CreateAccountActivity extends ActionBarActivity {
         user.setUsername(email);
         user.setPassword(password);
 
-        ParseQuery<ParseUser> query = ParseQuery.getQuery("userDetails");
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("email", email);
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
@@ -118,7 +117,19 @@ public class CreateAccountActivity extends ActionBarActivity {
                         user.signUpInBackground(new SignUpCallback() {
                             @Override
                             public void done(com.parse.ParseException e) {
-
+                                ParseUser.logInInBackground(email, password, new LogInCallback() {
+                                    public void done(ParseUser user, com.parse.ParseException e) {
+                                        if (user != null) {
+                                            Intent i = new Intent();
+                                            setResult(RESULT_OK, i);
+                                            finish();
+                                        } else {
+                                            Toast.makeText(getApplicationContext(),
+                                                    "Invalid username or wrong password",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
                             }
                         });
                     }

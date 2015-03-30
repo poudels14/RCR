@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
+import com.parse.Parse;
+
 /**
  * Created by Andrew on 3/28/2015.
  */
@@ -14,6 +16,7 @@ public class ManageAccountActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ParseAPI.init(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_account);
     }
