@@ -233,3 +233,258 @@ Author: Sagar Poudel <poudels14@gmail.com>
 Date:   Sat Mar 28 20:05:27 2015 -0400
 
     Andrew's initial work
+commit 28ab3c86553fa9b1956fd48a8c2c738c6357076e
+Merge: 0e1d211 6916257
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Mar 30 12:20:19 2015 -0400
+
+    Merged sagar's and tahmid's work
+
+commit 0e1d2117c3d04cbdc231692a6e82bfc24f5b1dc4
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Mar 30 12:04:03 2015 -0400
+
+    ParseAPI class added, auto login after signup
+
+commit 691625705a965193ab65eabcc5af6bf479aeb84c
+Merge: 54693b3 68dc649
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Mon Mar 30 11:47:06 2015 -0400
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 54693b3dcff9c59f8476cd12346ae5f6542629ac
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Mon Mar 30 11:46:37 2015 -0400
+
+    Added Facebook stuff
+
+commit 68dc64941685022fccafa5cae235a4ac68e4f91c
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Mar 30 11:11:17 2015 -0400
+
+    Fixed bug that showed all activity in launcher
+
+commit e8adbf1b672596577166dddd9683dc2cc80b333c
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Mar 29 21:20:11 2015 -0400
+
+    refactoring to parseuser instead of parseobject
+
+commit da1e013567d131b18bcddc17120b2d44fa5e1f2a
+Merge: bde054d faf9af6
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Mar 29 21:16:49 2015 -0400
+
+    Merge branch 'master' of https://github.com/cis-upenn/34-RCR
+
+commit bde054d5a49fa4305c413a13ee29df012f41c554
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Mar 29 21:16:32 2015 -0400
+
+    refactoring to parseuser instead of parseobject
+
+commit faf9af6da493c93dc4be20f55b84dcb883d86173
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Mar 29 20:55:55 2015 -0400
+
+    Added more friends.
+
+commit 9e07642a887ef5c6d20c83160112af3071024b52
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 17:43:31 2015 -0400
+
+    LOgin and logout perfectly working
+
+commit be6b6bd65281a10bd95e9f618760bfdcbf2f2d18
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 17:16:17 2015 -0400
+
+    Main view edited
+
+commit 32d6ba5851c873387c7f7ca8cb41542b39134f9c
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 17:15:18 2015 -0400
+
+    Sign out and manage account in setting menu
+
+commit 1f3e5be93624709eb0d290ab2d2fe7e18eb9cab3
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 16:52:05 2015 -0400
+
+    Password field shouldnt be empty
+
+commit 3dbcac815901c5f4cd46f409e094415dc9baea43
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 16:50:12 2015 -0400
+
+    merged bug fixed in Createaccount
+
+commit 7c837b53b9e8e5a6d4fcdba0d95868dabafb367f
+Merge: e1469d0 191189b
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 16:47:37 2015 -0400
+
+    merged
+
+commit e1469d0b0a5dc6e696ec9e8b4a016fe1ca97a95d
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 16:45:55 2015 -0400
+
+    Form verification added
+
+commit 191189b8f9f9fe8f2a3fcfd61da83f01ee1cc69e
+Merge: ab458bc b17009c
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Mar 29 16:39:35 2015 -0400
+
+    committing the return to login again
+
+commit ab458bcdf7a1221221986724dfa34dc483a06b2b
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Mar 29 16:36:41 2015 -0400
+
+    can cancel registration, registration returns to login screen
+
+commit b17009ca8cc559f18dc9d2c5c5f7c236d269ce31
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 16:35:52 2015 -0400
+
+    Sign in fixed
+
+commit 1393f78ab5a73e1a0c4352dc748c0550b3e05176
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 16:25:14 2015 -0400
+
+    Check existing user account
+
+commit c4f392bcd73206e2586ca4600eb3be74ed9e25dc
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 16:22:56 2015 -0400
+
+    register account working:
+
+commit e64e1c9d17f670ce773084e8886728a761094d94
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 16:17:57 2015 -0400
+
+    Create account activity changed- bug fixed
+
+commit 64323b0d465c855afee04b00790fc4c625fb4b73
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 16:17:24 2015 -0400
+
+    Create account activity changed
+
+commit 9ddb6334f08ac8f7cd7802b2dfc080dccd8c5725
+Merge: 3a1c11c e9a13fe
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 15:57:18 2015 -0400
+
+    Merge branch 'master' of github.com:cis-upenn/34-RCR
+
+commit 3a1c11ccfb9573cca85c305d014b9890307a3b9a
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 15:57:14 2015 -0400
+
+    create account activity
+
+commit e9a13fed45a2d1080e60019d850a80c519f28294
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Mar 29 15:56:51 2015 -0400
+
+    register button correctly moves activities
+
+commit 58e02f28e2df1e1f9fa272bcb22e46808ca932fc
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Mar 29 15:51:14 2015 -0400
+
+    updating xml file for account registration again
+
+commit f6d0018cf8a08109ac5761ed118bba32c7ba155e
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Mar 29 15:48:31 2015 -0400
+
+    updating xml file for account registration
+
+commit e6478b907e8469067131754dbd474fb25691198c
+Merge: ae9431b 4976499
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Mar 29 15:35:05 2015 -0400
+
+    Merge branch 'master' of https://github.com/cis-upenn/34-RCR
+
+commit ae9431b4b7d95b6a23035c626ea2d29de07ed4ff
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Mar 29 15:34:12 2015 -0400
+
+    adding xml for registration
+
+commit 497649992a3a875b8b3ee59373a52a642e0bd3a5
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 15:33:40 2015 -0400
+
+    create account java activity created
+
+commit fe1cfaa9c3699dbc5016a52800daa04623627242
+Merge: adc82b8 2d8fcd0
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 14:56:10 2015 -0400
+
+    Merge branch 'master' of github.com:cis-upenn/34-RCR
+
+commit adc82b80a704283cfb938aeba8f6785584f6a9d2
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 14:54:24 2015 -0400
+
+    added .xml for xml files
+
+commit 2d8fcd0511bb7829b2fdcb2dd07554d02b913bcb
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Mar 29 13:10:31 2015 -0400
+
+    Added in friends list.
+
+commit c6c433821e81c1103db9ce0babaf27717f88a46d
+Merge: e88682a 0bff8bd
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 03:44:51 2015 -0400
+
+    Merge branch 'master' of github.com:cis-upenn/34-RCR
+
+commit e88682a5867cb986d95d2f8ca47598ef18e24805
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 03:44:46 2015 -0400
+
+    App can query parse for login details and put new user account details
+
+commit 0bff8bd7def2dee8fbe26e7c160c1a10694de1fa
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Mar 29 00:52:18 2015 -0400
+
+    Added in the manage account page, the manage account button in main takes you there, and the return to main button takes you back to main.
+
+commit db7cbd1eb9c558e343ea9bc48977031a62f7f9e3
+Merge: 165e13e 8b5a07e
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 00:08:43 2015 -0400
+
+    Merged with Andrews and ssagars
+
+commit 165e13e548ca154e622e4e0356c119c29f19f44e
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sat Mar 28 23:54:46 2015 -0400
+
+    Login and session checking class added
+
+commit 8b5a07e8783decbbc366b76330c76ef6621c996c
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sat Mar 28 23:39:15 2015 -0400
+
+    Updates
+
+commit 3f0366a03465d50e0e2f7b5287da0431ec9ca752
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sat Mar 28 20:05:27 2015 -0400
+
+    Andrew's initial work
