@@ -40,15 +40,6 @@
                     android:singleLine="true" android:layout_toLeftOf="@id/search_classes_button" />
             </RelativeLayout>
 
-            <!--<Button android:id="@+id/manage_account_button" style="?android:textAppearanceSmall"-->
-                <!--android:layout_width="match_parent" android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="16dp" android:text="@string/manage_account"-->
-                <!--android:textStyle="bold" android:onClick="manageAccountClicked"/>-->
-
-            <!--<Button android:id="@+id/sign_out_button" style="?android:textAppearanceSmall"-->
-                <!--android:layout_width="match_parent" android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="16dp" android:text="@string/sign_out"-->
-                <!--android:textStyle="bold" android:onClick="signOutClicked"/>-->
         </LinearLayout>
     </ScrollView>
 
