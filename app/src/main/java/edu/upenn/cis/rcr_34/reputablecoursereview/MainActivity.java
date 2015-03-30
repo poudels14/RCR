@@ -34,7 +34,6 @@ public class MainActivity extends ActionBarActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
 
         setContentView(R.layout.activity_main);
-//        TextView friendList = (TextView)findViewById(R.id.friendList);
         String[] friends = {"Andrew Remec", "Daniel McCann", "Tahmid Shahriar", "Sagar Poudel",
                 "Alex Harelick", "Chris Murphy", "Amy Gutmann", "James Kirk", "Spock",
                 "Leonard McCoy", "Montgomery Scott", "Nyota Uhura", "Hikaru Sulu", "Pavel Chekov",
