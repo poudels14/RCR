@@ -14,5 +14,7 @@
     <string name="sign_out">Sign out</string>
     <string name="prompt_course">Course</string>
     <string name="title_activity_create_account">CreateAccountActivity</string>
+    <string name="facebook_app_id">753272034785961</string>
+
 
 </resources>
