@@ -4,10 +4,14 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
 
         setContentView(R.layout.activity_main);
-        TextView friendList = (TextView)findViewById(R.id.friendList);
+//        TextView friendList = (TextView)findViewById(R.id.friendList);
         String[] friends = {"Andrew Remec", "Daniel McCann", "Tahmid Shahriar", "Sagar Poudel",
                 "Alex Harelick", "Chris Murphy", "Amy Gutmann", "James Kirk", "Spock",
                 "Leonard McCoy", "Montgomery Scott", "Nyota Uhura", "Hikaru Sulu", "Pavel Chekov",
@@ -42,11 +46,15 @@ public class MainActivity extends ActionBarActivity {
                 "Percival Cox", "Bruce Wayne", "Brennan Huff", "Dale Doback", "Ricky Bobby",
                 "Cal Naughton, Jr.", "Aragorn II Elessar", "Frodo Baggins", "Bilbo Baggins",
                 "Samwise Gamgee", "Peregrin Took" ,"Meriadoc Brandybuck", "Loch Ness Monster"};
-        for(int x = 0; x < friends.length; x++){
-            friendList.append(friends[x]);
-            if(x != (friends.length - 1)){
-                friendList.append("\n");
-            }
+        for(int i = 0; i < friends.length; i++){
+            Button v2 = new Button(this);
+            v2.setText(friends[i]);
+            v2.setId(i);
+            v2.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
+            v2.setGravity(Gravity.CENTER_VERTICAL);
+            v2.setVisibility(View.VISIBLE);
+            LinearLayout friendListView = (LinearLayout) findViewById(R.id.friendListViewLL);
+            friendListView.addView(v2);
         }
     }
 

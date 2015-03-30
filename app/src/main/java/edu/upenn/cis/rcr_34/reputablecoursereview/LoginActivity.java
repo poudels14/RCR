@@ -29,12 +29,10 @@ public class LoginActivity extends ActionBarActivity {
     LoginButton loginButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ParseAPI.init(this);
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
-
-
-
-        ParseAPI.init(this);
 
         //Check if user is already logged in
         if (isLoggedIn()) {
@@ -104,6 +102,8 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     public void loginWithFacebook(View v){
+
+
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"));
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
