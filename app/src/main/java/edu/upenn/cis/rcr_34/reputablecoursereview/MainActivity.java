@@ -26,9 +26,16 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         TextView friendList = (TextView)findViewById(R.id.friendList);
         String[] friends = {"Andrew Remec", "Daniel McCann", "Tahmid Shahriar", "Sagar Poudel",
-                "Alex Harelick", "Chris Murphy", "Amy Gutmann", "James Kirk", "John Rambo",
-                "Alan \"Dutch\" Schaefer", "Michael Scott", "Jack Bauer", "Creed Bratton",
-                "Troy Barnes", "Abed Nadir", "Dr. Ján Ïtor", "Loch Ness Monster"};
+                "Alex Harelick", "Chris Murphy", "Amy Gutmann", "James Kirk", "Spock",
+                "Leonard McCoy", "Montgomery Scott", "Nyota Uhura", "Hikaru Sulu", "Pavel Chekov",
+                "Christine Chapel", "Janice Rand", "Jean-Luc Picard", "William Riker",
+                "Geordi La Forge", "Benjamin Sisko", "Kathryn Janeway", "Jonathan Archer",
+                "Sterling Archer", "John Rambo", "Alan \"Dutch\" Schaefer", "Michael Scott",
+                "Dwight Schrute", "Jim Halpert", "Pam Halpert", "Creed Bratton", "Jack Bauer",
+                "Troy Barnes", "Abed Nadir", "Dr. Ján Ïtor", "John Dorian", "Christopher Turk",
+                "Percival Cox", "Bruce Wayne", "Brennan Huff", "Dale Doback", "Ricky Bobby",
+                "Cal Naughton, Jr.", "Aragorn II Elessar", "Frodo Baggins", "Bilbo Baggins",
+                "Samwise Gamgee", "Peregrin Took" ,"Meriadoc Brandybuck", "Loch Ness Monster"};
         for(int x = 0; x < friends.length; x++){
             friendList.append(friends[x]);
             if(x != (friends.length - 1)){
