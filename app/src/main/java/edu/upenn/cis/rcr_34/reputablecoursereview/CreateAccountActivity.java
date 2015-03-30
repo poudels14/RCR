@@ -3,6 +3,7 @@ package edu.upenn.cis.rcr_34.reputablecoursereview;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,6 +50,24 @@ public class CreateAccountActivity extends ActionBarActivity {
         String major = majorField.getText().toString();
         String password = passwordField.getText().toString();
         String passwordConfirm = passwordConfirmField.getText().toString();
+
+        //Make sure valid email used and the email is from upenn
+        if(!email.equals("")){
+            String[] emailSplitatAt = email.split("@");
+            if (emailSplitatAt.length < 2){
+                Toast.makeText(getApplicationContext(), "Please enter a valid email!",
+                        Toast.LENGTH_SHORT).show();
+            }
+            else{
+                String[] emailSplitAtDot = emailSplitatAt[1].split("\\.");
+                int length = emailSplitAtDot.length;
+
+                if (length < 2 || !emailSplitAtDot[length - 1].equals("edu") || !emailSplitAtDot[length - 2].equals("upenn")){
+                    Toast.makeText(getApplicationContext(), "Only Penn emails are accepted!",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
 
         if (email.equals("")){
             Toast.makeText(getApplicationContext(), "Please Enter Email",
@@ -117,19 +136,11 @@ public class CreateAccountActivity extends ActionBarActivity {
                         user.signUpInBackground(new SignUpCallback() {
                             @Override
                             public void done(com.parse.ParseException e) {
-                                ParseUser.logInInBackground(email, password, new LogInCallback() {
-                                    public void done(ParseUser user, com.parse.ParseException e) {
-                                        if (user != null) {
-                                            Intent i = new Intent();
-                                            setResult(RESULT_OK, i);
-                                            finish();
-                                        } else {
-                                            Toast.makeText(getApplicationContext(),
-                                                    "Invalid username or wrong password",
-                                                    Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
+                                Toast.makeText(getApplicationContext(), "Account Created!",
+                                        Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent();
+                                setResult(RESULT_OK, i);
+                                finish();
                             }
                         });
                     }

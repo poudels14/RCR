@@ -83,7 +83,16 @@ public class LoginActivity extends ActionBarActivity {
         ParseUser.logInInBackground(email, password, new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
-                    logIn(); // go to the main activity
+                    boolean isEmailVerified = (Boolean) user.get("emailVerified");
+                    if (!isEmailVerified){
+                        Toast.makeText(getApplicationContext(),
+                                "Please verify your email first",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        logIn(); // go to the main activity
+                    }
+
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "Invalid username or wrong password",
@@ -102,8 +111,6 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     public void loginWithFacebook(View v){
-
-
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"));
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
@@ -128,8 +135,6 @@ public class LoginActivity extends ActionBarActivity {
                                         } catch (Exception e) {
 
                                         }
-
-
                                     }
                                 });
 
@@ -139,21 +144,18 @@ public class LoginActivity extends ActionBarActivity {
                         parameters.putString("fields", "id,name,link,email");
                         request.setParameters(parameters);
                         request.executeAsync();
-
                     }
 
                     @Override
                     public void onCancel() {
                         // App code
                         Toast.makeText(getApplicationContext(), "I made it to 2", Toast.LENGTH_SHORT).show();
-
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
                         // App code
                         Toast.makeText(getApplicationContext(), "I made it to 3", Toast.LENGTH_SHORT).show();
-
                     }
                 });
     }
