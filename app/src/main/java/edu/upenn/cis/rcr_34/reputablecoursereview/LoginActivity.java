@@ -10,10 +10,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
+import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.util.List;
@@ -23,26 +25,15 @@ public class LoginActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "W5JnCKDZoSYR2AHncCRPZ7TZ94e3x9RJcAQjoc0a", "9vWs3BE45BCEtigsvl9ezo14wAg2ECoPxADTxtoC");
+        Parse.initialize(this, "W5JnCKDZoSYR2AHncCRPZ7TZ94e3x9RJcAQjoc0a",
+                "9vWs3BE45BCEtigsvl9ezo14wAg2ECoPxADTxtoC");
 
         //Check if user is already logged in
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("localStorage");
-        query.fromLocalDatastore();
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List list, ParseException e) {
-                if (e == null) {
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            logIn();
+        }
 
-                    if (list.size() > 0) {
-                        ParseObject p =  (ParseObject) list.get(0);
-
-                        Log.d("LOGIN LOCAL", "Got sth from local");
-                        Log.d("SESSION ID", (String) p.get("sessionID"));
-                        logIn();
-                    }
-                }
-            }
-        });
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
     }
@@ -75,37 +66,20 @@ public class LoginActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-
+    // try to log the user in when 'sign in' is pressed
     private void checkLoginDetails(final String email, final String password){
-        ParseQuery query = ParseQuery.getQuery("userDetails");
-        query.whereEqualTo("email", email);
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List list, ParseException e) {
-                if (e == null) {
-                    if (list.size() > 0){
-                        ParseObject po = (ParseObject) list.get(0);
-                        String cloudEmail = (String) po.get("email");
-                        String cloudPassword = (String) po.get("password");
-                        if (cloudPassword.equals(password) && cloudEmail.equals(email)){
-                            ParseObject lS = new ParseObject("localStorage");
-                            lS.put("sessionID", email);
-                            lS.pinInBackground();
-                            logIn();
-                            Log.d("Database", "Logged in");
-                        }
-                        else {
-                            Toast.makeText(getApplicationContext(), "Invalid username or wrong password", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    else{
-                        Toast.makeText(getApplicationContext(), "Invalid username or wrong password", Toast.LENGTH_SHORT).show();
-                    }
-
+        ParseUser.logInInBackground(email, password, new LogInCallback() {
+            public void done(ParseUser user, ParseException e) {
+                if (user != null) {
+                    logIn(); // go to the main activity
                 } else {
-                    Log.d("Database", "Error: " + e.getMessage());
+                    Toast.makeText(getApplicationContext(),
+                            "Invalid username or wrong password",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+
     }
 }

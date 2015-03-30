@@ -15,6 +15,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -76,20 +77,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void signOutClicked(){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("localStorage");
-        query.fromLocalDatastore();
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List list, ParseException e) {
-                if (e == null) {
-                    if (list.size() > 0) {
-                        ParseObject p = (ParseObject) list.get(0);
-                        p.unpinInBackground();
-                        Log.d("LOGGED OUT", (String) p.get("sessionID") + " logged out");
-                    }
-                }
-            }
-        });
+        ParseUser.logOut();
 
         Toast.makeText(getApplicationContext(), "Signing out", Toast.LENGTH_SHORT).show();
         Intent i = new Intent();
