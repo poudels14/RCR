@@ -35,6 +35,8 @@ public class ManageAccountActivity extends ActionBarActivity {
 
     public void manageFriendsClicked(View view) {
         Toast.makeText(getApplicationContext(), "Manage friends", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this, ManageFriendsActivity.class);
+        startActivity(i);
     }
 
     public void manageFutureCoursesClicked(View view) {

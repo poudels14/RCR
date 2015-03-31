@@ -13,8 +13,8 @@
     <string name="return_main">Return to main</string>
     <string name="sign_out">Sign out</string>
     <string name="prompt_course">Course</string>
-    <string name="title_activity_create_account">CreateAccountActivity</string>
+    <string name="title_activity_create_account">Create Account</string>
     <string name="facebook_app_id">753272034785961</string>
-
+    <string name="title_activity_manage_friends">Manage Friends</string>
 
 </resources>
