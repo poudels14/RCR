@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 public class ManageFriendsActivity extends ActionBarActivity {
     private int viewsID = 1001;
+    //http://icons.iconarchive.com/icons/ilovecolors/easter-bunny-egg/256/easter-Bunny-icon.png
     private String icon = "http://icons.iconarchive.com/icons/yellowicon/game-stars/256/Mario-icon.png";
 
     @Override

@@ -3,6 +3,7 @@ package edu.upenn.cis.rcr_34.reputablecoursereview;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -18,10 +19,19 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
+import com.parse.SignUpCallback;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 import org.json.JSONObject;
 
 public class LoginActivity extends ActionBarActivity {
@@ -105,6 +115,33 @@ public class LoginActivity extends ActionBarActivity {
     private boolean isLoggedIn(){
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
+            Log.d("LOGGED USER", "Email:" + currentUser.getEmail());
+            ParseQuery<ParseUser> query = ParseUser.getQuery();
+            query.whereEqualTo("email", currentUser.getEmail());
+            query.findInBackground(new FindCallback<ParseUser>() {
+                @Override
+                public void done(List list, com.parse.ParseException e) {
+                    if (e == null) {
+                        if (list.size() > 0) {
+//                            ParseUser user = (ParseUser) list.get(0);
+//                            List<String> allFriends = user.getList("friends");
+//                            allFriends.add("poudels@seas.upenn.edu");
+//                            user.put("friends", allFriends);
+//                            user.saveInBackground(new SaveCallback() {
+//                                public void done(ParseException e) {
+//                                    if (e != null) {
+//                                        Log.d("PARSE","Friends saved properly");
+//                                    } else {
+//                                        // ParseException
+//                                    }
+//                                }
+//                            });
+                        } else {
+
+                        }
+                    }
+                }
+            });
             return true;
         }
         return false;
