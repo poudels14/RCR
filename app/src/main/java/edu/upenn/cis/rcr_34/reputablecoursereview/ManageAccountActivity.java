@@ -54,5 +54,7 @@ public class ManageAccountActivity extends ActionBarActivity {
 
     public void managePastCoursesClicked(View view) {
         Toast.makeText(getApplicationContext(), "Manage past courses", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this, PastCourses.class);
+        startActivity(i);
     }
 }

@@ -10,7 +10,10 @@
     <string name="manage_friends">Manage friends</string>
     <string name="future_courses">Manage future courses</string>
     <string name="past_courses">Manage past courses</string>
+    <string name="add_class">Add</string>
+    <string name="course_list_title">Courses</string>
     <string name="return_main">Return to main</string>
+    <string name="return_manage">Return to manage account</string>
     <string name="sign_out">Sign out</string>
     <string name="prompt_course">Course</string>
     <string name="title_activity_create_account">Create Account</string>
