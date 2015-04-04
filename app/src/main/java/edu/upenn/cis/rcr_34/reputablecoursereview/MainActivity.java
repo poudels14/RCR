@@ -80,6 +80,7 @@ public class MainActivity extends ActionBarActivity {
             signOutClicked();
         }
 
+
         return super.onOptionsItemSelected(item);
     }
 
