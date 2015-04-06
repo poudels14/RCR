@@ -18,10 +18,16 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
+
 import java.util.Arrays;
+import java.util.List;
+
 import org.json.JSONObject;
 
 public class LoginActivity extends ActionBarActivity {
@@ -117,7 +123,6 @@ public class LoginActivity extends ActionBarActivity {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         // App code
-                        Toast.makeText(getApplicationContext(), "I made it to 1", Toast.LENGTH_SHORT).show();
 
                         GraphRequest request = GraphRequest.newMeRequest(
                                 AccessToken.getCurrentAccessToken(),
@@ -127,18 +132,15 @@ public class LoginActivity extends ActionBarActivity {
                                     public void onCompleted(
                                             JSONObject object,
                                             GraphResponse response) {
-                                        Toast.makeText(getApplicationContext(), "I made it to end", Toast.LENGTH_SHORT).show();
                                         // Application code
                                         try {
-                                            Toast.makeText(getApplicationContext(), (String) object.get("email"), Toast.LENGTH_SHORT).show();
                                             String a = (String) object.get("email");
+                                            checkLoginDetailsFB(a);
                                         } catch (Exception e) {
 
                                         }
                                     }
                                 });
-
-                        Toast.makeText(getApplicationContext(), "I made it to somewhere", Toast.LENGTH_SHORT).show();
 
                         Bundle parameters = new Bundle();
                         parameters.putString("fields", "id,name,link,email");
@@ -149,14 +151,36 @@ public class LoginActivity extends ActionBarActivity {
                     @Override
                     public void onCancel() {
                         // App code
-                        Toast.makeText(getApplicationContext(), "I made it to 2", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
                         // App code
-                        Toast.makeText(getApplicationContext(), "I made it to 3", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "There was an error.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
+    // try to log the user in when 'sign in' is pressed
+    private void checkLoginDetailsFB(final String email){
+        final ParseUser user = new ParseUser();
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereEqualTo("email", email);
+        query.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List list, com.parse.ParseException e) {
+                if (e == null) {
+                    if (list.size() > 0) {
+                        logIn();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Email Address does not match",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+    }
+
+
+
 }
