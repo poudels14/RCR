@@ -15,6 +15,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.FacebookActivity;
 import com.facebook.FacebookSdk;
 import com.parse.FindCallback;
 import com.parse.Parse;
@@ -82,6 +83,7 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.sign_out) {
             signOutClicked();
         }
+
 
         return super.onOptionsItemSelected(item);
     }

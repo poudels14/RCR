@@ -3,7 +3,6 @@ package edu.upenn.cis.rcr_34.reputablecoursereview;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -24,11 +23,8 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -115,40 +111,6 @@ public class LoginActivity extends ActionBarActivity {
     private boolean isLoggedIn(){
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
-            Log.d("LOGGED USER", "Email:" + currentUser.getEmail());
-            User u = User.getUser("poudels@seas.upenn.edu");
-            Log.d("LOGIN ACTIVITY", "Received current user details:name" + u.getName());
-//            ParseQuery<ParseUser> query = ParseUser.getQuery();
-//            query.whereEqualTo("email", currentUser.getEmail());
-//            query.findInBackground(new FindCallback<ParseUser>() {
-//                @Override
-//                public void done(List list, com.parse.ParseException e) {
-//                    if (e == null) {
-//                        if (list.size() > 0) {
-//                            ParseUser user = (ParseUser) list.get(0);
-//                            Log.d("LOGIN ACTIVITY", ((ParseUser) list.get(0)).getClassName());
-//                            Log.d("LOGIN ACTIVITY", "Email = " + user.getEmail());
-//                            ArrayList<String> allFriends = (ArrayList) user.getList("friends");
-//                            if (allFriends == null){
-//                                allFriends = new ArrayList<String>();
-//                            }
-//                            allFriends.add("poudels@seas.upenn.edu");
-//                            user.put("friends", allFriends);
-//                            user.saveInBackground(new SaveCallback() {
-//                                public void done(ParseException e) {
-//                                    if (e != null) {
-//                                        Log.d("PARSE","Friends saved properly");
-//                                    } else {
-//                                        // ParseException
-//                                    }
-//                                }
-//                            });
-//                        } else {
-//
-//                        }
-//                    }
-//                }
-//            });
             return true;
         }
         return false;
@@ -161,7 +123,6 @@ public class LoginActivity extends ActionBarActivity {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         // App code
-                        Toast.makeText(getApplicationContext(), "I made it to 1", Toast.LENGTH_SHORT).show();
 
                         GraphRequest request = GraphRequest.newMeRequest(
                                 AccessToken.getCurrentAccessToken(),
@@ -171,18 +132,15 @@ public class LoginActivity extends ActionBarActivity {
                                     public void onCompleted(
                                             JSONObject object,
                                             GraphResponse response) {
-                                        Toast.makeText(getApplicationContext(), "I made it to end", Toast.LENGTH_SHORT).show();
                                         // Application code
                                         try {
-                                            Toast.makeText(getApplicationContext(), (String) object.get("email"), Toast.LENGTH_SHORT).show();
                                             String a = (String) object.get("email");
+                                            checkLoginDetailsFB(a);
                                         } catch (Exception e) {
 
                                         }
                                     }
                                 });
-
-                        Toast.makeText(getApplicationContext(), "I made it to somewhere", Toast.LENGTH_SHORT).show();
 
                         Bundle parameters = new Bundle();
                         parameters.putString("fields", "id,name,link,email");
@@ -193,14 +151,36 @@ public class LoginActivity extends ActionBarActivity {
                     @Override
                     public void onCancel() {
                         // App code
-                        Toast.makeText(getApplicationContext(), "I made it to 2", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
                         // App code
-                        Toast.makeText(getApplicationContext(), "I made it to 3", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "There was an error.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
+    // try to log the user in when 'sign in' is pressed
+    private void checkLoginDetailsFB(final String email){
+        final ParseUser user = new ParseUser();
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereEqualTo("email", email);
+        query.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List list, com.parse.ParseException e) {
+                if (e == null) {
+                    if (list.size() > 0) {
+                        logIn();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Email Address does not match",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+    }
+
+
+
 }
