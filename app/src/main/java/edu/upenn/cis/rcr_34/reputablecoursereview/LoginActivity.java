@@ -116,15 +116,22 @@ public class LoginActivity extends ActionBarActivity {
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
             Log.d("LOGGED USER", "Email:" + currentUser.getEmail());
-            ParseQuery<ParseUser> query = ParseUser.getQuery();
-            query.whereEqualTo("email", currentUser.getEmail());
-            query.findInBackground(new FindCallback<ParseUser>() {
-                @Override
-                public void done(List list, com.parse.ParseException e) {
-                    if (e == null) {
-                        if (list.size() > 0) {
+            User u = User.getUser("poudels@seas.upenn.edu");
+            Log.d("LOGIN ACTIVITY", "Received current user details:name" + u.getName());
+//            ParseQuery<ParseUser> query = ParseUser.getQuery();
+//            query.whereEqualTo("email", currentUser.getEmail());
+//            query.findInBackground(new FindCallback<ParseUser>() {
+//                @Override
+//                public void done(List list, com.parse.ParseException e) {
+//                    if (e == null) {
+//                        if (list.size() > 0) {
 //                            ParseUser user = (ParseUser) list.get(0);
-//                            List<String> allFriends = user.getList("friends");
+//                            Log.d("LOGIN ACTIVITY", ((ParseUser) list.get(0)).getClassName());
+//                            Log.d("LOGIN ACTIVITY", "Email = " + user.getEmail());
+//                            ArrayList<String> allFriends = (ArrayList) user.getList("friends");
+//                            if (allFriends == null){
+//                                allFriends = new ArrayList<String>();
+//                            }
 //                            allFriends.add("poudels@seas.upenn.edu");
 //                            user.put("friends", allFriends);
 //                            user.saveInBackground(new SaveCallback() {
@@ -136,12 +143,12 @@ public class LoginActivity extends ActionBarActivity {
 //                                    }
 //                                }
 //                            });
-                        } else {
-
-                        }
-                    }
-                }
-            });
+//                        } else {
+//
+//                        }
+//                    }
+//                }
+//            });
             return true;
         }
         return false;

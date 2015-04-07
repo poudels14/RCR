@@ -17,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.parse.ParseUser;
+
 import java.io.InputStream;
 import java.lang.reflect.GenericArrayType;
 import java.net.URL;
@@ -32,24 +34,44 @@ public class ManageFriendsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_friends);
+        final LinearLayout l = (LinearLayout) findViewById(R.id.manage_account_friends_list);
+        loadAllFriends(l);
+    }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_manage_friends, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private int getUniqueID() {
+        return viewsID++;
+    }
+
+    private void loadPendingRequest() {
         String[] pendingFriends = {"Andrew Remec", "Daniel McCann", "Tahmid Shahriar", "Sagar Poudel"};
-        String[] allFriends = {"Alex Harelick", "Chris Murphy", "Amy Gutmann", "James Kirk", "Spock",
-                "Leonard McCoy", "Montgomery Scott", "Nyota Uhura", "Hikaru Sulu", "Pavel Chekov",
-                "Christine Chapel", "Janice Rand", "Jean-Luc Picard", "William Riker",
-                "Geordi La Forge", "Benjamin Sisko", "Kathryn Janeway", "Jonathan Archer",
-                "Sterling Archer", "John Rambo", "Alan \"Dutch\" Schaefer", "Michael Scott",
-                "Dwight Schrute", "Jim Halpert", "Pam Halpert", "Creed Bratton", "Jack Bauer",
-                "Troy Barnes", "Abed Nadir", "Dr. Ján Ïtor", "John Dorian", "Christopher Turk",
-                "Percival Cox", "Bruce Wayne", "Brennan Huff", "Dale Doback", "Ricky Bobby",
-                "Cal Naughton, Jr.", "Aragorn II Elessar", "Frodo Baggins", "Bilbo Baggins",
-                "Samwise Gamgee", "Peregrin Took" ,"Meriadoc Brandybuck", "Loch Ness Monster"};
-
         LinearLayout pendingList = (LinearLayout) findViewById(R.id.manage_account_pending_list);
 
-        for(int i = 0; i < pendingFriends.length; i++){
+        for (int i = 0; i < pendingFriends.length; i++) {
             RelativeLayout ll = new RelativeLayout(this);
-            ll.setPadding(0,0,0,20);
+            ll.setPadding(0, 0, 0, 20);
 
             RelativeLayout.LayoutParams lpForImage = new RelativeLayout.LayoutParams(200, 250);
             final ImageView profilePic = new ImageView(this);
@@ -58,7 +80,7 @@ public class ManageFriendsActivity extends ActionBarActivity {
             profilePic.setLayoutParams(lpForImage);
             profilePic.setBackgroundColor(Color.BLACK);
             LoadImage lm = new LoadImage(this, profilePic);
-            lm.execute(icon);
+            lm.execute(icon); //icon = address of image to be loaded
 
             ll.addView(profilePic);
 
@@ -68,7 +90,7 @@ public class ManageFriendsActivity extends ActionBarActivity {
             lpForName.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
             TextView name = new TextView(this);
             name.setText(pendingFriends[i]);
-            name.setPadding(20,0,0,0);
+            name.setPadding(20, 0, 0, 0);
             name.setId(this.getUniqueID());
             name.setLayoutParams(lpForName);
             ll.addView(name);
@@ -81,7 +103,7 @@ public class ManageFriendsActivity extends ActionBarActivity {
 
             TextView year = new TextView(this);
             year.setText("Year: 2017");
-            year.setPadding(20,0,0,0);
+            year.setPadding(20, 0, 0, 0);
             year.setLayoutParams(lpForYear);
             year.setId(this.getUniqueID());
             ll.addView(year);
@@ -113,13 +135,24 @@ public class ManageFriendsActivity extends ActionBarActivity {
 
             pendingList.addView(ll);
         }
+    }
 
-        LinearLayout allFriendsList = (LinearLayout) findViewById(R.id.manage_account_friends_list);
-        for(int i = 0; i < allFriends.length; i++){
-            RelativeLayout ll = new RelativeLayout(this);
-            ll.setPadding(0,0,0,20);
+    private void loadAllFriends(final LinearLayout mainListLayout) {
+        mainListLayout.removeAllViews();
+        final User f1 = new User(ParseUser.getCurrentUser().getEmail());
+        f1.addListener(new ParseDataReceivedNotifier() {
+                           @Override
+                           public void notifyListener() {
+                               populateFriend(mainListLayout, f1);
+                           }
+                       });
+    }
 
+    private void populateFriend(LinearLayout llIn, User u){
+            RelativeLayout rL = new RelativeLayout(this);
+            rL.setPadding(0, 0, 0, 20);
 
+            //Set profile pic
             RelativeLayout.LayoutParams lpForImage = new RelativeLayout.LayoutParams(200, 250);
             ImageView profilePic = new ImageView(this);
             profilePic.setVisibility(View.VISIBLE);
@@ -127,19 +160,19 @@ public class ManageFriendsActivity extends ActionBarActivity {
             profilePic.setId(this.getUniqueID());
             profilePic.setLayoutParams(lpForImage);
             LoadImage lm = new LoadImage(this, profilePic);
-            lm.execute(icon);
-            ll.addView(profilePic);
+            lm.execute(u.getProfilePic()); //icon = address of image to be loaded
+            rL.addView(profilePic);
 
             //Set name
             RelativeLayout.LayoutParams lpForName = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             lpForName.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
             TextView name = new TextView(this);
-            name.setText(allFriends[i]);
-            name.setPadding(20,0,0,0);
+            name.setText(u.getName());
+            name.setPadding(20, 0, 0, 0);
             name.setId(this.getUniqueID());
             name.setLayoutParams(lpForName);
-            ll.addView(name);
+            rL.addView(name);
 
             //Set year
             RelativeLayout.LayoutParams lpForYear = new RelativeLayout.LayoutParams(
@@ -148,11 +181,11 @@ public class ManageFriendsActivity extends ActionBarActivity {
             lpForYear.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
 
             TextView year = new TextView(this);
-            year.setText("Year: 2017");
-            year.setPadding(20,0,0,0);
+            year.setText("Year: " + u.getYear());
+            year.setPadding(20, 0, 0, 0);
             year.setLayoutParams(lpForYear);
             year.setId(this.getUniqueID());
-            ll.addView(year);
+            rL.addView(year);
 
             //Set major
             RelativeLayout.LayoutParams lpForMajor = new RelativeLayout.LayoutParams(
@@ -161,53 +194,12 @@ public class ManageFriendsActivity extends ActionBarActivity {
             lpForMajor.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
 
             TextView major = new TextView(this);
-            major.setText("Major: CIS");
-            major.setPadding(20,0,0,0);
+            major.setText("Major: " + u.getMajor());
+            major.setPadding(20, 0, 0, 0);
             major.setLayoutParams(lpForMajor);
             major.setId(this.getUniqueID());
-            ll.addView(major);
+            rL.addView(major);
 
-//            //Set unfriend button
-//            RelativeLayout.LayoutParams lpForAccept = new RelativeLayout.LayoutParams(
-//                    RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-//            lpForAccept.addRule(RelativeLayout.BELOW, year.getId());
-//            lpForAccept.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
-//            Button accept = new Button(this);
-//            accept.setText("Unfriend");
-//            accept.setTextSize(10);
-//            accept.setId(this.getUniqueID());
-//            accept.setLayoutParams(lpForAccept);
-//            ll.addView(accept);
-
-
-            allFriendsList.addView(ll);
-        }
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_manage_friends, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private int getUniqueID(){
-        return viewsID++;
+            llIn.addView(rL);
     }
 }
