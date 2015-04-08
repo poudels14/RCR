@@ -8,11 +8,14 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
         android:weightSum="1">
 
         <EditText android:id="@+id/course_search" android:layout_width="238dp"
+            android:paddingLeft="10dp"
             android:layout_height="wrap_content" android:hint="@string/prompt_course"
             android:inputType="textEmailAddress" android:maxLines="1"
             android:singleLine="true"
@@ -21,6 +24,8 @@
         <Button android:id="@+id/search_classes_button" style="?android:textAppearanceSmall"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="@string/search_classes" android:textStyle="bold"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:onClick="searchClassesClicked" android:layout_alignParentRight="true"/>
     </LinearLayout>
 
