@@ -56,6 +56,10 @@
             android:label="@string/title_activity_manage_friends" >
         </activity>
         <activity
+            android:name=".FriendsDetailActivity"
+            android:label="@string/title_activity_friends_detail" >
+        </activity>
+        <activity
             android:name=".CourseActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_course"
