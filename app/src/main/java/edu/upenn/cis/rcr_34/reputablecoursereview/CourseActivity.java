@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -34,6 +35,8 @@ public class CourseActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         ParseAPI.init(this);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_course);
+
         FacebookSdk.sdkInitialize(getApplicationContext());
 
 
@@ -52,6 +55,7 @@ public class CourseActivity extends ActionBarActivity {
                         Toast.makeText(getApplicationContext(),
                                 "Error Retrieving Course", Toast.LENGTH_SHORT).show();
                     } else {
+                        Log.d("COURSE_ACTIVITY", parseObject.getString("Name"));
                         populateUI(parseObject.getDouble("Rating"),
                                 parseObject.getString("Name"),
                                 parseObject.getString("Code"));
