@@ -57,7 +57,7 @@ public class MainActivity extends ActionBarActivity {
             friendListView.addView(v2);
         }
 
-        User u = User.getUser("poudels@seas.upenn.edu");
+        User u = new User("poudels@seas.upenn.edu");
         Log.d("LOGIN ACTIVITY", "Received current user details:name" + u.getName());
     }
 

@@ -130,7 +130,6 @@ public class LoadImage extends AsyncTask<String,Void,Integer>{
 
 
     protected Integer doInBackground(String... arg){
-        Log.d("doInBackground", "Called!");
         if (arg[0] != null){
             this.image = this.getBitmap(arg[0]);
             return 1;
@@ -142,6 +141,5 @@ public class LoadImage extends AsyncTask<String,Void,Integer>{
 
     protected void onPostExecute(Integer result) {
         this.imageView.setImageBitmap(this.image);
-        Log.d("onPostExecute", "Image with id = " + this.imageView.getId() + " loaded!");
     }
 }
