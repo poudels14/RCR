@@ -15,9 +15,12 @@
     <string name="return_main">Return to main</string>
     <string name="return_manage">Return to manage account</string>
     <string name="sign_out">Sign out</string>
-    <string name="prompt_course">Course</string>
+    <string name="prompt_course">Course ID</string>
     <string name="title_activity_create_account">Create Account</string>
     <string name="facebook_app_id">753272034785961</string>
     <string name="title_activity_manage_friends">Manage Friends</string>
+    <string name="title_activity_course">CourseActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>

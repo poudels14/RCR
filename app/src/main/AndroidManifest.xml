@@ -15,6 +15,7 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -52,7 +53,13 @@
 
         <activity
             android:name=".ManageFriendsActivity"
-            android:label= "@string/title_activity_manage_friends" >
+            android:label="@string/title_activity_manage_friends" >
+        </activity>
+        <activity
+            android:name=".CourseActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_course"
+            android:theme="@style/Theme.AppCompat" >
         </activity>
     </application>
 
