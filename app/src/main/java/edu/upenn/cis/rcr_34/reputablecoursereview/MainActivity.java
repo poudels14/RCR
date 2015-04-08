@@ -58,6 +58,9 @@ public class MainActivity extends ActionBarActivity {
             LinearLayout friendListView = (LinearLayout) findViewById(R.id.friendListViewLL);
             friendListView.addView(v2);
         }
+
+        User u = User.getUser("poudels@seas.upenn.edu");
+        Log.d("LOGIN ACTIVITY", "Received current user details:name" + u.getName());
     }
 
     @Override
