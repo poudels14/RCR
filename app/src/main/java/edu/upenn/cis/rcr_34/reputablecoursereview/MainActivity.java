@@ -26,6 +26,8 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
+import edu.upenn.cis.rcr_34.reputablecoursereview.util.StaticUtils;
+
 public class MainActivity extends ActionBarActivity {
 
     @Override
@@ -56,6 +58,9 @@ public class MainActivity extends ActionBarActivity {
             LinearLayout friendListView = (LinearLayout) findViewById(R.id.friendListViewLL);
             friendListView.addView(v2);
         }
+
+        User u = new User("poudels@seas.upenn.edu");
+        Log.d("LOGIN ACTIVITY", "Received current user details:name" + u.getName());
     }
 
     @Override
@@ -72,15 +77,14 @@ public class MainActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+
         if (id == R.id.manage_account_item) {
             manageAccountClicked();
         }
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.sign_out) {
-            signOutClicked();
-        }
 
+        if (id == R.id.sign_out) {
+            StaticUtils.signOutClicked(this.getApplicationContext());
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -88,7 +92,35 @@ public class MainActivity extends ActionBarActivity {
     public void searchClassesClicked(View view){
         EditText courseName = (EditText)findViewById(R.id.course_search);
         String course = courseName.getText().toString();
-        Toast.makeText(getApplicationContext(), "Searching for course: " + course, Toast.LENGTH_SHORT).show();
+
+        // search for the course in parse
+        final ParseQuery<ParseObject> courseSearch = ParseQuery.getQuery("Course");
+        courseSearch.whereContains("Code", course.toUpperCase());
+        courseSearch.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> objList,ParseException e) {
+                if (e == null) {
+                    // initialize the course activity using Parse's ID of the course
+                    if (objList.size() > 0) {
+                        initializeCourse(objList.get(0));
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Course not found",
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Course not found",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
+    private void initializeCourse(ParseObject po) {
+        Toast.makeText(getApplicationContext(), "SHOOP", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this, CourseActivity.class);
+        i.putExtra("parseID", po.getObjectId());
+        startActivity(i);
     }
 
     public void manageAccountClicked(){
@@ -97,12 +129,5 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent2);
     }
 
-    public void signOutClicked(){
-        ParseUser.logOut();
 
-        Toast.makeText(getApplicationContext(), "Signing out", Toast.LENGTH_SHORT).show();
-        Intent i = new Intent();
-        setResult(RESULT_OK, i);
-        finish();
-    }
 }

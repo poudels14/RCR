@@ -1,5 +1,7 @@
 package edu.upenn.cis.rcr_34.reputablecoursereview;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -17,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.parse.ParseUser;
+
 import java.io.InputStream;
 import java.lang.reflect.GenericArrayType;
 import java.net.URL;
@@ -24,7 +28,6 @@ import java.util.ArrayList;
 
 
 public class ManageFriendsActivity extends ActionBarActivity {
-    private int viewsID = 1001;
     //http://icons.iconarchive.com/icons/ilovecolors/easter-bunny-egg/256/easter-Bunny-icon.png
     private String icon = "http://icons.iconarchive.com/icons/yellowicon/game-stars/256/Mario-icon.png";
 
@@ -32,156 +35,10 @@ public class ManageFriendsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_friends);
-
-        String[] pendingFriends = {"Andrew Remec", "Daniel McCann", "Tahmid Shahriar", "Sagar Poudel"};
-        String[] allFriends = {"Alex Harelick", "Chris Murphy", "Amy Gutmann", "James Kirk", "Spock",
-                "Leonard McCoy", "Montgomery Scott", "Nyota Uhura", "Hikaru Sulu", "Pavel Chekov",
-                "Christine Chapel", "Janice Rand", "Jean-Luc Picard", "William Riker",
-                "Geordi La Forge", "Benjamin Sisko", "Kathryn Janeway", "Jonathan Archer",
-                "Sterling Archer", "John Rambo", "Alan \"Dutch\" Schaefer", "Michael Scott",
-                "Dwight Schrute", "Jim Halpert", "Pam Halpert", "Creed Bratton", "Jack Bauer",
-                "Troy Barnes", "Abed Nadir", "Dr. Ján Ïtor", "John Dorian", "Christopher Turk",
-                "Percival Cox", "Bruce Wayne", "Brennan Huff", "Dale Doback", "Ricky Bobby",
-                "Cal Naughton, Jr.", "Aragorn II Elessar", "Frodo Baggins", "Bilbo Baggins",
-                "Samwise Gamgee", "Peregrin Took" ,"Meriadoc Brandybuck", "Loch Ness Monster"};
-
-        LinearLayout pendingList = (LinearLayout) findViewById(R.id.manage_account_pending_list);
-
-        for(int i = 0; i < pendingFriends.length; i++){
-            RelativeLayout ll = new RelativeLayout(this);
-            ll.setPadding(0,0,0,20);
-
-            RelativeLayout.LayoutParams lpForImage = new RelativeLayout.LayoutParams(200, 250);
-            final ImageView profilePic = new ImageView(this);
-            profilePic.setVisibility(View.VISIBLE);
-            profilePic.setId(this.getUniqueID());
-            profilePic.setLayoutParams(lpForImage);
-            profilePic.setBackgroundColor(Color.BLACK);
-            LoadImage lm = new LoadImage(this, profilePic);
-            lm.execute(icon);
-
-            ll.addView(profilePic);
-
-            //Set name
-            RelativeLayout.LayoutParams lpForName = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            lpForName.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
-            TextView name = new TextView(this);
-            name.setText(pendingFriends[i]);
-            name.setPadding(20,0,0,0);
-            name.setId(this.getUniqueID());
-            name.setLayoutParams(lpForName);
-            ll.addView(name);
-
-            //Set year
-            RelativeLayout.LayoutParams lpForYear = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            lpForYear.addRule(RelativeLayout.BELOW, name.getId());
-            lpForYear.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
-
-            TextView year = new TextView(this);
-            year.setText("Year: 2017");
-            year.setPadding(20,0,0,0);
-            year.setLayoutParams(lpForYear);
-            year.setId(this.getUniqueID());
-            ll.addView(year);
-
-            //Set accept button
-            RelativeLayout.LayoutParams lpForAccept = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            lpForAccept.addRule(RelativeLayout.BELOW, year.getId());
-            lpForAccept.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
-            Button accept = new Button(this);
-            accept.setText("Accept");
-            accept.setTextSize(10);
-            accept.setId(this.getUniqueID());
-            accept.setLayoutParams(lpForAccept);
-            ll.addView(accept);
-
-
-            //set decline button
-            RelativeLayout.LayoutParams lpForDecline = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            lpForDecline.addRule(RelativeLayout.RIGHT_OF, accept.getId());
-            lpForDecline.addRule(RelativeLayout.BELOW, year.getId());
-            Button decline = new Button(this);
-            decline.setText("Decline");
-            decline.setTextSize(10);
-            decline.setId(this.getUniqueID());
-            decline.setLayoutParams(lpForDecline);
-            ll.addView(decline);
-
-            pendingList.addView(ll);
-        }
-
-        LinearLayout allFriendsList = (LinearLayout) findViewById(R.id.manage_account_friends_list);
-        for(int i = 0; i < allFriends.length; i++){
-            RelativeLayout ll = new RelativeLayout(this);
-            ll.setPadding(0,0,0,20);
-
-
-            RelativeLayout.LayoutParams lpForImage = new RelativeLayout.LayoutParams(200, 250);
-            ImageView profilePic = new ImageView(this);
-            profilePic.setVisibility(View.VISIBLE);
-            profilePic.setBackgroundColor(Color.BLACK);
-            profilePic.setId(this.getUniqueID());
-            profilePic.setLayoutParams(lpForImage);
-            LoadImage lm = new LoadImage(this, profilePic);
-            lm.execute(icon);
-            ll.addView(profilePic);
-
-            //Set name
-            RelativeLayout.LayoutParams lpForName = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            lpForName.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
-            TextView name = new TextView(this);
-            name.setText(allFriends[i]);
-            name.setPadding(20,0,0,0);
-            name.setId(this.getUniqueID());
-            name.setLayoutParams(lpForName);
-            ll.addView(name);
-
-            //Set year
-            RelativeLayout.LayoutParams lpForYear = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            lpForYear.addRule(RelativeLayout.BELOW, name.getId());
-            lpForYear.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
-
-            TextView year = new TextView(this);
-            year.setText("Year: 2017");
-            year.setPadding(20,0,0,0);
-            year.setLayoutParams(lpForYear);
-            year.setId(this.getUniqueID());
-            ll.addView(year);
-
-            //Set major
-            RelativeLayout.LayoutParams lpForMajor = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            lpForMajor.addRule(RelativeLayout.BELOW, year.getId());
-            lpForMajor.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
-
-            TextView major = new TextView(this);
-            major.setText("Major: CIS");
-            major.setPadding(20,0,0,0);
-            major.setLayoutParams(lpForMajor);
-            major.setId(this.getUniqueID());
-            ll.addView(major);
-
-//            //Set unfriend button
-//            RelativeLayout.LayoutParams lpForAccept = new RelativeLayout.LayoutParams(
-//                    RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-//            lpForAccept.addRule(RelativeLayout.BELOW, year.getId());
-//            lpForAccept.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
-//            Button accept = new Button(this);
-//            accept.setText("Unfriend");
-//            accept.setTextSize(10);
-//            accept.setId(this.getUniqueID());
-//            accept.setLayoutParams(lpForAccept);
-//            ll.addView(accept);
-
-
-            allFriendsList.addView(ll);
-        }
+        final LinearLayout friendList = (LinearLayout) findViewById(R.id.manage_account_friends_list);
+        final LinearLayout pendingList = (LinearLayout) findViewById(R.id.manage_account_pending_list);
+        loadAllFriends(friendList);
+        loadAllPendingRequest(pendingList);
     }
 
 
@@ -207,7 +64,221 @@ public class ManageFriendsActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private int getUniqueID(){
-        return viewsID++;
+    private void loadAllPendingRequest(final LinearLayout mainListLayout) {
+        final User f1 = new User(ParseUser.getCurrentUser().getEmail());
+        f1.addListener(new ParseDataReceivedNotifier() {
+            @Override
+            public void notifyListener() {
+                //Remove loading label first
+                mainListLayout.removeAllViews();
+
+                ArrayList<String> pendingList = f1.getPendingRequests();
+                if (pendingList == null) {
+                    return;
+                }
+
+                for (int i = 0; i < pendingList.size(); i++){
+                    final User f = new User(f1.getPendingRequests().get(i));
+                    f.addListener(new ParseDataReceivedNotifier() {
+                        @Override
+                        public void notifyListener() {
+
+                            populatePendingRequest(mainListLayout, f);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    private void populatePendingRequest(LinearLayout llIn, final User u) {
+        RelativeLayout ll = new RelativeLayout(this);
+        ll.setPadding(0, 0, 0, 20);
+
+        RelativeLayout.LayoutParams lpForImage = new RelativeLayout.LayoutParams(200, 250);
+        final ImageView profilePic = new ImageView(this);
+        profilePic.setVisibility(View.VISIBLE);
+        profilePic.setId(Utils.getUniqueID());
+        profilePic.setLayoutParams(lpForImage);
+        profilePic.setBackgroundColor(Color.BLACK);
+        LoadImage lm = new LoadImage(this, profilePic);
+        lm.execute(u.getProfilePic()); //icon = address of image to be loaded
+
+        ll.addView(profilePic);
+
+        //Set name
+        RelativeLayout.LayoutParams lpForName = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        lpForName.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
+        TextView name = new TextView(this);
+        name.setText(u.getName());
+        name.setPadding(20, 0, 0, 0);
+        name.setId(Utils.getUniqueID());
+        name.setLayoutParams(lpForName);
+        ll.addView(name);
+
+        //Set year
+        RelativeLayout.LayoutParams lpForYear = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        lpForYear.addRule(RelativeLayout.BELOW, name.getId());
+        lpForYear.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
+
+        TextView year = new TextView(this);
+        year.setText("Year: " + u.getYear());
+        year.setPadding(20, 0, 0, 0);
+        year.setLayoutParams(lpForYear);
+        year.setId(Utils.getUniqueID());
+        ll.addView(year);
+
+        //Set accept button
+        RelativeLayout.LayoutParams lpForAccept = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        lpForAccept.addRule(RelativeLayout.BELOW, year.getId());
+        lpForAccept.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
+        Button accept = new Button(this);
+        accept.setText("Accept");
+        accept.setTextSize(10);
+        accept.setId(Utils.getUniqueID());
+        accept.setLayoutParams(lpForAccept);
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final User me = new User(ParseUser.getCurrentUser().getEmail());
+                me.addListener(new ParseDataReceivedNotifier() {
+                    @Override
+                    public void notifyListener() {
+                        me.acceptRequest(u.getEmail());
+                    }
+                });
+            }
+        });
+        ll.addView(accept);
+
+
+
+        //set decline button
+        RelativeLayout.LayoutParams lpForDecline = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        lpForDecline.addRule(RelativeLayout.RIGHT_OF, accept.getId());
+        lpForDecline.addRule(RelativeLayout.BELOW, year.getId());
+        Button decline = new Button(this);
+        decline.setText("Decline");
+        decline.setTextSize(10);
+        decline.setId(Utils.getUniqueID());
+        decline.setLayoutParams(lpForDecline);
+        decline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final User me = new User(ParseUser.getCurrentUser().getEmail());
+                me.addListener(new ParseDataReceivedNotifier() {
+                    @Override
+                    public void notifyListener() {
+                        me.rejectRequest(u.getEmail());
+                    }
+                });
+            }
+        });
+        ll.addView(decline);
+
+        llIn.addView(ll);
+    }
+
+    private void loadAllFriends(final LinearLayout mainListLayout) {
+        final User f1 = new User(ParseUser.getCurrentUser().getEmail());
+        f1.addListener(new ParseDataReceivedNotifier() {
+            @Override
+            public void notifyListener() {
+                // Remove loading label first
+                mainListLayout.removeAllViews();
+
+                ArrayList<String> friends = f1.getFriends();
+                if (friends == null) {
+                    return;
+                }
+                for (int i = 0; i < friends.size(); i++){
+                    final User f = new User(f1.getFriends().get(i));
+                    f.addListener(new ParseDataReceivedNotifier() {
+                        @Override
+                        public void notifyListener() {
+                            populateFriend(mainListLayout, f);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    private void populateFriend(LinearLayout llIn, final User u){
+        RelativeLayout rL = new RelativeLayout(this);
+        rL.setPadding(5, 10, 5, 10);
+        rL.setId(Utils.getUniqueID());
+        if(rL.getId() % 2 == 0){
+            rL.setBackgroundColor(Color.GRAY);
+        }
+
+        //Set profile pic
+        RelativeLayout.LayoutParams lpForImage = new RelativeLayout.LayoutParams(200, 250);
+        ImageView profilePic = new ImageView(this);
+        profilePic.setVisibility(View.VISIBLE);
+        profilePic.setBackgroundColor(Color.BLACK);
+        profilePic.setId(Utils.getUniqueID());
+        profilePic.setLayoutParams(lpForImage);
+        LoadImage lm = new LoadImage(this, profilePic);
+        lm.execute(u.getProfilePic()); //icon = address of image to be loaded
+        rL.addView(profilePic);
+
+        //Set name
+        RelativeLayout.LayoutParams lpForName = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        lpForName.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
+        TextView name = new TextView(this);
+        name.setText(u.getName());
+        name.setPadding(20, 0, 0, 0);
+        name.setId(Utils.getUniqueID());
+        name.setLayoutParams(lpForName);
+        rL.addView(name);
+
+        //Set year
+        RelativeLayout.LayoutParams lpForYear = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        lpForYear.addRule(RelativeLayout.BELOW, name.getId());
+        lpForYear.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
+
+        TextView year = new TextView(this);
+        year.setText("Year: " + u.getYear());
+        year.setPadding(20, 0, 0, 0);
+        year.setLayoutParams(lpForYear);
+        year.setId(Utils.getUniqueID());
+        rL.addView(year);
+
+        //Set major
+        RelativeLayout.LayoutParams lpForMajor = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        lpForMajor.addRule(RelativeLayout.BELOW, year.getId());
+        lpForMajor.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
+
+        TextView major = new TextView(this);
+        major.setText("Major: " + u.getMajor());
+        major.setPadding(20, 0, 0, 0);
+        major.setLayoutParams(lpForMajor);
+        major.setId(Utils.getUniqueID());
+        rL.addView(major);
+        Intent intent = new Intent(this, FriendsDetailActivity.class);
+
+        rL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("TEST", "Friends view clicked :" + u.getEmail());
+                goToFriendsProfile(u.getEmail());
+            }
+        });
+
+        llIn.addView(rL);
+    }
+
+    protected void goToFriendsProfile(String email){
+        Intent intent = new Intent(this, FriendsDetailActivity.class);
+        intent.putExtra("email", email);
+        startActivity(intent);
     }
 }

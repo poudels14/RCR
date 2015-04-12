@@ -3,6 +3,7 @@ package edu.upenn.cis.rcr_34.reputablecoursereview;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -96,6 +97,7 @@ public class LoginActivity extends ActionBarActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                     else{
+                        Log.d("LOGIN", "Login successful!");
                         logIn(); // go to the main activity
                     }
 

@@ -15,7 +15,6 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -53,11 +52,7 @@
 
         <activity
             android:name=".ManageFriendsActivity"
-            android:label="@string/title_activity_manage_friends" >
-        </activity>
-        <activity
-            android:name=".FutureCourses"
-            android:label="@string/title_activity_future_courses" >
+            android:label= "@string/title_activity_manage_friends" >
         </activity>
     </application>
 
