@@ -1,12 +1,14 @@
+package edu.upenn.cis.rcr_34.reputablecoursereview;
+
 /**
- * Created by sagar on 4/7/15.
+ * Created by andrew on 4/12/15.
  */
-public class CoursesTaken {
+public class Course {
     private String courseCode;
     private String semesterTaken;
     private String individualRating;
 
-    public CoursesTaken(String code, String semester){
+    public Course (String code, String semester){
         courseCode = code;
         semesterTaken = semester;
         individualRating = "";
