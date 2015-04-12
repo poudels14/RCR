@@ -16,20 +16,14 @@
         android:textSize="20sp" />
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="1">
 
-        <EditText android:id="@+id/add_course_name" android:layout_width="238dp"
-            android:layout_height="wrap_content" android:hint="@string/prompt_course"
-            android:inputType="textEmailAddress" android:maxLines="1"
-            android:singleLine="true"
-            android:layout_weight="1.58" />
-
-        <Button android:id="@+id/add_classes_button" style="?android:textAppearanceSmall"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="@string/add_class" android:textStyle="bold"
+        <Button android:id="@+id/add_classes_buttons" style="?android:textAppearanceSmall"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="@string/add_course" android:textStyle="bold"
             android:onClick="addClassClicked" android:layout_alignParentRight="true"/>
     </LinearLayout>
 

@@ -65,41 +65,9 @@ public class PastCourses extends ActionBarActivity {
     }
 
     public void addClassClicked(View view){
-        EditText courseName = (EditText)findViewById(R.id.add_course_name);
-        String course = courseName.getText().toString();
-        Toast.makeText(getApplicationContext(), "Added course: " + course, Toast.LENGTH_SHORT).show();
-        LinearLayout courseListView = (LinearLayout) findViewById(R.id.courseListViewLL);
-        int width3 = 250;
-        int width = courseListView.getWidth() - width3;
-        Button v1 = new Button(this);
-        v1.setWidth(width);
-        v1.setText(course);
-        v1.setGravity(Gravity.CENTER_VERTICAL);
-        v1.setVisibility(View.VISIBLE);
-        v1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v){
-                Button thisButton = (Button)v;
-                String course = (String)thisButton.getText();
-                Toast.makeText(getApplicationContext(), "Go to: " + course, Toast.LENGTH_SHORT).show();
-            }
-        });
-        Button v3 = new Button(this);
-        v3.setText("Remove");
-        v3.setWidth(width3);
-        v3.setGravity(Gravity.CENTER_VERTICAL);
-        v3.setVisibility(View.VISIBLE);
-        v3.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v){
-                LinearLayout courseListView = (LinearLayout) findViewById(R.id.courseListViewLL);
-                View parent = (View) v.getParent();
-                courseListView.removeView(parent);
-            }
-        });
-        LinearLayout courseButton = new LinearLayout(this);
-        courseButton.setOrientation(LinearLayout.HORIZONTAL);
-        courseButton.addView(v1);
-        courseButton.addView(v3);
-        courseListView.addView(courseButton);
+        Toast.makeText(getApplicationContext(), "Add course", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this, CourseAdditionActivity.class);
+        startActivity(i);
     }
 
     public void returnToManageClicked(){

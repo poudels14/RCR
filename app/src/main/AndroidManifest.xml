@@ -65,6 +65,11 @@
             android:label="@string/title_activity_course"
             android:theme="@style/Theme.AppCompat" >
         </activity>
+        <activity
+            android:name=".CourseAdditionActivity"
+            android:label="Course Addition" >
+        </activity>
+
     </application>
 
 </manifest>
