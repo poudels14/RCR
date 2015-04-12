@@ -50,6 +50,8 @@ public class ManageAccountActivity extends ActionBarActivity {
 
     public void manageFutureCoursesClicked(View view) {
         Toast.makeText(getApplicationContext(), "Manage future courses", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this, FutureCourses.class);
+        startActivity(i);
     }
 
     public void managePastCoursesClicked(View view) {

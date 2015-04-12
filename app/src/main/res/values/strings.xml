@@ -19,5 +19,7 @@
     <string name="title_activity_create_account">Create Account</string>
     <string name="facebook_app_id">753272034785961</string>
     <string name="title_activity_manage_friends">Manage Friends</string>
+    <string name="title_activity_future_course">FutureCourse</string>
+    <string name="title_activity_future_courses">FutureCourses</string>
 
 </resources>
