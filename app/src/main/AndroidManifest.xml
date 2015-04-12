@@ -59,6 +59,11 @@
             android:label= "@string/title_activity_manage_friends" >
         </activity>
 
+        <activity
+            android:name=".CourseActivity"
+            android:label= "Course Page" >
+        </activity>
+
     </application>
 
 </manifest>
