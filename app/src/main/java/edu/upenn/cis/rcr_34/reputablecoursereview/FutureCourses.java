@@ -24,7 +24,7 @@ public class FutureCourses extends ActionBarActivity {
         setContentView(R.layout.activity_future_courses);
 
         // set the header of this view
-        TextView t = (TextView)findViewById(R.id.header_text);
+        TextView t = (TextView)findViewById(R.id.header_text_FC);
 
         t.setText("Future Courses: " +
                 (String) ParseUser.getCurrentUser().get("firstName") +
@@ -55,10 +55,10 @@ public class FutureCourses extends ActionBarActivity {
     }
 
     public void addClassClicked(View view){
-        EditText courseName = (EditText)findViewById(R.id.add_course_name);
+        EditText courseName = (EditText)findViewById(R.id.add_course_name_FC);
         String course = courseName.getText().toString();
         Toast.makeText(getApplicationContext(), "Added course: " + course, Toast.LENGTH_SHORT).show();
-        LinearLayout courseListView = (LinearLayout) findViewById(R.id.courseListViewLL);
+        LinearLayout courseListView = (LinearLayout) findViewById(R.id.courseListViewLL_FC);
         int width3 = 250;
         int width = courseListView.getWidth() - width3;
         TextView v1 = new TextView(this);
@@ -73,7 +73,7 @@ public class FutureCourses extends ActionBarActivity {
         v3.setVisibility(View.VISIBLE);
         v3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                LinearLayout courseListView = (LinearLayout) findViewById(R.id.courseListViewLL);
+                LinearLayout courseListView = (LinearLayout) findViewById(R.id.courseListViewLL_FC);
                 View parent = (View) v.getParent();
                 courseListView.removeView(parent);
             }
