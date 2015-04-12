@@ -28,7 +28,7 @@ public class User {
     private ArrayList<String> friendEmails;
     private ArrayList<String> pendingRequests;
     private ArrayList<ParseDataReceivedNotifier> liteners;
-    private HashMap<String, Course> courses;
+    private ArrayList<Course> courses;
     private boolean isObjectReady;
 
     public User(final String email){
