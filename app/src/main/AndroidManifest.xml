@@ -41,6 +41,10 @@
             android:label="Past Courses" >
         </activity>
         <activity
+            android:name=".FutureCourses"
+            android:label="Future Courses" >
+        </activity>
+        <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
