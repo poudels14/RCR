@@ -8,10 +8,21 @@ public class Course {
     private String semesterTaken;
     private String individualRating;
 
-    public Course (String code, String semester){
+    public Course(String code, String semester){
         courseCode = code;
         semesterTaken = semester;
         individualRating = "";
+    }
+
+    public Course (String base){
+        String[] parts = base.split("~");
+        courseCode = parts[0];
+        semesterTaken = parts[1];
+        individualRating = "";
+    }
+
+    public String toString(){
+        return courseCode + "~" + semesterTaken;
     }
 
     public String getCourseCode(){

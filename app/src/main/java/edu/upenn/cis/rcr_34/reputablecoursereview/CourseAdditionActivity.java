@@ -3,34 +3,21 @@ package edu.upenn.cis.rcr_34.reputablecoursereview;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.facebook.FacebookSdk;
-import com.parse.FindCallback;
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
+import java.util.ArrayList;
 import com.parse.ParseUser;
 
-import java.util.List;
-
 public class CourseAdditionActivity extends ActionBarActivity {
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ParseAPI.init(this);
         super.onCreate(savedInstanceState);
+        user = new User(ParseUser.getCurrentUser().getEmail());
         setContentView(R.layout.activity_course_addition);
     }
 
@@ -45,9 +32,39 @@ public class CourseAdditionActivity extends ActionBarActivity {
 
     public void saveCourseClicked(View view){
         Toast.makeText(getApplicationContext(), "Save selected", Toast.LENGTH_SHORT).show();
+        EditText courseName = (EditText)findViewById(R.id.add_course_name);
+        String course = courseName.getText().toString();
+        EditText semesterName = (EditText)findViewById(R.id.add_semester);
+        String semester = semesterName.getText().toString();
+        Course newCourse = new Course(course, semester);
+        ArrayList<String> courses = user.getCoursesTaken();
+        Toast.makeText(getApplicationContext(), fromArray(courses), Toast.LENGTH_SHORT).show();
+        user.addCourse(newCourse.toString());
+        courses = user.getCoursesTaken();
+        Toast.makeText(getApplicationContext(), fromArray(courses), Toast.LENGTH_SHORT).show();
+        Intent i = new Intent();
+        setResult(RESULT_OK, i);
+        finish();
     }
 
     public void deleteCourseClicked(View view){
         Toast.makeText(getApplicationContext(), "Delete selected", Toast.LENGTH_SHORT).show();
+    }
+
+    public String fromArray(ArrayList<String> array){
+        String toReturn = "[";
+        if(array == null){
+            toReturn = toReturn + "null";
+        }
+        else if(array.size() > 0){
+            toReturn = toReturn + array.get(0);
+            if(array.size() > 1){
+                for(int x = 1; x < array.size(); x++){
+                    toReturn = toReturn + "," + array.get(x);
+                }
+            }
+        }
+        toReturn = toReturn + "]";
+        return toReturn;
     }
 }

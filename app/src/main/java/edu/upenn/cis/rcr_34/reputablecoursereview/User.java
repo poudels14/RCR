@@ -28,10 +28,11 @@ public class User {
     private ArrayList<String> friendEmails;
     private ArrayList<String> pendingRequests;
     private ArrayList<ParseDataReceivedNotifier> liteners;
-    private ArrayList<Course> courses;
+    private ArrayList<String> coursesTaken;
     private boolean isObjectReady;
 
     public User(final String email){
+        Log.d("User", "1");
         this.email = email;
         this.liteners = new ArrayList<ParseDataReceivedNotifier>();
         this.isObjectReady = false;
@@ -42,7 +43,9 @@ public class User {
             @Override
             public void done(List list, com.parse.ParseException e) {
                 if (e == null) {
+                    Log.d("User", "1.1");
                     if (list.size() > 0) {
+                        Log.d("User", "1.1.1");
                         ParseUser user = (ParseUser) list.get(0);
                         me = user;
                         year = (String) user.get("year");
@@ -52,9 +55,11 @@ public class User {
                         picLink = (String) user.get("profilePic");
                         friendEmails = (ArrayList) user.getList("friends");
                         pendingRequests = (ArrayList) user.getList("pendingRequest");
+                        coursesTaken = (ArrayList) user.getList("coursesTaken");
                         isObjectReady = true;
                         notifyListeners();
                     } else {
+                        Log.d("User", "1.1.2");
                     }
                 }
             }
@@ -98,6 +103,16 @@ public class User {
             return "INVALID_RETURN_OBJECT";
         }
     }
+
+    public ArrayList<String> getCoursesTaken(){
+        if(isObjectReady){
+            return this.coursesTaken;
+        }
+        else{
+            return null;
+        }
+    }
+
 
     public String getProfilePic(){
         if(isObjectReady){
@@ -258,6 +273,28 @@ public class User {
                     else {
                         Log.d("PARSE", "Friends request couldn't be sent: " + email);
                         Log.d("PARSE", "Error : " + e.getMessage());
+                    }
+                }
+            });
+        }
+    }
+
+    public void addCourse(final String course){
+        if (!this.isObjectReady) {
+            return;
+        }
+        if (coursesTaken == null){
+            coursesTaken = new ArrayList<String>();
+        }
+        if (!this.coursesTaken.contains(course)) {
+            this.coursesTaken.add(course);
+            this.me.put("coursesTaken", coursesTaken);
+            this.me.saveInBackground(new SaveCallback() {
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Log.d("PARSE", "Coursed added properly");
+                    } else {
+                        Log.d("USER.JAVA", "Course couldn't be added properly: " + email);
                     }
                 }
             });
