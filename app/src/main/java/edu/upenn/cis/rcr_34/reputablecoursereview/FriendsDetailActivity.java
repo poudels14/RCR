@@ -58,7 +58,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void populateFriend(LinearLayout llIn, User u){
+    private void populateFriend(LinearLayout llIn, final User u){
         RelativeLayout personalDetail = new RelativeLayout(this);
         RelativeLayout.LayoutParams lpforPersonalDetail = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -148,7 +148,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
                 me.addListener(new ParseDataReceivedNotifier() {
                     @Override
                     public void notifyListener() {
-//                        me.removeFriend(u.getEmail());
+                        me.removeFriend(u.getEmail());
                     }
                 });
             }

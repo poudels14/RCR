@@ -26,6 +26,7 @@
     <string name="facebook_app_id">753272034785961</string>
     <string name="title_activity_manage_friends">Manage Friends</string>
     <string name="title_activity_review">ReviewActivity</string>
+    <string name="title_activity_friends_detail">FriendsDetailActivity</string>
 
     <string-array name="ratings_array">
         <item>1</item>

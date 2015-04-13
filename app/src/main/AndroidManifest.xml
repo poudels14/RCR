@@ -64,6 +64,10 @@
             android:label="@string/title_activity_manage_friends" >
         </activity>
         <activity
+                   android:name=".FriendsDetailActivity"
+                   android:label="@string/title_activity_friends_detail" >
+    </activity>
+        <activity
             android:name=".CourseActivity"
             android:label="Course Page" >
         </activity>
