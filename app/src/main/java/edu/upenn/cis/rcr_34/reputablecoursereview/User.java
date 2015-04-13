@@ -29,10 +29,10 @@ public class User {
     private ArrayList<String> pendingRequests;
     private ArrayList<ParseDataReceivedNotifier> liteners;
     private ArrayList<String> coursesTaken;
+    private ArrayList<String> plannedCourses;
     private boolean isObjectReady;
 
     public User(final String email){
-        Log.d("User", "1");
         this.email = email;
         this.liteners = new ArrayList<ParseDataReceivedNotifier>();
         this.isObjectReady = false;
@@ -43,9 +43,7 @@ public class User {
             @Override
             public void done(List list, com.parse.ParseException e) {
                 if (e == null) {
-                    Log.d("User", "1.1");
                     if (list.size() > 0) {
-                        Log.d("User", "1.1.1");
                         ParseUser user = (ParseUser) list.get(0);
                         me = user;
                         year = (String) user.get("year");
@@ -56,10 +54,9 @@ public class User {
                         friendEmails = (ArrayList) user.getList("friends");
                         pendingRequests = (ArrayList) user.getList("pendingRequest");
                         coursesTaken = (ArrayList) user.getList("coursesTaken");
+                        plannedCourses = (ArrayList) user.getList("plannedCourses");
                         isObjectReady = true;
                         notifyListeners();
-                    } else {
-                        Log.d("User", "1.1.2");
                     }
                 }
             }
@@ -292,9 +289,53 @@ public class User {
             this.me.saveInBackground(new SaveCallback() {
                 public void done(ParseException e) {
                     if (e != null) {
-                        Log.d("PARSE", "Coursed added properly");
+                        Log.d("PARSE", "Course added properly");
                     } else {
                         Log.d("USER.JAVA", "Course couldn't be added properly: " + email);
+                    }
+                }
+            });
+        }
+    }
+
+    public void planCourse(final String course){
+        if (!this.isObjectReady) {
+            return;
+        }
+        if (plannedCourses == null){
+            plannedCourses = new ArrayList<String>();
+        }
+        if (!this.plannedCourses.contains(course)) {
+            this.plannedCourses.add(course);
+            this.me.put("plannedCourses", plannedCourses);
+            this.me.saveInBackground(new SaveCallback() {
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Log.d("PARSE", "Course added properly");
+                    } else {
+                        Log.d("USER.JAVA", "Course couldn't be added properly: " + email);
+                    }
+                }
+            });
+        }
+    }
+
+    public void unplanCourse(final String course){
+        if (!this.isObjectReady) {
+            return;
+        }
+        if (plannedCourses == null){
+            plannedCourses = new ArrayList<String>();
+        }
+        if (this.plannedCourses.contains(course)) {
+            this.plannedCourses.remove(course);
+            this.me.put("plannedCourses", plannedCourses);
+            this.me.saveInBackground(new SaveCallback() {
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Log.d("PARSE", "Course removed properly");
+                    } else {
+                        Log.d("USER.JAVA", "Course couldn't be removed properly: " + email);
                     }
                 }
             });

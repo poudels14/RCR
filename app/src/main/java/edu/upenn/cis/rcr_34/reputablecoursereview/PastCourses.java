@@ -44,16 +44,27 @@ public class PastCourses extends ActionBarActivity {
         if(courses != null) {
             Toast.makeText(getApplicationContext(), "Courses", Toast.LENGTH_SHORT).show();
             LinearLayout courseListView = (LinearLayout) findViewById(R.id.courseListViewLL);
+            int width3 = 250;
+            int width = 750;
             for (String s : courses) {
                 Course c = new Course(s);
-                TextView v1 = new TextView(this);
-                v1.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
+                Button v1 = new Button(this);
+                v1.setWidth(width);
                 String code = c.getCourseCode();
                 String semester = c.getSemesterTaken();
                 v1.setText(code + ", " + semester);
                 v1.setGravity(Gravity.CENTER_VERTICAL);
                 v1.setVisibility(View.VISIBLE);
-                courseListView.addView(v1);
+                Button v3 = new Button(this);
+                v3.setText("Edit");
+                v3.setWidth(width3);
+                v3.setGravity(Gravity.CENTER_VERTICAL);
+                v3.setVisibility(View.VISIBLE);
+                LinearLayout courseButton = new LinearLayout(this);
+                courseButton.setOrientation(LinearLayout.HORIZONTAL);
+                courseButton.addView(v1);
+                courseButton.addView(v3);
+                courseListView.addView(courseButton);
             }
         }
         else{

@@ -17,7 +17,12 @@ public class Course {
     public Course (String base){
         String[] parts = base.split("~");
         courseCode = parts[0];
-        semesterTaken = parts[1];
+        if(parts.length == 1){
+            semesterTaken = "";
+        }
+        else {
+            semesterTaken = parts[1];
+        }
         individualRating = "";
     }
 
