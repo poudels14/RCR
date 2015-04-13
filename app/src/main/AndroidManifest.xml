@@ -42,6 +42,10 @@
             android:label="Past Courses" >
         </activity>
         <activity
+            android:name=".CourseAdditionActivity"
+            android:label="Course Addition" >
+        </activity>
+        <activity
             android:name=".FutureCourses"
             android:label="Future Courses" >
         </activity>
