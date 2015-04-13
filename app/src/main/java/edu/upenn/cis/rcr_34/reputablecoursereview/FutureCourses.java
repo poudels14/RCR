@@ -14,9 +14,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FutureCourses extends ActionBarActivity {
     User user;
@@ -101,7 +106,35 @@ public class FutureCourses extends ActionBarActivity {
 
     public void addClassClicked(View view){
         EditText courseName = (EditText)findViewById(R.id.add_course_name_FC);
-        String courseCode = courseName.getText().toString();
+        final String courseCode = courseName.getText().toString();
+
+
+        // search for the course in parse
+        final ParseQuery<ParseObject> courseSearch = ParseQuery.getQuery("Course");
+        courseSearch.whereContains("Code", courseCode.toUpperCase());
+        courseSearch.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> objList,ParseException e) {
+                if (e == null) {
+                    // initialize the course activity using Parse's ID of the course
+                    if (objList.size() > 0) {
+                        addToList(courseCode);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Course not found",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Course not found",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+        });
+
+    }
+
+    public void addToList (String courseCode) {
         final Course course = new Course(courseCode, "");
         user.planCourse(course.toString());
         Toast.makeText(getApplicationContext(), "Added course: " + course.getCourseCode(), Toast.LENGTH_SHORT).show();
