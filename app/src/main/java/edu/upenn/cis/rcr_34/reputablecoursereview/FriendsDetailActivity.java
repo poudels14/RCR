@@ -7,10 +7,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.parse.ParseUser;
 
 
 public class FriendsDetailActivity extends ActionBarActivity {
@@ -127,6 +130,32 @@ public class FriendsDetailActivity extends ActionBarActivity {
         personalDetail.addView(email);
 
         llIn.addView(personalDetail);
+
+        //set decline button
+        RelativeLayout.LayoutParams lpForRemove = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        lpForRemove.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
+        lpForRemove.addRule(RelativeLayout.BELOW, email.getId());
+        Button unfriend = new Button(this);
+        unfriend.setText("Unfriend");
+        unfriend.setTextSize(10);
+        unfriend.setId(Utils.getUniqueID());
+        unfriend.setLayoutParams(lpForRemove);
+        unfriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final User me = new User(ParseUser.getCurrentUser().getEmail());
+                me.addListener(new ParseDataReceivedNotifier() {
+                    @Override
+                    public void notifyListener() {
+//                        me.removeFriend(u.getEmail());
+                    }
+                });
+            }
+        });
+        personalDetail.addView(unfriend);
+
+        // End of personal details
 
         //Add class details
         LinearLayout classesTakenDetails = new LinearLayout(this);
