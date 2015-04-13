@@ -23,6 +23,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PastCourses extends ActionBarActivity {
@@ -39,6 +40,36 @@ public class PastCourses extends ActionBarActivity {
         t.setText("Past Courses: " +
                 (String) ParseUser.getCurrentUser().get("firstName") +
                 " " + (String) ParseUser.getCurrentUser().get("lastName"));
+        ArrayList<String> courses = (ArrayList) ParseUser.getCurrentUser().get("coursesTaken");
+        if(courses != null) {
+            Toast.makeText(getApplicationContext(), "Courses", Toast.LENGTH_SHORT).show();
+            LinearLayout courseListView = (LinearLayout) findViewById(R.id.courseListViewLL);
+            int width3 = 250;
+            int width = 750;
+            for (String s : courses) {
+                Course c = new Course(s);
+                Button v1 = new Button(this);
+                v1.setWidth(width);
+                String code = c.getCourseCode();
+                String semester = c.getSemesterTaken();
+                v1.setText(code + ", " + semester);
+                v1.setGravity(Gravity.CENTER_VERTICAL);
+                v1.setVisibility(View.VISIBLE);
+                Button v3 = new Button(this);
+                v3.setText("Edit");
+                v3.setWidth(width3);
+                v3.setGravity(Gravity.CENTER_VERTICAL);
+                v3.setVisibility(View.VISIBLE);
+                LinearLayout courseButton = new LinearLayout(this);
+                courseButton.setOrientation(LinearLayout.HORIZONTAL);
+                courseButton.addView(v1);
+                courseButton.addView(v3);
+                courseListView.addView(courseButton);
+            }
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "No courses", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
