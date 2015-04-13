@@ -31,6 +31,8 @@ import java.text.ParseException;
 
 public class CourseActivity extends ActionBarActivity {
 
+    private String parseCourseID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ParseAPI.init(this);
@@ -39,9 +41,7 @@ public class CourseActivity extends ActionBarActivity {
 
         FacebookSdk.sdkInitialize(getApplicationContext());
 
-
-
-        String parseCourseID = getIntent().getStringExtra("parseID");
+        parseCourseID = getIntent().getStringExtra("parseID");
 
         Toast.makeText(getApplicationContext(),
                 parseCourseID, Toast.LENGTH_SHORT).show();
@@ -99,6 +99,12 @@ public class CourseActivity extends ActionBarActivity {
         Toast.makeText(getApplicationContext(), "Manage account selected", Toast.LENGTH_SHORT).show();
         Intent intent2 = new Intent(this, ManageAccountActivity.class);
         startActivity(intent2);
+    }
+
+    public void onReviewClicked(View v) {
+        Intent i = new Intent(this, ReviewActivity.class);
+        i.putExtra("parseID", parseCourseID);
+        startActivity(i);
     }
 
     protected void populateUI(Double rating, String name, String code) {

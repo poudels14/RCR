@@ -41,22 +41,22 @@ public class User {
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List list, com.parse.ParseException e) {
-                if (e == null) {
-                    if (list.size() > 0) {
-                        ParseUser user = (ParseUser) list.get(0);
-                        me = user;
-                        year = (String) user.get("year");
-                        firstName = (String) user.get("firstName");
-                        lastName = (String) user.get("lastName");
-                        major = (String) user.get("major");
-                        picLink = (String) user.get("profilePic");
-                        friendEmails = (ArrayList) user.getList("friends");
-                        pendingRequests = (ArrayList) user.getList("pendingRequest");
-                        isObjectReady = true;
-                        notifyListeners();
-                    } else {
-                    }
+            if (e == null) {
+                if (list.size() > 0) {
+                    ParseUser user = (ParseUser) list.get(0);
+                    me = user;
+                    year = (String) user.get("year");
+                    firstName = (String) user.get("firstName");
+                    lastName = (String) user.get("lastName");
+                    major = (String) user.get("major");
+                    picLink = (String) user.get("profilePic");
+                    friendEmails = (ArrayList) user.getList("friends");
+                    pendingRequests = (ArrayList) user.getList("pendingRequest");
+                    isObjectReady = true;
+                    notifyListeners();
+                } else {
                 }
+            }
             }
         });
     }
