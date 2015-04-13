@@ -151,7 +151,8 @@
             android:paddingLeft="34dp"
             android:paddingRight="34dp"
             android:paddingTop="10dp"
-            android:text="Review this course" />
+            android:text="Review this course"
+            android:onClick="onReviewClicked"/>
 
     </LinearLayout>
 

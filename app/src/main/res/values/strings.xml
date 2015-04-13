@@ -25,5 +25,15 @@
     <string name="title_activity_create_account">Create Account</string>
     <string name="facebook_app_id">753272034785961</string>
     <string name="title_activity_manage_friends">Manage Friends</string>
+    <string name="title_activity_review">ReviewActivity</string>
+
+    <string-array name="ratings_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
 
 </resources>

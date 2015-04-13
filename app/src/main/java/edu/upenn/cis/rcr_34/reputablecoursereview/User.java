@@ -42,6 +42,8 @@ public class User {
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List list, com.parse.ParseException e) {
+
+
                 if (e == null) {
                     if (list.size() > 0) {
                         ParseUser user = (ParseUser) list.get(0);
@@ -60,6 +62,7 @@ public class User {
                     }
                 }
             }
+
         });
     }
 

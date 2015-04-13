@@ -1,0 +1,223 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="edu.upenn.cis.rcr_34.reputablecoursereview.ReviewActivity">
+
+
+    <ScrollView
+
+        android:id="@+id/review_scroll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:gravity="top"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
+        android:descendantFocusability="beforeDescendants"
+        android:layout_weight = "1"
+        android:fillViewport="true"
+        android:scrollY="0dp">
+
+        <LinearLayout
+            android:id = "@+id/review_main"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="#699F">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:background="#699F">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reviewing:"
+                    android:textSize="30dp"
+                    android:paddingLeft="30dp"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/review_course_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:textSize="30dp"
+                    android:text="BS 101"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:background="#699F">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:textSize="15dp"
+                    android:gravity="center"
+                    android:text="Overall course rating from 1 (worst) to 5 (best):"/>
+
+                <Spinner
+                    android:id="@+id/review_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:textSize="15dp"
+                android:gravity="center"
+                android:text="What professor taught your course?"/>
+
+            <EditText
+                android:id="@+id/review_professor"
+                android:inputType="textCapWords"
+                android:lines="1"
+                android:minLines="1"
+                android:gravity="top|left"
+                android:maxLines="1"
+                android:hint="Course Professor"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"/>
+
+
+
+            <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="#699F">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textSize="15dp"
+                    android:gravity="center"
+                    android:text="Please check the boxes that apply to your experience with the course."/>
+
+                <CheckBox android:id="@+id/checkbox_required"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="This course is required for my major."
+                    android:onClick="onCheckboxClicked"/>
+
+                <CheckBox android:id="@+id/checkbox_recommended"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="I would recommend this course to non majors."
+                    android:onClick="onCheckboxClicked"/>
+
+                <CheckBox android:id="@+id/checkbox_useful"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="This course is useful to my major."
+                    android:onClick="onCheckboxClicked"/>
+
+                <CheckBox android:id="@+id/checkbox_commitment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="This course is a serious time commitment."
+                    android:onClick="onCheckboxClicked"/>
+
+        </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:textSize="15dp"
+                android:text="Optionally, put other comments for this course in the space below:"/>
+
+            <EditText
+                android:id="@+id/review_text"
+                android:inputType="textMultiLine"
+                android:lines="8"
+                android:minLines="6"
+                android:gravity="top|left"
+                android:maxLines="10"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:scrollbars="vertical"/>
+
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:background="#699F">
+
+                <Button
+                    android:id="@+id/review_submit_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Submit Review"
+                    android:textStyle="bold"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:onClick="submitReview"
+                    android:gravity="center"/>
+
+                <Button
+                    android:id="@+id/review_cancel_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel Review"
+                    android:textStyle="bold"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:onClick="cancelReview"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <requestFocus />
+    </ScrollView>
+</RelativeLayout>
