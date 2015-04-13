@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import java.util.ArrayList;
 import com.parse.ParseUser;
 
 public class CourseAdditionActivity extends ActionBarActivity {
@@ -44,5 +45,8 @@ public class CourseAdditionActivity extends ActionBarActivity {
 
     public void deleteCourseClicked(View view){
         Toast.makeText(getApplicationContext(), "Delete selected", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent();
+        setResult(RESULT_OK, i);
+        finish();
     }
 }
