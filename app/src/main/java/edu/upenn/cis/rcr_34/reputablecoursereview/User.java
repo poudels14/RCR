@@ -1,13 +1,11 @@
 package edu.upenn.cis.rcr_34.reputablecoursereview;
 
 import android.util.Log;
-
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -112,7 +110,6 @@ public class User {
             return null;
         }
     }
-
 
     public String getProfilePic(){
         if(isObjectReady){

@@ -7,8 +7,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.parse.Parse;
 import com.parse.ParseUser;
 
 /**

@@ -1,7 +1,6 @@
 package edu.upenn.cis.rcr_34.reputablecoursereview;
 
 import android.content.Context;
-
 import com.parse.Parse;
 
 /**
