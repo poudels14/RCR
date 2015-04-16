@@ -1,7 +1,6 @@
 package edu.upenn.cis.rcr_34.reputablecoursereview;
 
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
