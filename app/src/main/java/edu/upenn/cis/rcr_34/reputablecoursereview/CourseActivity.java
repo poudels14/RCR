@@ -28,14 +28,16 @@ public class CourseActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // initialize parse
         ParseAPI.init(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
-
+        //initialize facebook
         FacebookSdk.sdkInitialize(getApplicationContext());
-
+        //to find course
         parseCourseID = getIntent().getStringExtra("parseID");
 
+        // find the course using parsecourseid
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Course");
         query.getInBackground(parseCourseID, new GetCallback<ParseObject>() {
             @Override
@@ -76,10 +78,11 @@ public class CourseActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
+        // manage account
         if (id == R.id.manage_account_item) {
             manageAccountClicked();
         }
-
+        // sign out
         if (id == R.id.sign_out) {
             StaticUtils.signOutClicked(getApplicationContext());
         }
@@ -87,12 +90,14 @@ public class CourseActivity extends ActionBarActivity {
     }
 
     public void manageAccountClicked(){
+        // manage account clicked
         Toast.makeText(getApplicationContext(), "Manage account selected", Toast.LENGTH_SHORT).show();
         Intent intent2 = new Intent(this, ManageAccountActivity.class);
         startActivity(intent2);
     }
 
     public void onReviewClicked(View v) {
+        // review clicked
         Intent i = new Intent(this, ReviewActivity.class);
         i.putExtra("parseID", parseCourseID);
         startActivity(i);
@@ -110,7 +115,7 @@ public class CourseActivity extends ActionBarActivity {
     }
 
     public void populateReview() {
-
+        // fill the reviews after finding them in parse
         String parseCourseID = getIntent().getStringExtra("parseID");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Review");
         query.whereEqualTo("courseID", parseCourseID);
@@ -125,15 +130,14 @@ public class CourseActivity extends ActionBarActivity {
                         }
                         addReview(reviewList, objects.get(i), colorHelp);
                     }
-                } else {
                 }
             }
         });
     }
 
+    // adds each review. uses relative layout and adds textview one at a time
     public void addReview (LinearLayout ll, final ParseObject review, boolean color) {
         int rate = (Integer) review.get("reviewRating");
-
         if (rate < -4) {
             try {
                 review.delete();

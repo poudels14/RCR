@@ -171,7 +171,6 @@ public class ReviewActivity extends ActionBarActivity {
         }
 
         public void onNothingSelected(AdapterView<?> parent) {
-            // congratulations, you did nothing!
         }
     }
 }

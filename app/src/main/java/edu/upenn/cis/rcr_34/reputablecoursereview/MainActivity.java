@@ -26,11 +26,13 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // initialize
         ParseAPI.init(this);
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
 
         setContentView(R.layout.activity_main);
+        // fake friends to fill
         String[] friends = {"Andrew Remec", "Daniel McCann", "Tahmid Shahriar", "Sagar Poudel",
                 "Alex Harelick", "Chris Murphy", "Amy Gutmann", "James Kirk", "Spock",
                 "Leonard McCoy", "Montgomery Scott", "Nyota Uhura", "Hikaru Sulu", "Pavel Chekov",
@@ -111,7 +113,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void initializeCourse(ParseObject po) {
-        Toast.makeText(getApplicationContext(), "SHOOP", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, CourseActivity.class);
         i.putExtra("parseID", po.getObjectId());
         startActivity(i);
@@ -122,6 +123,4 @@ public class MainActivity extends ActionBarActivity {
         Intent intent2 = new Intent(this, ManageAccountActivity.class);
         startActivity(intent2);
     }
-
-
 }

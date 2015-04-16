@@ -30,11 +30,12 @@ public class User {
     private ArrayList<String> plannedCourses;
     private boolean isObjectReady;
 
+    // user creation
     public User(final String email){
         this.email = email;
         this.liteners = new ArrayList<ParseDataReceivedNotifier>();
         this.isObjectReady = false;
-
+        // finds user
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("email", email);
         query.findInBackground(new FindCallback<ParseUser>() {
@@ -64,6 +65,7 @@ public class User {
         });
     }
 
+    // finds username of user
     public String getName(){
         if (isObjectReady){
             this.name = this.firstName.substring(0, 1).toUpperCase() + this.firstName.substring(1);
@@ -75,6 +77,7 @@ public class User {
         }
     }
 
+    // finds email of user
     public String getEmail(){
         if(isObjectReady){
             return email;
@@ -84,6 +87,7 @@ public class User {
         }
     }
 
+    // finds year of user
     public String getYear(){
         if(isObjectReady){
             return year;
@@ -93,6 +97,7 @@ public class User {
         }
     }
 
+    // finds major of user
     public String getMajor(){
         if(isObjectReady){
             return major;
@@ -102,6 +107,7 @@ public class User {
         }
     }
 
+    // finds user's courses taken
     public ArrayList<String> getCoursesTaken(){
         if(isObjectReady){
             return this.coursesTaken;
@@ -111,6 +117,7 @@ public class User {
         }
     }
 
+    // finds users prof pic
     public String getProfilePic(){
         if(isObjectReady){
             return picLink;
@@ -120,6 +127,7 @@ public class User {
         }
     }
 
+    // finds users friends
     public ArrayList<String> getFriends(){
         if(isObjectReady){
             return this.friendEmails;
@@ -129,6 +137,7 @@ public class User {
         }
     }
 
+    // finds users pending requests
     public ArrayList<String> getPendingRequests(){
         if(isObjectReady){
             return this.pendingRequests;
@@ -138,6 +147,7 @@ public class User {
         }
     }
 
+    // accepts request
     public void acceptRequest(final String email){
         if (!this.isObjectReady)
             return;
@@ -201,6 +211,7 @@ public class User {
         }
     }
 
+    //reject friend request
     public void rejectRequest(final String email) {
         if (!this.isObjectReady)
             return;
@@ -223,6 +234,7 @@ public class User {
         }
     }
 
+    // send friend request
     public void sendRequest(final String email){
         if (!this.isObjectReady)
             return;
@@ -276,6 +288,7 @@ public class User {
         }
     }
 
+    // add course to courses taken
     public void addCourse(final String course){
         if (!this.isObjectReady) {
             return;
@@ -298,6 +311,7 @@ public class User {
         }
     }
 
+    // addplanned course
     public void planCourse(final String course){
         if (!this.isObjectReady) {
             return;
@@ -320,6 +334,7 @@ public class User {
         }
     }
 
+    // remove course from planned list
     public void unplanCourse(final String course){
         if (!this.isObjectReady) {
             return;
@@ -327,6 +342,7 @@ public class User {
         if (plannedCourses == null){
             plannedCourses = new ArrayList<String>();
         }
+        // find course
         if (this.plannedCourses.contains(course)) {
             this.plannedCourses.remove(course);
             this.me.put("plannedCourses", plannedCourses);
@@ -342,14 +358,16 @@ public class User {
         }
     }
 
+    // remove friend from list
     public void removeFriend(final String email){
         if (!this.isObjectReady)
             return;
-
+        // no email provided
         if (friendEmails == null){
             Log.d("PARSE", "Friends couldn't be removed");
         }
 
+        // find friend and try to remove
         if (this.friendEmails.contains(email)) {
             this.friendEmails.remove(email);
             this.me.put("friends", friendEmails);
