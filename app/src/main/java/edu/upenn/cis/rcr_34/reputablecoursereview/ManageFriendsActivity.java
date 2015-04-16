@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,6 +53,7 @@ public class ManageFriendsActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Load the pending friend requests
     private void loadAllPendingRequest(final LinearLayout mainListLayout) {
         final User f1 = new User(ParseUser.getCurrentUser().getEmail());
         f1.addListener(new ParseDataReceivedNotifier() {
@@ -81,6 +81,7 @@ public class ManageFriendsActivity extends ActionBarActivity {
         });
     }
 
+    //Display pending friend requests
     private void populatePendingRequest(LinearLayout llIn, final User u) {
         RelativeLayout ll = new RelativeLayout(this);
         ll.setPadding(0, 0, 0, 20);
@@ -173,6 +174,7 @@ public class ManageFriendsActivity extends ActionBarActivity {
         llIn.addView(ll);
     }
 
+    //Load user's friends
     private void loadAllFriends(final LinearLayout mainListLayout) {
         final User f1 = new User(ParseUser.getCurrentUser().getEmail());
         f1.addListener(new ParseDataReceivedNotifier() {
@@ -198,6 +200,7 @@ public class ManageFriendsActivity extends ActionBarActivity {
         });
     }
 
+    //Display user's friends
     private void populateFriend(LinearLayout llIn, final User u){
         RelativeLayout rL = new RelativeLayout(this);
         rL.setPadding(5, 10, 5, 10);
@@ -258,7 +261,6 @@ public class ManageFriendsActivity extends ActionBarActivity {
         rL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("TEST", "Friends view clicked :" + u.getEmail());
                 goToFriendsProfile(u.getEmail());
             }
         });
@@ -266,6 +268,7 @@ public class ManageFriendsActivity extends ActionBarActivity {
         llIn.addView(rL);
     }
 
+    //Go to a friend's profile
     protected void goToFriendsProfile(String email){
         Intent intent = new Intent(this, FriendsDetailActivity.class);
         intent.putExtra("email", email);

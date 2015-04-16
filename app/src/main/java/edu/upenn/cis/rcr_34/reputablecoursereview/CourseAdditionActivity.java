@@ -25,25 +25,31 @@ public class CourseAdditionActivity extends ActionBarActivity {
         return true;
     }
 
+    //Add a review to the course
     public void addReviewClicked(View view){
         Toast.makeText(getApplicationContext(), "Add review", Toast.LENGTH_SHORT).show();
     }
 
+    //Save the changes to the course
     public void saveCourseClicked(View view){
-        Toast.makeText(getApplicationContext(), "Save selected", Toast.LENGTH_SHORT).show();
+        //Get the name and semester
         EditText courseName = (EditText)findViewById(R.id.add_course_name);
         String course = courseName.getText().toString();
         EditText semesterName = (EditText)findViewById(R.id.add_semester);
         String semester = semesterName.getText().toString();
+        //Construct the course
         Course newCourse = new Course(course, semester);
+        //Add the new course to the database
         user.addCourse(newCourse.toString());
+        //Return
         Intent i = new Intent();
         setResult(RESULT_OK, i);
         finish();
     }
 
+    //Remove the course from the database
     public void deleteCourseClicked(View view){
-        Toast.makeText(getApplicationContext(), "Delete selected", Toast.LENGTH_SHORT).show();
+        //Return, the course hasn't been saved and will never be added to the database
         Intent i = new Intent();
         setResult(RESULT_OK, i);
         finish();
