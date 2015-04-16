@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.parse.ParseUser;
 import java.util.ArrayList;
 
@@ -28,35 +27,36 @@ public class PastCourses extends ActionBarActivity {
         t.setText("Past Courses: " +
                 (String) ParseUser.getCurrentUser().get("firstName") +
                 " " + (String) ParseUser.getCurrentUser().get("lastName"));
+        //Display all courses taken
         ArrayList<String> courses = (ArrayList) ParseUser.getCurrentUser().get("coursesTaken");
         if(courses != null) {
-            Toast.makeText(getApplicationContext(), "Courses", Toast.LENGTH_SHORT).show();
             LinearLayout courseListView = (LinearLayout) findViewById(R.id.courseListViewLL);
-            int width3 = 250;
-            int width = 750;
+            int widthEdit = 250;
+            int widthCourse = 750;
             for (String s : courses) {
+                //Get course information
                 Course c = new Course(s);
-                Button v1 = new Button(this);
-                v1.setWidth(width);
+                Button classButton = new Button(this);
+                //Create button to access course
+                classButton.setWidth(widthCourse);
                 String code = c.getCourseCode();
                 String semester = c.getSemesterTaken();
-                v1.setText(code + ", " + semester);
-                v1.setGravity(Gravity.CENTER_VERTICAL);
-                v1.setVisibility(View.VISIBLE);
-                Button v3 = new Button(this);
-                v3.setText("Edit");
-                v3.setWidth(width3);
-                v3.setGravity(Gravity.CENTER_VERTICAL);
-                v3.setVisibility(View.VISIBLE);
+                classButton.setText(code + ", " + semester);
+                classButton.setGravity(Gravity.CENTER_VERTICAL);
+                classButton.setVisibility(View.VISIBLE);
+                Button editButton = new Button(this);
+                //Create button to edit course
+                editButton.setText("Edit");
+                editButton.setWidth(widthEdit);
+                editButton.setGravity(Gravity.CENTER_VERTICAL);
+                editButton.setVisibility(View.VISIBLE);
+                //Add the buttons to a LinearLayout to be shown
                 LinearLayout courseButton = new LinearLayout(this);
                 courseButton.setOrientation(LinearLayout.HORIZONTAL);
-                courseButton.addView(v1);
-                courseButton.addView(v3);
+                courseButton.addView(classButton);
+                courseButton.addView(editButton);
                 courseListView.addView(courseButton);
             }
-        }
-        else{
-            Toast.makeText(getApplicationContext(), "No courses", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -83,14 +83,14 @@ public class PastCourses extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //User clicked add class
     public void addClassClicked(View view){
-        Toast.makeText(getApplicationContext(), "Add course", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, CourseAdditionActivity.class);
         startActivity(i);
     }
 
+    //User clicked return to manage
     public void returnToManageClicked(){
-        Toast.makeText(getApplicationContext(), "Return selected", Toast.LENGTH_SHORT).show();
         Intent i = new Intent();
         setResult(RESULT_OK, i);
         finish();

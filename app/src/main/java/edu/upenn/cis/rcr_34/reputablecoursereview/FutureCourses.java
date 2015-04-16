@@ -3,7 +3,6 @@ package edu.upenn.cis.rcr_34.reputablecoursereview;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,7 +25,6 @@ public class FutureCourses extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("Future", "0");
         ParseAPI.init(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_future_courses);
@@ -41,27 +39,26 @@ public class FutureCourses extends ActionBarActivity {
                 " " + (String) ParseUser.getCurrentUser().get("lastName"));
         ArrayList<String> courses = (ArrayList) ParseUser.getCurrentUser().get("plannedCourses");
         LinearLayout courseListView = (LinearLayout) findViewById(R.id.courseListViewLL_FC);
-        int width3 = 250;
-        int width = 700;
-        Log.d("Future", "1");
+        int widthButton = 250;
+        int widthCourse = 700;
+        //Display previously added courses
         if(courses != null) {
-            Log.d("Future", "2");
             for(String s : courses) {
-                Log.d("Future", "2.1");
+                //Get course information
                 final Course course = new Course(s);
-                TextView v1 = new TextView(this);
-                v1.setWidth(width);
-                Log.d("Future", "2.2");
-                v1.setText(course.getCourseCode());
-                v1.setGravity(Gravity.CENTER_VERTICAL);
-                v1.setVisibility(View.VISIBLE);
-                Button v3 = new Button(this);
-                v3.setText("Remove");
-                v3.setWidth(width3);
-                Log.d("Future", "2.3");
-                v3.setGravity(Gravity.CENTER_VERTICAL);
-                v3.setVisibility(View.VISIBLE);
-                v3.setOnClickListener(new View.OnClickListener() {
+                //Set TextView with course information
+                TextView nameView = new TextView(this);
+                nameView.setWidth(widthCourse);
+                nameView.setText(course.getCourseCode());
+                nameView.setGravity(Gravity.CENTER_VERTICAL);
+                nameView.setVisibility(View.VISIBLE);
+                //Make button to remove course
+                Button removeButton = new Button(this);
+                removeButton.setText("Remove");
+                removeButton.setWidth(widthButton);
+                removeButton.setGravity(Gravity.CENTER_VERTICAL);
+                removeButton.setVisibility(View.VISIBLE);
+                removeButton.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         LinearLayout courseListView = (LinearLayout) findViewById(R.id.courseListViewLL_FC);
                         View parent = (View) v.getParent();
@@ -69,13 +66,13 @@ public class FutureCourses extends ActionBarActivity {
                         user.unplanCourse(course.toString());
                     }
                 });
+                //Add TextView and button to a LinearLayout to be added to be shown
                 LinearLayout courseButton = new LinearLayout(this);
                 courseButton.setOrientation(LinearLayout.HORIZONTAL);
-                courseButton.addView(v1);
-                courseButton.addView(v3);
+                courseButton.addView(nameView);
+                courseButton.addView(removeButton);
                 courseListView.addView(courseButton);
             }
-            Log.d("Future", "3");
         }
     }
 
@@ -102,6 +99,7 @@ public class FutureCourses extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Add a course
     public void addClassClicked(View view){
         EditText courseName = (EditText)findViewById(R.id.add_course_name_FC);
         final String courseCode = courseName.getText().toString();
@@ -131,24 +129,27 @@ public class FutureCourses extends ActionBarActivity {
 
     }
 
+    //Add a planned course to the list
     public void addToList (String courseCode) {
+        //Get course information
         final Course course = new Course(courseCode, "");
         user.planCourse(course.toString());
-        Toast.makeText(getApplicationContext(), "Added course: " + course.getCourseCode(), Toast.LENGTH_SHORT).show();
         LinearLayout courseListView = (LinearLayout) findViewById(R.id.courseListViewLL_FC);
-        int width3 = 250;
-        int width = 700;
-        TextView v1 = new TextView(this);
-        v1.setWidth(width);
-        v1.setText(course.getCourseCode());
-        v1.setGravity(Gravity.CENTER_VERTICAL);
-        v1.setVisibility(View.VISIBLE);
-        Button v3 = new Button(this);
-        v3.setText("Remove");
-        v3.setWidth(width3);
-        v3.setGravity(Gravity.CENTER_VERTICAL);
-        v3.setVisibility(View.VISIBLE);
-        v3.setOnClickListener(new View.OnClickListener() {
+        int widthRemove = 250;
+        int widthCourse = 700;
+        //Set TextView with course information
+        TextView nameView = new TextView(this);
+        nameView.setWidth(widthCourse);
+        nameView.setText(course.getCourseCode());
+        nameView.setGravity(Gravity.CENTER_VERTICAL);
+        nameView.setVisibility(View.VISIBLE);
+        //Make button to remove course
+        Button removeButton = new Button(this);
+        removeButton.setText("Remove");
+        removeButton.setWidth(widthRemove);
+        removeButton.setGravity(Gravity.CENTER_VERTICAL);
+        removeButton.setVisibility(View.VISIBLE);
+        removeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 LinearLayout courseListView = (LinearLayout) findViewById(R.id.courseListViewLL_FC);
                 View parent = (View) v.getParent();
@@ -156,15 +157,16 @@ public class FutureCourses extends ActionBarActivity {
                 user.unplanCourse(course.toString());
             }
         });
+        //Add TextView and button to a LinearLayout to be added to be shown
         LinearLayout courseButton = new LinearLayout(this);
         courseButton.setOrientation(LinearLayout.HORIZONTAL);
-        courseButton.addView(v1);
-        courseButton.addView(v3);
+        courseButton.addView(nameView);
+        courseButton.addView(removeButton);
         courseListView.addView(courseButton);
     }
 
+    //Return
     public void returnToManageClicked(){
-        Toast.makeText(getApplicationContext(), "Return selected", Toast.LENGTH_SHORT).show();
         Intent i = new Intent();
         setResult(RESULT_OK, i);
         finish();
