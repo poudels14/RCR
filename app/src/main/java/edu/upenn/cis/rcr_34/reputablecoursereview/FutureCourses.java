@@ -119,7 +119,6 @@ public class FutureCourses extends ActionBarActivity {
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
-
                 } else {
                     Toast.makeText(getApplicationContext(), "Course not found",
                             Toast.LENGTH_SHORT).show();

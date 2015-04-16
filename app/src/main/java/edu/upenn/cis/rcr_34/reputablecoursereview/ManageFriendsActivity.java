@@ -265,6 +265,9 @@ public class ManageFriendsActivity extends ActionBarActivity {
             }
         });
 
+
+
+
         llIn.addView(rL);
     }
 
