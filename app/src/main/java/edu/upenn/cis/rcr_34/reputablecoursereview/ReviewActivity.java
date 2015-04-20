@@ -18,6 +18,8 @@ import com.facebook.FacebookSdk;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
+
 
 public class ReviewActivity extends ActionBarActivity {
 
@@ -140,7 +142,9 @@ public class ReviewActivity extends ActionBarActivity {
             review.put("professor", professor);
             review.put("rating", rating);
             review.put("reviewRating", 0);// default rating of review, to be changed by voting
-
+            ArrayList<String> upvAndDownv = new ArrayList<String>();
+            review.put("upvoted", upvAndDownv);
+            review.put("downvoted", upvAndDownv);
             review.saveInBackground();
 
             Toast.makeText(getApplicationContext(),
