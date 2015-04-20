@@ -286,6 +286,35 @@ public class User {
         }
     }
 
+    public void checkIfFriendRequestIsAccepted(){
+        // retrieve pending request
+        final ParseQuery<ParseObject> friendRequest = new ParseQuery<ParseObject>("pendingFriendRequest");
+        friendRequest.whereEqualTo("sentBy", me.getEmail());
+        friendRequest.whereEqualTo("accepted", true);
+        friendRequest.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List list, com.parse.ParseException e) {
+                if (e == null) {
+                    if (list.size() > 0) {
+                        for (ParseObject po : (List<ParseObject>) list) {
+                            friendEmails.add((String) po.get("sentTo"));
+                        }
+
+                        // update parse with new friends list
+                        me.put("friends", friendEmails);
+                        me.saveInBackground(new SaveCallback() {
+                            public void done(ParseException e) {
+                                if (e == null) {
+//                                    Log.d("PARSE", "Friends saved properly");
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    }
+
     // add course to courses taken
     public void addCourse(String course, String semester, String year) {
         if (!this.isObjectReady) {
