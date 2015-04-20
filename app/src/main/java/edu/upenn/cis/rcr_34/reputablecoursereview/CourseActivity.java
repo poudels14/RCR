@@ -43,10 +43,11 @@ public class CourseActivity extends ActionBarActivity {
         //initialize facebook
         FacebookSdk.sdkInitialize(getApplicationContext());
         //to find course
-        parseCourseID = getIntent().getStringExtra("parseID");
+        parseCourseID = (String)getIntent().getStringExtra("name");
 
         // find the course using parsecourseid
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Course");
+        query.whereEqualTo("name", parseCourseID);
         query.getInBackground(parseCourseID, new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject parseObject, com.parse.ParseException e) {
