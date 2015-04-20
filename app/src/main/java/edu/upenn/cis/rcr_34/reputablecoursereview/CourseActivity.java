@@ -47,35 +47,35 @@ public class CourseActivity extends ActionBarActivity {
 
         // find the course using parsecourseid
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Course");
-//        query.getInBackground(parseCourseID, new GetCallback<ParseObject>() {
-//            @Override
-//            public void done(ParseObject parseObject, com.parse.ParseException e) {
-//                if (e == null) {
-//                    // pass the object's info into the interface
-//                    if (parseObject == null) {
-//                        Toast.makeText(getApplicationContext(),
-//                                "Error Retrieving Course", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        Log.d("COURSE_ACTIVITY", parseObject.getString("Name"));
-//                        populateUI(parseObject.getDouble("Rating"),
-//                                parseObject.getString("Name"),
-//                                parseObject.getString("Code"));
-//                    }
-//
-//
-//                } else {
-//                    Toast.makeText(getApplicationContext(),
-//                            "Error Retrieving Course", Toast.LENGTH_SHORT).show();
-//                    // quit this activity
-//                    Intent i = new Intent();
-//                    setResult(RESULT_CANCELED, i);
-//                    finish();
-//                }
-//            }
-//        });
+        query.getInBackground(parseCourseID, new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject parseObject, com.parse.ParseException e) {
+                if (e == null) {
+                    // pass the object's info into the interface
+                    if (parseObject == null) {
+                        Toast.makeText(getApplicationContext(),
+                                "Error Retrieving Course", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.d("COURSE_ACTIVITY", parseObject.getString("Name"));
+                        populateUI(parseObject.getDouble("Rating"),
+                                parseObject.getString("Name"),
+                                parseObject.getString("Code"));
+                    }
 
 
-        query.whereEqualTo(property, valueOfProperty);
+                } else {
+                    Toast.makeText(getApplicationContext(),
+                            "Error Retrieving Course", Toast.LENGTH_SHORT).show();
+                    // quit this activity
+                    Intent i = new Intent();
+                    setResult(RESULT_CANCELED, i);
+                    finish();
+                }
+            }
+        });
+
+
+        /*query.whereEqualTo(property, valueOfProperty);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List list, com.parse.ParseException e) {
@@ -104,7 +104,7 @@ public class CourseActivity extends ActionBarActivity {
                     finish();
                 }
             }
-        });
+        });*/
     }
 
     @Override

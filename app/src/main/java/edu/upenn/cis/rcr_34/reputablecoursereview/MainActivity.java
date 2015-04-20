@@ -68,11 +68,12 @@ public class MainActivity extends ActionBarActivity {
         LinearLayout friendListView = (LinearLayout) findViewById(R.id.friendListViewLL);
         friendListView.removeAllViews();
         EditText searchName = (EditText)findViewById(R.id.course_search);
-        final String toSearch = searchName.getText().toString();
+        final String toSearch = searchName.getText().toString().toUpperCase();
         if(toSearch.length() > 0) {
             // search for the course in parse
             final ParseQuery<ParseObject> courseSearch = ParseQuery.getQuery("Course");
-            courseSearch.whereContains("Code", toSearch.toUpperCase());
+            courseSearch.whereStartsWith("Code", toSearch);
+            courseSearch.whereEndsWith("Code", toSearch);
             courseSearch.findInBackground(new FindCallback<ParseObject>() {
                 public void done(List<ParseObject> objList, ParseException e) {
                     if (e == null) {
@@ -82,20 +83,8 @@ public class MainActivity extends ActionBarActivity {
                         }
                         else {
                             // no course found, check to see if it's a person
-                            String[] userName = toSearch.split(" ");
-                            String firstName = userName[0];
                             final ParseQuery<ParseUser> personSearch = ParseUser.getQuery();
-                            personSearch.whereContains("firstName", firstName);
-                            String lastName = "";
-                            if (userName.length > 1) {
-                                lastName = userName[1];
-                                if (userName.length > 2) {
-                                    for (int x = 2; x < userName.length; x++) {
-                                        lastName = lastName + " " + userName[x];
-                                    }
-                                }
-                                personSearch.whereContains("lastName", lastName);
-                            }
+                            personSearch.whereContains("userName", toSearch);
                             personSearch.findInBackground(new FindCallback<ParseUser>() {
                                 @Override
                                 public void done(List list, com.parse.ParseException e) {
@@ -146,7 +135,6 @@ public class MainActivity extends ActionBarActivity {
 
     private void initializeCourse(ParseObject po) {
         Intent i = new Intent(this, CourseActivity.class);
-
         i.putExtra("property", "objectId");
         i.putExtra("name", po.getObjectId());
         startActivity(i);
