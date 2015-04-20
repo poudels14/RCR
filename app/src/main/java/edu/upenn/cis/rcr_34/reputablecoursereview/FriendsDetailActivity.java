@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class FriendsDetailActivity extends ActionBarActivity {
     private String email; // this email belongs to the friend
-    private User userObject;
+//    private User userObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +33,17 @@ public class FriendsDetailActivity extends ActionBarActivity {
 
         final LinearLayout profileDetail = (LinearLayout) findViewById(R.id.friends_detail_main_view);
         final User u = new User(email);
-        userObject = u;
+//        userObject = u;
         u.addListener(new ParseDataReceivedNotifier() {
             @Override
             public void notifyListener() {
                 populateFriend(profileDetail, u);
+                u.retrieveCoursesTaken(new ParseDataReceivedNotifier() {
+                    @Override
+                    public void notifyListener() {
+                        populateCoursesTaken(profileDetail, u.getCoursesTaken());
+                    }
+                });
             }
         });
     }
@@ -169,8 +175,10 @@ public class FriendsDetailActivity extends ActionBarActivity {
         personalDetail.addView(unfriend);
 
         // End of personal details
+    }
 
-        //Add class details
+    //Add class details
+    private void populateCoursesTaken(LinearLayout llIn, ArrayList<CoursesTaken> coursesTaken){
         LinearLayout classesTakenDetails = new LinearLayout(this);
         classesTakenDetails.setOrientation(LinearLayout.VERTICAL);
         classesTakenDetails.setId(Utils.getUniqueID());
@@ -198,15 +206,27 @@ public class FriendsDetailActivity extends ActionBarActivity {
         allClassesTaken.setOrientation(LinearLayout.VERTICAL);
         allClassesTaken.setId(Utils.getUniqueID());
 
-        ArrayList<CoursesTaken> co = userObject.getCoursesTaken();
-        if (co != null){
-            for (CoursesTaken s:co){
+//        ArrayList<CoursesTaken> co = userObject.getCoursesTaken();
+        Log.d("COURSE TAKEN", Integer.toString(coursesTaken.size()));
+        if (coursesTaken != null){
+            for (CoursesTaken s:coursesTaken){
                 Log.d("COURSES TAKEN", s.getCourseCode());
             }
         }
 
 
-        for (int i = 0; i < 19; i++){
+        for (int i = 0; i < coursesTaken.size(); i++){
+            CoursesTaken ct = coursesTaken.get(i);
+            String courseName = ct.getCourseCode();
+            String semseterTaken = ct.getSemesterTaken();
+            String yearTaken = ct.getYearTaken();
+            String rating = "N/A";
+            int r = ct.getRating();
+            // rating is -1 if the user hasn't rated it yet
+            if (r != -1){
+                rating = Integer.toString(r);
+            }
+
             //Set course
             LinearLayout course = new LinearLayout(this);
             course.setLayoutParams(new RelativeLayout.LayoutParams(
@@ -231,7 +251,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
             TextView className = new TextView(this);
             RelativeLayout.LayoutParams lpForClassName = new RelativeLayout.LayoutParams(
                     400, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            className.setText("abc 123");
+            className.setText(courseName);
             className.setPadding(20, 0, 0, 0);
             className.setId(Utils.getUniqueID());
             className.setLayoutParams(lpForClassName);
@@ -241,7 +261,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
             TextView classRating = new TextView(this);
             RelativeLayout.LayoutParams lpForClassRating = new RelativeLayout.LayoutParams(
                     200, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            classRating.setText("3.5");
+            classRating.setText(rating);
             classRating.setPadding(20, 0, 0, 0);
             classRating.setId(Utils.getUniqueID());
             classRating.setLayoutParams(lpForClassRating);
@@ -252,7 +272,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
             TextView semester = new TextView(this);
             RelativeLayout.LayoutParams lpForSemester = new RelativeLayout.LayoutParams(
                     800, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            semester.setText("Spring 2012");
+            semester.setText(semseterTaken + " " + yearTaken);
             semester.setPadding(20, 0, 0, 0);
             semester.setId(Utils.getUniqueID());
             semester.setLayoutParams(lpForSemester);
