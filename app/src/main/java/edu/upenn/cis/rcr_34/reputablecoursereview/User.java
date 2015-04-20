@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -28,22 +29,21 @@ public class User {
     private ArrayList<String> friendEmails;
     private ArrayList<String> pendingRequests;
     private ArrayList<ParseDataReceivedNotifier> liteners;
-    private ArrayList<String> coursesTaken;
+    private ArrayList<CoursesTaken> coursesTaken;
     private ArrayList<String> plannedCourses;
     private boolean isObjectReady;
 
-    public User(final String email){
+    public User(final String email) {
         this.email = email;
         this.liteners = new ArrayList<ParseDataReceivedNotifier>();
         this.isObjectReady = false;
 
+        // Retrieve user details
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("email", email);
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List list, com.parse.ParseException e) {
-
-
                 if (e == null) {
                     if (list.size() > 0) {
                         ParseUser user = (ParseUser) list.get(0);
@@ -54,116 +54,158 @@ public class User {
                         major = (String) user.get("major");
                         picLink = (String) user.get("profilePic");
                         friendEmails = (ArrayList) user.getList("friends");
-                        pendingRequests = (ArrayList) user.getList("pendingRequest");
-                        coursesTaken = (ArrayList) user.getList("coursesTaken");
-                        plannedCourses = (ArrayList) user.getList("plannedCourses");
-                        isObjectReady = true;
-                        notifyListeners();
+
+                        // retrieve pending request
+                        ParseQuery<ParseObject> friendRequest = new ParseQuery<ParseObject>("pendingFriendRequest");
+                        friendRequest.whereEqualTo("sentTo", me.getEmail());
+                        friendRequest.findInBackground(new FindCallback<ParseObject>() {
+                            @Override
+                            public void done(List list, com.parse.ParseException e) {
+                                if (e == null) {
+                                    if (list.size() > 0) {
+                                        pendingRequests = new ArrayList<String>();
+                                        for (ParseObject po : (List<ParseObject>) list){
+                                            pendingRequests.add((String) po.get("sentBy"));
+                                        }
+                                    }
+                                    isObjectReady = true;
+                                    notifyListeners();
+                                }
+                            }
+                        });
+//                        plannedCourses = (ArrayList) user.getList("plannedCourses");
+
                     }
                 }
             }
+        });
 
+        //Retrieve courses taken
+        ParseQuery<ParseObject> coursesTaken = ParseQuery.getQuery("coursesTaken");
+        coursesTaken.whereEqualTo("email", this.email);
+        coursesTaken.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> courses, ParseException e) {
+                if (e == null) {
+                    if (courses.size() > 0) {
+                        ArrayList<CoursesTaken> ct = new ArrayList<CoursesTaken>();
+                        for (ParseObject ob : courses) {
+                            String courseCode = (String) ob.get("courseName");
+                            String sem = (String) ob.get("semester");
+                            String year = (String) ob.get("year");
+                            int rating = (int) ob.get("rating");
+                            ct.add(new CoursesTaken(email, courseCode, sem, year, rating));
+                        }
+                    }
+                }
+            }
         });
     }
 
-    public String getName(){
-        if (isObjectReady){
+    public String getName() {
+        if (isObjectReady) {
             this.name = this.firstName.substring(0, 1).toUpperCase() + this.firstName.substring(1);
             this.name += " " + this.lastName.substring(0, 1).toUpperCase() + this.lastName.substring(1);
             return this.name;
-        }
-        else{
+        } else {
             return "INVALID_RETURN_OBJECT";
         }
     }
 
-    public String getEmail(){
-        if(isObjectReady){
+    public String getEmail() {
+        if (isObjectReady) {
             return email;
-        }
-        else{
+        } else {
             return "INVALID_RETURN_OBJECT";
         }
     }
 
-    public String getYear(){
-        if(isObjectReady){
+    public String getYear() {
+        if (isObjectReady) {
             return year;
-        }
-        else{
+        } else {
             return "INVALID_RETURN_OBJECT";
         }
     }
 
-    public String getMajor(){
-        if(isObjectReady){
+    public String getMajor() {
+        if (isObjectReady) {
             return major;
-        }
-        else{
+        } else {
             return "INVALID_RETURN_OBJECT";
         }
     }
 
-    public ArrayList<String> getCoursesTaken(){
-        if(isObjectReady){
+    public ArrayList<CoursesTaken> getCoursesTaken() {
+        if (isObjectReady) {
             return this.coursesTaken;
-        }
-        else{
+        } else {
             return null;
         }
     }
 
 
-    public String getProfilePic(){
-        if(isObjectReady){
+    public String getProfilePic() {
+        if (isObjectReady) {
             return picLink;
-        }
-        else{
+        } else {
             return "INVALID_RETURN_OBJECT";
         }
     }
 
-    public ArrayList<String> getFriends(){
-        if(isObjectReady){
+    public ArrayList<String> getFriends() {
+        if (isObjectReady) {
             return this.friendEmails;
-        }
-        else{
+        } else {
             return null;
         }
     }
 
-    public ArrayList<String> getPendingRequests(){
-        if(isObjectReady){
+    public ArrayList<String> getPendingRequests() {
+        if (isObjectReady) {
             return this.pendingRequests;
-        }
-        else{
+        } else {
             return null;
         }
     }
 
-    public void acceptRequest(final String email){
+    public void acceptRequest(final String sentBy) {
         if (!this.isObjectReady)
             return;
 
-        if (friendEmails == null){
+        if (friendEmails == null) {
             friendEmails = new ArrayList<String>();
         }
 
-        if (this.friendEmails.contains(email) || !this.pendingRequests.contains(email)) {
-            Log.d("PARSE", email + " is already your friend or is not found in pending list");
-        }
-        else {
-            this.pendingRequests.remove(email);
-            this.friendEmails.add(email);
+        if (this.friendEmails.contains(sentBy) || !this.pendingRequests.contains(sentBy)) {
+            Log.d("PARSE", sentBy + " is already your friend or is not found in pending list");
+            //Remove request from pending list
+            ParseQuery<ParseObject> removeRequest = new ParseQuery<ParseObject>("pendingFriendRequest");
+            removeRequest.whereEqualTo("sentBy", sentBy);
+            removeRequest.whereEqualTo("sentTo", this.email);
+            removeRequest.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> parseObjects, ParseException e) {
+                    if (parseObjects.size() == 1){
+                        parseObjects.get(0).deleteInBackground();
+                    }
+                }
+            });
+        } else {
+            this.friendEmails.add(sentBy);
+
+            //Remove request from pending list
+            ParseObject removeRequest = new ParseObject("pendingFriendRequest");
+            removeRequest.put("sentBy", sentBy);
+            removeRequest.put("sentTo", this.email);
+            removeRequest.deleteInBackground();
 
             this.me.put("friends", friendEmails);
-            this.me.put("pendingRequest", this.pendingRequests);
             this.me.saveInBackground(new SaveCallback() {
                 public void done(ParseException e) {
                     if (e != null) {
                         Log.d("PARSE", "Friends saved properly");
                     } else {
-                        Log.d("USER.JAVA", "Friends couldn't be saved properly: " + email);
+                        Log.d("USER.JAVA", "Friends couldn't be saved properly: " + sentBy);
                     }
                 }
             });
@@ -178,7 +220,7 @@ public class User {
                         if (list.size() > 0) {
                             final ParseUser user = (ParseUser) list.get(0);
                             ArrayList<String> friends = (ArrayList) user.getList("friends");
-                            if (friends == null){
+                            if (friends == null) {
                                 friends = new ArrayList<String>();
                             }
                             if (friends.contains(me.getEmail())) {
@@ -226,86 +268,69 @@ public class User {
         }
     }
 
-    public void sendRequest(final String email){
+    public void sendRequest(final String sendTo) {
         if (!this.isObjectReady)
             return;
 
-        if (this.friendEmails != null && this.friendEmails.contains(email)) {
-            Log.d("PARSE", email + " is already your friend");
-        }
-        else {
-            ParseQuery<ParseUser> query = ParseUser.getQuery();
-            query.whereEqualTo("email", email);
-            query.findInBackground(new FindCallback<ParseUser>() {
+        if (this.friendEmails != null && this.friendEmails.contains(sendTo)) {
+            Log.d("PARSE", sendTo + " is already your friend");
+        } else {
+            ParseQuery<ParseObject> friendRequest = new ParseQuery<ParseObject>("pendingFriendRequest");
+            friendRequest.whereContains("sentTo", sendTo);
+            friendRequest.whereContains("sentBy", this.email);
+            friendRequest.findInBackground(new FindCallback<ParseObject>() {
                 @Override
                 public void done(List list, com.parse.ParseException e) {
                     if (e == null) {
-                        if (list.size() > 0) {
-                            final ParseUser user = (ParseUser) list.get(0);
-                            ArrayList<String> pendingEmails = (ArrayList) user.getList("pendingRequest");
-                            if (pendingEmails == null){
-                                pendingEmails = new ArrayList<String>();
-                            }
-
-                            if (pendingEmails.contains(me.getEmail())){
-                                Log.d("PARSE", "Friends request already sent");
-                            }
-                            else{
-                                pendingEmails.add(me.getEmail());
-                                user.put("pendingRequest", pendingEmails);
-                                user.saveInBackground(new SaveCallback() {
-                                    public void done(ParseException e) {
-                                        if (e != null) {
-                                            Log.d("PARSE", "Friends request sent to: " + user.getEmail());
-                                        } else {
-                                            Log.d("USER.JAVA", "Friends request couldn't be sent: " + email);
-                                        }
+                        if (list.size() <= 0) {
+                            ParseObject sendRequest = new ParseObject("pendingFriendRequest");
+                            sendRequest.put("sentBy", email);
+                            sendRequest.put("sentTo", sendTo);
+                            sendRequest.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e == null) {
+                                        Log.d("USER.JAVA", "Request sent");
+                                    } else {
+                                        Log.d("USER.JAVA", "Request not sent" + email);
                                     }
-                                });
-                            }
-
+                                }
+                            });
                         }
-                        else {
-                            Log.d("PARSE", "Friends request couldn't be sent: " + email);
-                            Log.d("PARSE", "Error : User nor found!");
-                        }
-                    }
-                    else {
-                        Log.d("PARSE", "Friends request couldn't be sent: " + email);
-                        Log.d("PARSE", "Error : " + e.getMessage());
                     }
                 }
             });
         }
     }
 
-    public void addCourse(final String course){
+    public void addCourse(final String course, final String semester, final String year) {
         if (!this.isObjectReady) {
             return;
         }
-        if (coursesTaken == null){
-            coursesTaken = new ArrayList<String>();
-        }
-        if (!this.coursesTaken.contains(course)) {
-            this.coursesTaken.add(course);
-            this.me.put("coursesTaken", coursesTaken);
-            this.me.saveInBackground(new SaveCallback() {
-                public void done(ParseException e) {
-                    if (e != null) {
-                        Log.d("PARSE", "Course added properly");
-                    } else {
-                        Log.d("USER.JAVA", "Course couldn't be added properly: " + email);
-                    }
+
+        ParseObject courseTaken = new ParseObject("coursesTaken");
+        courseTaken.put("userEmail", email);
+        courseTaken.put("courseName", course);
+        courseTaken.put("semester", semester);
+        courseTaken.put("year", year);
+        courseTaken.put("rating", -1);
+        courseTaken.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.d("PARSE", "Course added properly");
+                } else {
+                    Log.d("USER.JAVA", "Course couldn't be added properly: " + email);
                 }
-            });
-        }
+            }
+        });
     }
 
-    public void planCourse(final String course){
+    public void planCourse(final String course) {
         if (!this.isObjectReady) {
             return;
         }
-        if (plannedCourses == null){
+        if (plannedCourses == null) {
             plannedCourses = new ArrayList<String>();
         }
         if (!this.plannedCourses.contains(course)) {
@@ -323,11 +348,11 @@ public class User {
         }
     }
 
-    public void unplanCourse(final String course){
+    public void unplanCourse(final String course) {
         if (!this.isObjectReady) {
             return;
         }
-        if (plannedCourses == null){
+        if (plannedCourses == null) {
             plannedCourses = new ArrayList<String>();
         }
         if (this.plannedCourses.contains(course)) {
@@ -345,11 +370,11 @@ public class User {
         }
     }
 
-    public void removeFriend(final String email){
+    public void removeFriend(final String email) {
         if (!this.isObjectReady)
             return;
 
-        if (friendEmails == null){
+        if (friendEmails == null) {
             Log.d("PARSE", "Friends couldn't be removed");
         }
 
@@ -368,17 +393,17 @@ public class User {
         }
     }
 
-    public void notifyListeners(){
-        if (isObjectReady){
-            for (ParseDataReceivedNotifier l : this.liteners){
+    public void notifyListeners() {
+        if (isObjectReady) {
+            for (ParseDataReceivedNotifier l : this.liteners) {
                 l.notifyListener();
             }
         }
     }
 
-    public void addListener(ParseDataReceivedNotifier l){
+    public void addListener(ParseDataReceivedNotifier l) {
         this.liteners.add(l);
-        if (isObjectReady){
+        if (isObjectReady) {
             l.notifyListener();
         }
     }

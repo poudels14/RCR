@@ -1,9 +1,11 @@
 package edu.upenn.cis.rcr_34.reputablecoursereview;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,8 +17,12 @@ import android.widget.TextView;
 
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
+
 
 public class FriendsDetailActivity extends ActionBarActivity {
+    private String email; // this email belongs to the friend
+    private User userObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +30,11 @@ public class FriendsDetailActivity extends ActionBarActivity {
         setContentView(R.layout.activity_friends_detail);
 
         Bundle extra = getIntent().getExtras();
-        String email = extra.getString("email");
+        email = extra.getString("email");
 
         final LinearLayout profileDetail = (LinearLayout) findViewById(R.id.friends_detail_main_view);
         final User u = new User(email);
+        userObject = u;
         u.addListener(new ParseDataReceivedNotifier() {
             @Override
             public void notifyListener() {
@@ -136,7 +143,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
                 RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         lpForRemove.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
         lpForRemove.addRule(RelativeLayout.BELOW, email.getId());
-        Button unfriend = new Button(this);
+        final Button unfriend = new Button(this);
         unfriend.setText("Unfriend");
         unfriend.setTextSize(10);
         unfriend.setId(Utils.getUniqueID());
@@ -148,7 +155,14 @@ public class FriendsDetailActivity extends ActionBarActivity {
                 me.addListener(new ParseDataReceivedNotifier() {
                     @Override
                     public void notifyListener() {
-                        me.removeFriend(u.getEmail());
+                        if (unfriend.getText() == "Unfriend"){
+                            unfriend.setText("Add Friend");
+                            me.removeFriend(u.getEmail());
+                        }
+                        else{
+                            unfriend.setText("Unfriend");
+                            me.sendRequest(u.getEmail());
+                        }
                     }
                 });
             }
@@ -162,6 +176,14 @@ public class FriendsDetailActivity extends ActionBarActivity {
         classesTakenDetails.setOrientation(LinearLayout.VERTICAL);
         classesTakenDetails.setId(Utils.getUniqueID());
         classesTakenDetails.setPadding(5, 20, 0, 20);
+
+        // Add title for courses taken
+//        LinearLayout allCourseTitle = new LinearLayout(this);
+//        allCourseTitle.setLayoutParams(new RelativeLayout.LayoutParams(
+//                RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+//        allCourseTitle.setOrientation(LinearLayout.HORIZONTAL);
+//        allCourseTitle.setId(Utils.getUniqueID());
+//        allCourseTitle.setBackgroundColor(Color.LTGRAY);
 
         TextView classesTakenLabel = new TextView(this);
         RelativeLayout.LayoutParams lpForclassesTakenLabel = new RelativeLayout.LayoutParams(
@@ -177,22 +199,40 @@ public class FriendsDetailActivity extends ActionBarActivity {
         allClassesTaken.setOrientation(LinearLayout.VERTICAL);
         allClassesTaken.setId(Utils.getUniqueID());
 
+        ArrayList<CoursesTaken> co = userObject.getCoursesTaken();
+        if (co != null){
+            for (CoursesTaken s:co){
+                Log.d("COURSES TAKEN", s.getCourseCode());
+            }
+        }
+
+
         for (int i = 0; i < 199; i++){
             //Set course
             LinearLayout course = new LinearLayout(this);
             course.setLayoutParams(new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                    RelativeLayout.LayoutParams.MATCH_PARENT, 200));
             course.setOrientation(LinearLayout.HORIZONTAL);
             course.setId(Utils.getUniqueID());
-            if (course.getId() % 2 == 1){
+            if (i % 2 == 1){
                 course.setBackgroundColor(Color.LTGRAY);
             }
+            final FriendsDetailActivity self = this;
+            course.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(self, CourseActivity.class);
+                    i.putExtra("property", "code");
+                    i.putExtra("name", "ABC 123");
+                    startActivity(i);
+                }
+            });
 
             //Set course code
             TextView className = new TextView(this);
             RelativeLayout.LayoutParams lpForClassName = new RelativeLayout.LayoutParams(
                     400, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            className.setText("CIS 121");
+            className.setText("abc 123");
             className.setPadding(20, 0, 0, 0);
             className.setId(Utils.getUniqueID());
             className.setLayoutParams(lpForClassName);

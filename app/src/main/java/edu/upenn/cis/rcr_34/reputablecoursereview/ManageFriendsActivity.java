@@ -69,7 +69,8 @@ public class ManageFriendsActivity extends ActionBarActivity {
         f1.addListener(new ParseDataReceivedNotifier() {
             @Override
             public void notifyListener() {
-                //Remove loading label first
+
+                // Remove loading label first
                 mainListLayout.removeAllViews();
 
                 ArrayList<String> pendingList = f1.getPendingRequests();

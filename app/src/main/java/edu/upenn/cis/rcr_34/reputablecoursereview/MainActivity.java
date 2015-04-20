@@ -119,7 +119,9 @@ public class MainActivity extends ActionBarActivity {
     private void initializeCourse(ParseObject po) {
         Toast.makeText(getApplicationContext(), "SHOOP", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, CourseActivity.class);
-        i.putExtra("parseID", po.getObjectId());
+
+        i.putExtra("property", "objectId");
+        i.putExtra("name", po.getObjectId());
         startActivity(i);
     }
 

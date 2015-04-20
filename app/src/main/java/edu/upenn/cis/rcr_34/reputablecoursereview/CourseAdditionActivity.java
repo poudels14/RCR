@@ -37,7 +37,7 @@ public class CourseAdditionActivity extends ActionBarActivity {
         EditText semesterName = (EditText)findViewById(R.id.add_semester);
         String semester = semesterName.getText().toString();
         Course newCourse = new Course(course, semester);
-        user.addCourse(newCourse.toString());
+        user.addCourse(newCourse.toString(), "", "");
         Intent i = new Intent();
         setResult(RESULT_OK, i);
         finish();

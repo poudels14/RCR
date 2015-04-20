@@ -7,6 +7,7 @@ public class Utils {
     private static int viewsID = 1001;
 
     public static int getUniqueID() {
+//        viewsID += (int) Math.round(Math.random() * 10);
         return viewsID++;
     }
 }
