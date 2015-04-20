@@ -58,6 +58,7 @@ public class User {
                         // retrieve pending request
                         ParseQuery<ParseObject> friendRequest = new ParseQuery<ParseObject>("pendingFriendRequest");
                         friendRequest.whereEqualTo("sentTo", me.getEmail());
+                        friendRequest.whereEqualTo("accepted", false);
                         friendRequest.findInBackground(new FindCallback<ParseObject>() {
                             @Override
                             public void done(List list, com.parse.ParseException e) {
