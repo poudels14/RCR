@@ -207,7 +207,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
         }
 
 
-        for (int i = 0; i < 199; i++){
+        for (int i = 0; i < 19; i++){
             //Set course
             LinearLayout course = new LinearLayout(this);
             course.setLayoutParams(new RelativeLayout.LayoutParams(
