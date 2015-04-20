@@ -67,33 +67,12 @@ public class User {
                                             pendingRequests.add((String) po.get("sentBy"));
                                         }
                                     }
-                                    isObjectReady = true;
-                                    notifyListeners();
                                 }
+                                isObjectReady = true;
+                                notifyListeners();
                             }
                         });
 //                        plannedCourses = (ArrayList) user.getList("plannedCourses");
-
-                    }
-                }
-            }
-        });
-
-        //Retrieve courses taken
-        ParseQuery<ParseObject> coursesTaken = ParseQuery.getQuery("coursesTaken");
-        coursesTaken.whereEqualTo("email", this.email);
-        coursesTaken.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> courses, ParseException e) {
-                if (e == null) {
-                    if (courses.size() > 0) {
-                        ArrayList<CoursesTaken> ct = new ArrayList<CoursesTaken>();
-                        for (ParseObject ob : courses) {
-                            String courseCode = (String) ob.get("courseName");
-                            String sem = (String) ob.get("semester");
-                            String year = (String) ob.get("year");
-                            int rating = (int) ob.get("rating");
-                            ct.add(new CoursesTaken(email, courseCode, sem, year, rating));
-                        }
                     }
                 }
             }
@@ -139,11 +118,36 @@ public class User {
     }
 
     // finds user's courses taken
+    public void retrieveCoursesTaken(final ParseDataReceivedNotifier not){
+        //Retrieve courses taken
+        ParseQuery<ParseObject> cT = ParseQuery.getQuery("coursesTaken");
+        cT.whereEqualTo("userEmail", email);
+        cT.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> courses, ParseException e) {
+                if (e == null) {
+                    coursesTaken = new ArrayList<CoursesTaken>();
+                    if (courses.size() > 0) {
+                        for (ParseObject ob : courses) {
+                            String courseCode = (String) ob.get("courseName");
+                            String sem = (String) ob.get("semester");
+                            String year = (String) ob.get("year");
+                            int rating = (int) ob.get("rating");
+                            coursesTaken.add(new CoursesTaken(email, courseCode, sem, year, rating));
+                        }
+                    }
+                    not.notifyListener();
+                }
+            }
+        });
+    }
+
     public ArrayList<CoursesTaken> getCoursesTaken(){
-        if(isObjectReady){
-            return this.coursesTaken;
-        } else {
+        if (coursesTaken == null){
+            System.err.println("Should retrive courses taken before getting courses taken");
             return null;
+        }
+        else{
+            return this.coursesTaken;
         }
     }
 
