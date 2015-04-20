@@ -1,6 +1,7 @@
 package edu.upenn.cis.rcr_34.reputablecoursereview;
 
 import edu.upenn.cis.rcr_34.reputablecoursereview.util.StaticUtils;
+import edu.upenn.cis.rcr_34.reputablecoursereview.util.SystemUiHider;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -29,6 +30,8 @@ import java.util.List;
 
 public class CourseActivity extends ActionBarActivity {
 
+    private String valueOfProperty;
+    private String property; // this is the property of parse object
     private String parseCourseID;
 
     @Override
@@ -44,22 +47,54 @@ public class CourseActivity extends ActionBarActivity {
 
         // find the course using parsecourseid
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Course");
-        query.getInBackground(parseCourseID, new GetCallback<ParseObject>() {
+//        query.getInBackground(parseCourseID, new GetCallback<ParseObject>() {
+//            @Override
+//            public void done(ParseObject parseObject, com.parse.ParseException e) {
+//                if (e == null) {
+//                    // pass the object's info into the interface
+//                    if (parseObject == null) {
+//                        Toast.makeText(getApplicationContext(),
+//                                "Error Retrieving Course", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        Log.d("COURSE_ACTIVITY", parseObject.getString("Name"));
+//                        populateUI(parseObject.getDouble("Rating"),
+//                                parseObject.getString("Name"),
+//                                parseObject.getString("Code"));
+//                    }
+//
+//
+//                } else {
+//                    Toast.makeText(getApplicationContext(),
+//                            "Error Retrieving Course", Toast.LENGTH_SHORT).show();
+//                    // quit this activity
+//                    Intent i = new Intent();
+//                    setResult(RESULT_CANCELED, i);
+//                    finish();
+//                }
+//            }
+//        });
+
+
+        query.whereEqualTo(property, valueOfProperty);
+        query.findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void done(ParseObject parseObject, com.parse.ParseException e) {
+            public void done(List list, com.parse.ParseException e) {
                 if (e == null) {
-                    // pass the object's info into the interface
-                    if (parseObject == null) {
-                        Toast.makeText(getApplicationContext(),
-                                "Error Retrieving Course", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Log.d("COURSE_ACTIVITY", parseObject.getString("Name"));
-                        populateUI(parseObject.getDouble("Rating"),
-                                parseObject.getString("Name"),
-                                parseObject.getString("Code"));
+                    if (list.size() > 0) {
+                        ParseObject parseObject = (ParseObject) list.get(0);
+                        // pass the object's info into the interface
+                        if (parseObject == null) {
+                            Toast.makeText(getApplicationContext(),
+                                    "Error Retrieving Course", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.d("COURSE_ACTIVITY", parseObject.getString("Name"));
+                            parseCourseID = parseObject.getObjectId();
+                            populateUI(parseObject.getDouble("Rating"),
+                                    parseObject.getString("Name"),
+                                    parseObject.getString("Code"));
+                        }
+
                     }
-
-
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "Error Retrieving Course", Toast.LENGTH_SHORT).show();
@@ -110,11 +145,11 @@ public class CourseActivity extends ActionBarActivity {
 
     protected void populateUI(Double rating, String name, String code) {
         // set the header of this view
-        TextView t = (TextView)findViewById(R.id.course_code);
+        TextView t = (TextView) findViewById(R.id.course_code);
         t.setText(code);
-        t = (TextView)findViewById(R.id.course_avg_rating);
+        t = (TextView) findViewById(R.id.course_avg_rating);
         t.setText(rating.toString());
-        t = (TextView)findViewById(R.id.course_name);
+        t = (TextView) findViewById(R.id.course_name);
         t.setText(name);
         populateReview();
     }

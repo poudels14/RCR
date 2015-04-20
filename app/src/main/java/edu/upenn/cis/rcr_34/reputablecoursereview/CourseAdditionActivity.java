@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import java.util.ArrayList;
 import com.parse.ParseUser;
 
 public class CourseAdditionActivity extends ActionBarActivity {
@@ -40,7 +41,7 @@ public class CourseAdditionActivity extends ActionBarActivity {
         //Construct the course
         Course newCourse = new Course(course, semester);
         //Add the new course to the database
-        user.addCourse(newCourse.toString());
+        user.addCourse(course, semester, "2014");
         //Return
         Intent i = new Intent();
         setResult(RESULT_OK, i);

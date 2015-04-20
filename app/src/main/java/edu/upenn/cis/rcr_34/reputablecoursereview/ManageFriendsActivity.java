@@ -59,7 +59,8 @@ public class ManageFriendsActivity extends ActionBarActivity {
         f1.addListener(new ParseDataReceivedNotifier() {
             @Override
             public void notifyListener() {
-                //Remove loading label first
+
+                // Remove loading label first
                 mainListLayout.removeAllViews();
 
                 ArrayList<String> pendingList = f1.getPendingRequests();
@@ -170,6 +171,13 @@ public class ManageFriendsActivity extends ActionBarActivity {
             }
         });
         ll.addView(decline);
+
+        ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToFriendsProfile(u.getEmail());
+            }
+        });
 
         llIn.addView(ll);
     }
