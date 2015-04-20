@@ -172,6 +172,13 @@ public class ManageFriendsActivity extends ActionBarActivity {
         });
         ll.addView(decline);
 
+        ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToFriendsProfile(u.getEmail());
+            }
+        });
+
         llIn.addView(ll);
     }
 

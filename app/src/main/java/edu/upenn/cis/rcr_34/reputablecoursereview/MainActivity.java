@@ -70,7 +70,6 @@ public class MainActivity extends ActionBarActivity {
         EditText searchName = (EditText)findViewById(R.id.course_search);
         final String toSearch = searchName.getText().toString();
         if(toSearch.length() > 0) {
-
             // search for the course in parse
             final ParseQuery<ParseObject> courseSearch = ParseQuery.getQuery("Course");
             courseSearch.whereContains("Code", toSearch.toUpperCase());
@@ -81,40 +80,41 @@ public class MainActivity extends ActionBarActivity {
                         if (objList.size() > 0) {
                             initializeCourse(objList.get(0));
                         }
-                    } else {
-                        // no course found, check to see if it's a person
-                        String[] userName = toSearch.split(" ");
-                        String firstName = userName[0];
-                        final ParseQuery<ParseUser> personSearch = ParseUser.getQuery();
-                        personSearch.whereContains("firstName", firstName);
-                        String lastName = "";
-                        if (userName.length > 1) {
-                            lastName = userName[1];
-                            if (userName.length > 2) {
-                                for (int x = 2; x < userName.length; x++) {
-                                    lastName = lastName + " " + userName[x];
+                        else {
+                            // no course found, check to see if it's a person
+                            String[] userName = toSearch.split(" ");
+                            String firstName = userName[0];
+                            final ParseQuery<ParseUser> personSearch = ParseUser.getQuery();
+                            personSearch.whereContains("firstName", firstName);
+                            String lastName = "";
+                            if (userName.length > 1) {
+                                lastName = userName[1];
+                                if (userName.length > 2) {
+                                    for (int x = 2; x < userName.length; x++) {
+                                        lastName = lastName + " " + userName[x];
+                                    }
                                 }
+                                personSearch.whereContains("lastName", lastName);
                             }
-                            personSearch.whereContains("lastName", lastName);
-                        }
-                        personSearch.findInBackground(new FindCallback<ParseUser>() {
-                            @Override
-                            public void done(List list, com.parse.ParseException e) {
-                                if (e == null) {
-                                    if (list.size() > 0) {
-                                        LinearLayout friendListView = (LinearLayout) findViewById(R.id.friendListViewLL);
-                                        friendListView.removeAllViews();
-                                        for (Object o : list) {
-                                            ParseUser user = (ParseUser) o;
-                                            addUserButton(user);
+                            personSearch.findInBackground(new FindCallback<ParseUser>() {
+                                @Override
+                                public void done(List list, com.parse.ParseException e) {
+                                    if (e == null) {
+                                        if (list.size() > 0) {
+                                            LinearLayout friendListView = (LinearLayout) findViewById(R.id.friendListViewLL);
+                                            friendListView.removeAllViews();
+                                            for (Object o : list) {
+                                                ParseUser user = (ParseUser) o;
+                                                addUserButton(user);
+                                            }
+                                        }
+                                        else{
+                                            Toast.makeText(getApplicationContext(), "Nothing found", Toast.LENGTH_SHORT).show();
                                         }
                                     }
-                                    else{
-                                        Toast.makeText(getApplicationContext(), "Nothing found", Toast.LENGTH_SHORT).show();
-                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
             });
