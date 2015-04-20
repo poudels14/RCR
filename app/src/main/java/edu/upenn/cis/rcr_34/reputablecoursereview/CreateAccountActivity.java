@@ -107,7 +107,7 @@ public class CreateAccountActivity extends ActionBarActivity {
         user.put("firstName", firstName);
         user.put("lastName", lastName);
         String userName = firstName + " " + lastName;
-        userName.toUpperCase();
+        userName = userName.toUpperCase();
         user.put("userName", userName);
 
         user.put("major", major);
