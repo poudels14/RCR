@@ -227,26 +227,27 @@ public class User {
     }
 
     //reject friend request
-    public void rejectRequest(final String email) {
+    public void rejectRequest(final String sentBy) {
         if (!this.isObjectReady)
             return;
 
-        if (!this.pendingRequests.contains(email)) {
-            Log.d("PARSE", email + " is not found in pending list");
-        } else {
-            this.pendingRequests.remove(email);
-
-            this.me.put("pendingRequest", this.pendingRequests);
-            this.me.saveInBackground(new SaveCallback() {
-                public void done(ParseException e) {
-                    if (e != null) {
-                        Log.d("PARSE", "Pending friend request removed");
-                    } else {
-                        Log.d("USER.JAVA", "Pending friend request couldn't be removed : " + email);
+        final ParseQuery<ParseObject> friendRequest = new ParseQuery<ParseObject>("pendingFriendRequest");
+        friendRequest.whereEqualTo("sentTo", me.getEmail());
+        friendRequest.whereEqualTo("sentBy", sentBy);
+        friendRequest.whereEqualTo("accepted", false);
+        friendRequest.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List list, com.parse.ParseException e) {
+                if (e == null) {
+                    if (list.size() > 0) {
+                        for (ParseObject po : (List<ParseObject>) list) {
+                            // Drop request
+                            po.deleteInBackground();
+                        }
                     }
                 }
-            });
-        }
+            }
+        });
     }
 
     // send friend request
@@ -297,7 +298,10 @@ public class User {
                 if (e == null) {
                     if (list.size() > 0) {
                         for (ParseObject po : (List<ParseObject>) list) {
-                            friendEmails.add((String) po.get("sentTo"));
+                            String fr = (String) po.get("sentTo");
+                            if (!friendEmails.contains(fr)){
+                                friendEmails.add(fr);
+                            }
                             po.deleteInBackground();
                         }
 
@@ -306,7 +310,7 @@ public class User {
                         me.saveInBackground(new SaveCallback() {
                             public void done(ParseException e) {
                                 if (e == null) {
-//                                    Log.d("PARSE", "Friends saved properly");
+                                    //Log.d("PARSE", "Friends saved properly");
                                 }
                             }
                         });
@@ -333,8 +337,6 @@ public class User {
             public void done(ParseException e) {
                 if (e != null) {
                     Log.d("PARSE", "Course added properly");
-                } else {
-//                    Log.d("USER.JAVA", "Course couldn't be added properly: " + email);
                 }
             }
         });
