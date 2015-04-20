@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,10 @@ import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CourseActivity extends ActionBarActivity {
@@ -407,6 +412,9 @@ public class CourseActivity extends ActionBarActivity {
                 textR = "No review given";
             }
             // eighth answer
+
+
+
             RelativeLayout.LayoutParams eighthAnswer = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             eighthAnswer.addRule(RelativeLayout.BELOW, question8.getId());
@@ -417,49 +425,130 @@ public class CourseActivity extends ActionBarActivity {
             answer8.setId(Utils.getUniqueID());
             myRL.addView(answer8);
 
+            //////////////////////// Buttons
+
+            ArrayList<String> upv = (ArrayList<String>) review.get("upvoted");
+            ArrayList<String> downv = (ArrayList<String>) review.get("downvoted");
+            boolean hasUp = false;
+            boolean hasDown = false;
+            if (upv.contains(ParseUser.getCurrentUser().getObjectId())) {
+                hasUp = true;
+            }
+
+            if (downv.contains(ParseUser.getCurrentUser().getObjectId())) {
+                hasDown = true;
+            }
+
+            final RadioButton down = new RadioButton(this);
+            final RadioButton up = new RadioButton(this);
+            up.setText("UP");
+            down.setText("DOWN");
+
+
+            if (hasUp) {
+                up.setChecked(true);
+                down.setChecked(false);
+            }
+
+            if (hasDown) {
+                down.setChecked(true);
+                up.setChecked(false);
+            }
 
             RelativeLayout.LayoutParams upvote = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             upvote.addRule(RelativeLayout.BELOW, answer8.getId());
-            Button accept = new Button(this);
-            accept.setText("UP");
-            accept.setTextSize(10);
-            accept.setId(Utils.getUniqueID());
-            accept.setLayoutParams(upvote);
-            accept.setOnClickListener(new View.OnClickListener() {
+
+            up.setLayoutParams(upvote);
+            up.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int rate = (Integer) review.get("reviewRating") + 1;
-                    review.put("reviewRating", rate);
-                    review.saveInBackground();
-                    final LinearLayout ll = (LinearLayout) findViewById(R.id.course_reviewLL);
-                    ll.removeAllViews();
-                    populateReview();
+
+                    ArrayList<String> upv = (ArrayList<String>) review.get("upvoted");
+                    ArrayList<String> downv = (ArrayList<String>) review.get("downvoted");
+
+
+                    if (down.isChecked()) {
+                        up.setChecked(true);
+                        down.setChecked(false);
+                        downv.remove(ParseUser.getCurrentUser().getObjectId());
+                        upv.add(ParseUser.getCurrentUser().getObjectId());
+                        review.put("upvoted", upv);
+                        review.put("downvoted", downv);
+
+                        int rate;
+                        rate = (Integer) review.get("reviewRating") + 2;
+                        review.put("reviewRating", rate);
+                        review.saveInBackground();
+                        final LinearLayout ll = (LinearLayout) findViewById(R.id.course_reviewLL);
+                        ll.removeAllViews();
+                        populateReview();
+                    } else {
+                        if  (!up.isChecked()) {
+                            up.setChecked(true);
+                            down.setChecked(false);
+                            int rate;
+                            upv.add(ParseUser.getCurrentUser().getObjectId());
+                            review.put("upvoted", upv);
+                            rate = (Integer) review.get("reviewRating") + 1;
+                            review.put("reviewRating", rate);
+                            review.saveInBackground();
+                            final LinearLayout ll = (LinearLayout) findViewById(R.id.course_reviewLL);
+                            ll.removeAllViews();
+                            populateReview();
+                        }
+                    }
                 }
             });
-            myRL.addView(accept);
 
 
             RelativeLayout.LayoutParams downvote = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            downvote.addRule(RelativeLayout.BELOW, answer8.getId());
-            downvote.addRule(RelativeLayout.RIGHT_OF, accept.getId());
-            Button down = new Button(this);
-            down.setText("DOWN");
-            down.setTextSize(10);
-            down.setId(Utils.getUniqueID());
+            downvote.addRule(RelativeLayout.BELOW, up.getId());
+
             down.setLayoutParams(downvote);
             down.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int rate = (Integer) review.get("reviewRating") - 1;
-                    review.put("reviewRating", rate);
-                    review.saveInBackground();
-                    final LinearLayout ll = (LinearLayout) findViewById(R.id.course_reviewLL);
-                    ll.removeAllViews();
-                    populateReview();
+                    ArrayList<String> upv = (ArrayList<String>) review.get("upvoted");
+                    ArrayList<String> downv = (ArrayList<String>) review.get("downvoted");
+
+                    if (up.isChecked()) {
+                        down.setChecked(true);
+                        up.setChecked(false);
+                        int rate;
+
+                        upv.remove(ParseUser.getCurrentUser().getObjectId());
+                        downv.add(ParseUser.getCurrentUser().getObjectId());
+                        review.put("upvoted", upv);
+                        review.put("downvoted", downv);
+
+                        rate = (Integer) review.get("reviewRating") - 2;
+                        review.put("reviewRating", rate);
+                        review.saveInBackground();
+                        final LinearLayout ll = (LinearLayout) findViewById(R.id.course_reviewLL);
+                        ll.removeAllViews();
+                        populateReview();
+                    } else {
+                        if  (!down.isChecked()) {
+                            down.setChecked(true);
+                            up.setChecked(false);
+                            int rate;
+                            downv.add(ParseUser.getCurrentUser().getObjectId());
+                            review.put("downvoted", downv);
+                            rate = (Integer) review.get("reviewRating") - 1;
+                            review.put("reviewRating", rate);
+                            review.saveInBackground();
+                            final LinearLayout ll = (LinearLayout) findViewById(R.id.course_reviewLL);
+                            ll.removeAllViews();
+                            populateReview();
+                        }
+                    }
                 }
             });
+
+
+            myRL.addView(up);
             myRL.addView(down);
 
             ll.addView(myRL);

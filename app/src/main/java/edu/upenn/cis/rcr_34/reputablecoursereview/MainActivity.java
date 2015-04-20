@@ -17,6 +17,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -32,28 +33,6 @@ public class MainActivity extends ActionBarActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
 
         setContentView(R.layout.activity_main);
-        // fake friends to fill
-        String[] friends = {"Andrew Remec", "Daniel McCann", "Tahmid Shahriar", "Sagar Poudel",
-                "Alex Harelick", "Chris Murphy", "Amy Gutmann", "James Kirk", "Spock",
-                "Leonard McCoy", "Montgomery Scott", "Nyota Uhura", "Hikaru Sulu", "Pavel Chekov",
-                "Christine Chapel", "Janice Rand", "Jean-Luc Picard", "William Riker",
-                "Geordi La Forge", "Benjamin Sisko", "Kathryn Janeway", "Jonathan Archer",
-                "Sterling Archer", "John Rambo", "Alan \"Dutch\" Schaefer", "Michael Scott",
-                "Dwight Schrute", "Jim Halpert", "Pam Halpert", "Creed Bratton", "Jack Bauer",
-                "Troy Barnes", "Abed Nadir", "Dr. Ján Ïtor", "John Dorian", "Christopher Turk",
-                "Percival Cox", "Bruce Wayne", "Brennan Huff", "Dale Doback", "Ricky Bobby",
-                "Cal Naughton, Jr.", "Aragorn II Elessar", "Frodo Baggins", "Bilbo Baggins",
-                "Samwise Gamgee", "Peregrin Took" ,"Meriadoc Brandybuck", "Loch Ness Monster"};
-        for(int i = 0; i < friends.length; i++){
-            Button v2 = new Button(this);
-            v2.setText(friends[i]);
-            v2.setId(i);
-            v2.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
-            v2.setGravity(Gravity.CENTER_VERTICAL);
-            v2.setVisibility(View.VISIBLE);
-            LinearLayout friendListView = (LinearLayout) findViewById(R.id.friendListViewLL);
-            friendListView.addView(v2);
-        }
 
         User u = new User("poudels@seas.upenn.edu");
         Log.d("LOGIN ACTIVITY", "Received current user details:name" + u.getName());
@@ -86,30 +65,83 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void searchClassesClicked(View view){
-        EditText courseName = (EditText)findViewById(R.id.course_search);
-        String course = courseName.getText().toString();
-
-        // search for the course in parse
-        final ParseQuery<ParseObject> courseSearch = ParseQuery.getQuery("Course");
-        courseSearch.whereContains("Code", course.toUpperCase());
-        courseSearch.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> objList,ParseException e) {
-                if (e == null) {
-                    // initialize the course activity using Parse's ID of the course
-                    if (objList.size() > 0) {
-                        initializeCourse(objList.get(0));
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Course not found",
-                                Toast.LENGTH_SHORT).show();
+        LinearLayout friendListView = (LinearLayout) findViewById(R.id.friendListViewLL);
+        friendListView.removeAllViews();
+        EditText searchName = (EditText)findViewById(R.id.course_search);
+        final String toSearch = searchName.getText().toString();
+        if(toSearch.length() > 0) {
+            // search for the course in parse
+            final ParseQuery<ParseObject> courseSearch = ParseQuery.getQuery("Course");
+            courseSearch.whereContains("Code", toSearch.toUpperCase());
+            courseSearch.findInBackground(new FindCallback<ParseObject>() {
+                public void done(List<ParseObject> objList, ParseException e) {
+                    if (e == null) {
+                        // initialize the course activity using Parse's ID of the course
+                        if (objList.size() > 0) {
+                            initializeCourse(objList.get(0));
+                        }
+                        else {
+                            // no course found, check to see if it's a person
+                            String[] userName = toSearch.split(" ");
+                            String firstName = userName[0];
+                            final ParseQuery<ParseUser> personSearch = ParseUser.getQuery();
+                            personSearch.whereContains("firstName", firstName);
+                            String lastName = "";
+                            if (userName.length > 1) {
+                                lastName = userName[1];
+                                if (userName.length > 2) {
+                                    for (int x = 2; x < userName.length; x++) {
+                                        lastName = lastName + " " + userName[x];
+                                    }
+                                }
+                                personSearch.whereContains("lastName", lastName);
+                            }
+                            personSearch.findInBackground(new FindCallback<ParseUser>() {
+                                @Override
+                                public void done(List list, com.parse.ParseException e) {
+                                    if (e == null) {
+                                        if (list.size() > 0) {
+                                            LinearLayout friendListView = (LinearLayout) findViewById(R.id.friendListViewLL);
+                                            friendListView.removeAllViews();
+                                            for (Object o : list) {
+                                                ParseUser user = (ParseUser) o;
+                                                addUserButton(user);
+                                            }
+                                        }
+                                        else{
+                                            Toast.makeText(getApplicationContext(), "Nothing found", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+                            });
+                        }
                     }
-
-                } else {
-                    Toast.makeText(getApplicationContext(), "Course not found",
-                            Toast.LENGTH_SHORT).show();
                 }
+            });
+        }
+    }
+
+    protected void addUserButton(ParseUser user){
+        Button userButton = new Button(this);
+        userButton.setText(user.get("firstName") + " " + user.get("lastName"));
+        userButton.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
+        userButton.setGravity(Gravity.CENTER_VERTICAL);
+        userButton.setVisibility(View.VISIBLE);
+        final String email = user.getEmail();
+        userButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                goToPersonsProfile(email);
             }
         });
+        LinearLayout friendListView = (LinearLayout) findViewById(R.id.friendListViewLL);
+        friendListView.addView(userButton);
+    }
 
+    //Go to a friend's profile
+    protected void goToPersonsProfile(String email){
+        Intent intent = new Intent(this, FriendsDetailActivity.class);
+        intent.putExtra("email", email);
+        startActivity(intent);
     }
 
     private void initializeCourse(ParseObject po) {

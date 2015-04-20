@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 public class FriendsDetailActivity extends ActionBarActivity {
     private String email; // this email belongs to the friend
-//    private User userObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +32,6 @@ public class FriendsDetailActivity extends ActionBarActivity {
 
         final LinearLayout profileDetail = (LinearLayout) findViewById(R.id.friends_detail_main_view);
         final User u = new User(email);
-//        userObject = u;
         u.addListener(new ParseDataReceivedNotifier() {
             @Override
             public void notifyListener() {
