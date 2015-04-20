@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +13,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
 import java.util.ArrayList;
 
 
@@ -24,8 +29,20 @@ public class ManageFriendsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_friends);
+
+        //No add all accepted friends to friends list
+        final User f1 = new User(ParseUser.getCurrentUser().getEmail());
+        f1.addListener(new ParseDataReceivedNotifier() {
+            @Override
+            public void notifyListener() {
+                f1.checkIfFriendRequestIsAccepted();
+            }
+        });
+
         final LinearLayout friendList = (LinearLayout) findViewById(R.id.manage_account_friends_list);
         final LinearLayout pendingList = (LinearLayout) findViewById(R.id.manage_account_pending_list);
+
+
         loadAllFriends(friendList);
         loadAllPendingRequest(pendingList);
     }
@@ -83,8 +100,8 @@ public class ManageFriendsActivity extends ActionBarActivity {
     }
 
     //Display pending friend requests
-    private void populatePendingRequest(LinearLayout llIn, final User u) {
-        RelativeLayout ll = new RelativeLayout(this);
+    private void populatePendingRequest(final LinearLayout llIn, final User u) {
+        final RelativeLayout ll = new RelativeLayout(this);
         ll.setPadding(0, 0, 0, 20);
 
         RelativeLayout.LayoutParams lpForImage = new RelativeLayout.LayoutParams(200, 250);
@@ -139,7 +156,12 @@ public class ManageFriendsActivity extends ActionBarActivity {
                 me.addListener(new ParseDataReceivedNotifier() {
                     @Override
                     public void notifyListener() {
-                        me.acceptRequest(u.getEmail());
+                        me.acceptRequest(u.getEmail(), new ParseDataReceivedNotifier() {
+                            @Override
+                            public void notifyListener() {
+                                llIn.removeView(ll);
+                            }
+                        });
                     }
                 });
             }

@@ -204,7 +204,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
                         @Override
                         public void notifyListener() {
                             if (unfriend.getText() == "Add friend") {
-                                unfriend.setText("Request Sent");
+                                unfriend.setText("Friend request pending");
                                 me.sendRequest(u.getEmail());
                             }
                         }
@@ -256,6 +256,39 @@ public class FriendsDetailActivity extends ActionBarActivity {
             }
 
 
+<<<<<<< HEAD
+        for (int i = 0; i < coursesTaken.size(); i++){
+            CoursesTaken ct = coursesTaken.get(i);
+            final String courseName = ct.getCourseCode();
+            String semseterTaken = ct.getSemesterTaken();
+            String yearTaken = ct.getYearTaken();
+            String rating = "N/A";
+            int r = ct.getRating();
+            // rating is -1 if the user hasn't rated it yet
+            if (r != -1){
+                rating = Integer.toString(r);
+            }
+
+            //Set course
+            LinearLayout course = new LinearLayout(this);
+            course.setLayoutParams(new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.MATCH_PARENT, 200));
+            course.setOrientation(LinearLayout.HORIZONTAL);
+            course.setId(Utils.getUniqueID());
+            if (i % 2 == 1){
+                course.setBackgroundColor(Color.LTGRAY);
+            }
+
+            // Go to course page if course is clicked
+            final FriendsDetailActivity self = this;
+            course.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(self, CourseActivity.class);
+                    i.putExtra("property", "code");
+                    i.putExtra("name", courseName);
+                    startActivity(i);
+=======
             for (int i = 0; i < coursesTaken.size(); i++) {
                 CoursesTaken ct = coursesTaken.get(i);
                 String courseName = ct.getCourseCode();
@@ -276,6 +309,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
                 course.setId(Utils.getUniqueID());
                 if (i % 2 == 1) {
                     course.setBackgroundColor(Color.LTGRAY);
+>>>>>>> 6cbc63cbe09118f64843715afacd3d87dec0492b
                 }
                 final FriendsDetailActivity self = this;
                 course.setOnClickListener(new View.OnClickListener() {

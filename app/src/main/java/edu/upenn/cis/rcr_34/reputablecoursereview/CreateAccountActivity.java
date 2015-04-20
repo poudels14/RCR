@@ -106,6 +106,10 @@ public class CreateAccountActivity extends ActionBarActivity {
         final ParseUser user = new ParseUser();
         user.put("firstName", firstName);
         user.put("lastName", lastName);
+        String userName = firstName + " " + lastName;
+        userName.toUpperCase();
+        user.put("userName", userName);
+
         user.put("major", major);
         user.put("year", year);
 
