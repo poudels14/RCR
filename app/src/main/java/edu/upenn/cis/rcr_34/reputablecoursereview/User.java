@@ -8,6 +8,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +34,7 @@ public class User {
     private boolean isObjectReady;
 
     // user creation
-    public User(final String email){
+    public User(final String email) {
         this.email = email;
         this.liteners = new ArrayList<ParseDataReceivedNotifier>();
         this.isObjectReady = false;
@@ -63,7 +64,7 @@ public class User {
                                 if (e == null) {
                                     if (list.size() > 0) {
                                         pendingRequests = new ArrayList<String>();
-                                        for (ParseObject po : (List<ParseObject>) list){
+                                        for (ParseObject po : (List<ParseObject>) list) {
                                             pendingRequests.add((String) po.get("sentBy"));
                                         }
                                     }
@@ -80,8 +81,8 @@ public class User {
     }
 
     // finds username of user
-    public String getName(){
-        if (isObjectReady){
+    public String getName() {
+        if (isObjectReady) {
             this.name = this.firstName.substring(0, 1).toUpperCase() + this.firstName.substring(1);
             this.name += " " + this.lastName.substring(0, 1).toUpperCase() + this.lastName.substring(1);
             return this.name;
@@ -91,8 +92,8 @@ public class User {
     }
 
     // finds email of user
-    public String getEmail(){
-        if(isObjectReady){
+    public String getEmail() {
+        if (isObjectReady) {
             return email;
         } else {
             return "INVALID_RETURN_OBJECT";
@@ -100,8 +101,8 @@ public class User {
     }
 
     // finds year of user
-    public String getYear(){
-        if(isObjectReady){
+    public String getYear() {
+        if (isObjectReady) {
             return year;
         } else {
             return "INVALID_RETURN_OBJECT";
@@ -109,8 +110,8 @@ public class User {
     }
 
     // finds major of user
-    public String getMajor(){
-        if(isObjectReady){
+    public String getMajor() {
+        if (isObjectReady) {
             return major;
         } else {
             return "INVALID_RETURN_OBJECT";
@@ -118,7 +119,7 @@ public class User {
     }
 
     // finds user's courses taken
-    public void retrieveCoursesTaken(final ParseDataReceivedNotifier not){
+    public void retrieveCoursesTaken(final ParseDataReceivedNotifier not) {
         //Retrieve courses taken
         ParseQuery<ParseObject> cT = ParseQuery.getQuery("coursesTaken");
         cT.whereEqualTo("userEmail", email);
@@ -141,19 +142,18 @@ public class User {
         });
     }
 
-    public ArrayList<CoursesTaken> getCoursesTaken(){
-        if (coursesTaken == null){
+    public ArrayList<CoursesTaken> getCoursesTaken() {
+        if (coursesTaken == null) {
             System.err.println("Should retrive courses taken before getting courses taken");
             return null;
-        }
-        else{
+        } else {
             return this.coursesTaken;
         }
     }
 
     // finds users prof pic
-    public String getProfilePic(){
-        if(isObjectReady){
+    public String getProfilePic() {
+        if (isObjectReady) {
             return picLink;
         } else {
             return "INVALID_RETURN_OBJECT";
@@ -161,8 +161,8 @@ public class User {
     }
 
     // finds users friends
-    public ArrayList<String> getFriends(){
-        if(isObjectReady){
+    public ArrayList<String> getFriends() {
+        if (isObjectReady) {
             return this.friendEmails;
         } else {
             return null;
@@ -170,8 +170,8 @@ public class User {
     }
 
     // finds users pending requests
-    public ArrayList<String> getPendingRequests(){
-        if(isObjectReady){
+    public ArrayList<String> getPendingRequests() {
+        if (isObjectReady) {
             return this.pendingRequests;
         } else {
             return null;
@@ -179,7 +179,7 @@ public class User {
     }
 
     // accepts request
-    public void acceptRequest(final String sentBy){
+    public void acceptRequest(final String sentBy, final ParseDataReceivedNotifier listener) {
         if (!this.isObjectReady)
             return;
 
@@ -187,74 +187,42 @@ public class User {
             friendEmails = new ArrayList<String>();
         }
 
-        if (this.friendEmails.contains(sentBy) || !this.pendingRequests.contains(sentBy)) {
-            Log.d("PARSE", sentBy + " is already your friend or is not found in pending list");
-            //Remove request from pending list
-            ParseQuery<ParseObject> removeRequest = new ParseQuery<ParseObject>("pendingFriendRequest");
-            removeRequest.whereEqualTo("sentBy", sentBy);
-            removeRequest.whereEqualTo("sentTo", this.email);
-            removeRequest.findInBackground(new FindCallback<ParseObject>() {
-                @Override
-                public void done(List<ParseObject> parseObjects, ParseException e) {
-                    if (parseObjects.size() == 1){
-                        parseObjects.get(0).deleteInBackground();
-                    }
-                }
-            });
-        } else {
-            this.friendEmails.add(sentBy);
+        this.friendEmails.add(sentBy);
 
-            //Remove request from pending list
-            ParseObject removeRequest = new ParseObject("pendingFriendRequest");
-            removeRequest.put("sentBy", sentBy);
-            removeRequest.put("sentTo", this.email);
-            removeRequest.deleteInBackground();
-
-            this.me.put("friends", friendEmails);
-            this.me.saveInBackground(new SaveCallback() {
-                public void done(ParseException e) {
-                    if (e != null) {
-                        Log.d("PARSE", "Friends saved properly");
-                    } else {
-                        Log.d("USER.JAVA", "Friends couldn't be saved properly: " + sentBy);
-                    }
-                }
-            });
-
-            //Now add this user to friend's friend list
-            ParseQuery<ParseUser> query = ParseUser.getQuery();
-            query.whereEqualTo("email", email);
-            query.findInBackground(new FindCallback<ParseUser>() {
-                @Override
-                public void done(List list, com.parse.ParseException e) {
-                    if (e == null) {
-                        if (list.size() > 0) {
-                            final ParseUser user = (ParseUser) list.get(0);
-                            ArrayList<String> friends = (ArrayList) user.getList("friends");
-                            if (friends == null) {
-                                friends = new ArrayList<String>();
+        //set accepted to true in pending list
+        ParseQuery<ParseObject> setAcceptedInParse = new ParseQuery<ParseObject>("pendingFriendRequest");
+        setAcceptedInParse.whereEqualTo("sentBy", sentBy);
+        setAcceptedInParse.whereEqualTo("sentTo", this.email);
+        setAcceptedInParse.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List list, com.parse.ParseException e) {
+                if (e == null) {
+                    if (list.size() > 0) {
+                        ParseObject pendingRequest = (ParseObject) list.get(0);
+                        pendingRequest.put("accepted", true);
+                        pendingRequest.saveInBackground(new SaveCallback() {
+                            public void done(ParseException e) {
+                                if (e != null) {
+                                    listener.notifyListener();
+                                }
                             }
-                            if (friends.contains(me.getEmail())) {
-                                Log.d("PARSE", "how can I be friends alrady?");
-                            } else {
-                                friends.add(me.getEmail());
-                                user.put("friends", friends);
-                                user.saveInBackground(new SaveCallback() {
-                                    public void done(ParseException e) {
-                                        if (e != null) {
-                                            Log.d("PARSE", "Friend added");
-                                        } else {
-                                            Log.d("USER.JAVA", "Friend couldn't be added: " + email);
-                                        }
-                                    }
-                                });
-                            }
-
-                        }
+                        });
                     }
                 }
-            });
-        }
+            }
+        });
+
+        // update parse with new friends list
+        this.me.put("friends", friendEmails);
+        this.me.saveInBackground(new SaveCallback() {
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.d("PARSE", "Friends saved properly");
+                } else {
+                    Log.d("USER.JAVA", "Friends couldn't be saved properly: " + sentBy);
+                }
+            }
+        });
     }
 
     //reject friend request
@@ -281,7 +249,7 @@ public class User {
     }
 
     // send friend request
-    public void sendRequest(final String sendTo){
+    public void sendRequest(final String sendTo) {
         if (!this.isObjectReady)
             return;
 
@@ -317,7 +285,7 @@ public class User {
     }
 
     // add course to courses taken
-    public void addCourse(String course, String semester, String year){
+    public void addCourse(String course, String semester, String year) {
         if (!this.isObjectReady) {
             return;
         }
@@ -341,7 +309,7 @@ public class User {
     }
 
     // addplanned course
-    public void planCourse(final String course){
+    public void planCourse(final String course) {
         if (!this.isObjectReady) {
             return;
         }
@@ -364,7 +332,7 @@ public class User {
     }
 
     // remove course from planned list
-    public void unplanCourse(final String course){
+    public void unplanCourse(final String course) {
         if (!this.isObjectReady) {
             return;
         }
@@ -388,11 +356,11 @@ public class User {
     }
 
     // remove friend from list
-    public void removeFriend(final String email){
+    public void removeFriend(final String email) {
         if (!this.isObjectReady)
             return;
         // no email provided
-        if (friendEmails == null){
+        if (friendEmails == null) {
             Log.d("PARSE", "Friends couldn't be removed");
         }
 

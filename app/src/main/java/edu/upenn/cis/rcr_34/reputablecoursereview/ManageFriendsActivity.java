@@ -83,8 +83,8 @@ public class ManageFriendsActivity extends ActionBarActivity {
     }
 
     //Display pending friend requests
-    private void populatePendingRequest(LinearLayout llIn, final User u) {
-        RelativeLayout ll = new RelativeLayout(this);
+    private void populatePendingRequest(final LinearLayout llIn, final User u) {
+        final RelativeLayout ll = new RelativeLayout(this);
         ll.setPadding(0, 0, 0, 20);
 
         RelativeLayout.LayoutParams lpForImage = new RelativeLayout.LayoutParams(200, 250);
@@ -139,7 +139,12 @@ public class ManageFriendsActivity extends ActionBarActivity {
                 me.addListener(new ParseDataReceivedNotifier() {
                     @Override
                     public void notifyListener() {
-                        me.acceptRequest(u.getEmail());
+                        me.acceptRequest(u.getEmail(), new ParseDataReceivedNotifier() {
+                            @Override
+                            public void notifyListener() {
+                                llIn.removeView(ll);
+                            }
+                        });
                     }
                 });
             }

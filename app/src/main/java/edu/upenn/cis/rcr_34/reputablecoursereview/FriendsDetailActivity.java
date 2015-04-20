@@ -215,7 +215,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
 
         for (int i = 0; i < coursesTaken.size(); i++){
             CoursesTaken ct = coursesTaken.get(i);
-            String courseName = ct.getCourseCode();
+            final String courseName = ct.getCourseCode();
             String semseterTaken = ct.getSemesterTaken();
             String yearTaken = ct.getYearTaken();
             String rating = "N/A";
@@ -234,13 +234,15 @@ public class FriendsDetailActivity extends ActionBarActivity {
             if (i % 2 == 1){
                 course.setBackgroundColor(Color.LTGRAY);
             }
+
+            // Go to course page if course is clicked
             final FriendsDetailActivity self = this;
             course.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(self, CourseActivity.class);
                     i.putExtra("property", "code");
-                    i.putExtra("name", "ABC 123");
+                    i.putExtra("name", courseName);
                     startActivity(i);
                 }
             });
