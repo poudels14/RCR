@@ -268,6 +268,7 @@ public class User {
                             ParseObject sendRequest = new ParseObject("pendingFriendRequest");
                             sendRequest.put("sentBy", email);
                             sendRequest.put("sentTo", sendTo);
+                            sendRequest.put("accepted", false);
                             sendRequest.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {
