@@ -17,9 +17,11 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.facebook.FacebookSdk;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -43,15 +45,18 @@ public class CourseActivity extends ActionBarActivity {
         //initialize facebook
         FacebookSdk.sdkInitialize(getApplicationContext());
         //to find course
-        parseCourseID = (String)getIntent().getStringExtra("name");
+        property = (String) getIntent().getStringExtra("property");
+        valueOfProperty = (String) getIntent().getStringExtra("value");
 
         // find the course using parsecourseid
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Course");
-        query.whereEqualTo("name", parseCourseID);
-        query.getInBackground(parseCourseID, new GetCallback<ParseObject>() {
+        query.whereEqualTo(property, valueOfProperty);
+        query.findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void done(ParseObject parseObject, com.parse.ParseException e) {
-                if (e == null) {
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if (parseObjects.size() > 0) {
+                    ParseObject parseObject = parseObjects.get(0);
+                    parseCourseID = parseObject.getObjectId();
                     // pass the object's info into the interface
                     if (parseObject == null) {
                         Toast.makeText(getApplicationContext(),
@@ -130,7 +135,7 @@ public class CourseActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void manageAccountClicked(){
+    public void manageAccountClicked() {
         // manage account clicked
         Toast.makeText(getApplicationContext(), "Manage account selected", Toast.LENGTH_SHORT).show();
         Intent intent2 = new Intent(this, ManageAccountActivity.class);
@@ -157,7 +162,6 @@ public class CourseActivity extends ActionBarActivity {
 
     public void populateReview() {
         // fill the reviews after finding them in parse
-        String parseCourseID = getIntent().getStringExtra("parseID");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Review");
         query.whereEqualTo("courseID", parseCourseID);
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -177,7 +181,7 @@ public class CourseActivity extends ActionBarActivity {
     }
 
     // adds each review. uses relative layout and adds textview one at a time
-    public void addReview (LinearLayout ll, final ParseObject review, boolean color) {
+    public void addReview(LinearLayout ll, final ParseObject review, boolean color) {
         int rate = (Integer) review.get("reviewRating");
         if (rate < -4) {
             try {
@@ -415,7 +419,6 @@ public class CourseActivity extends ActionBarActivity {
             // eighth answer
 
 
-
             RelativeLayout.LayoutParams eighthAnswer = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             eighthAnswer.addRule(RelativeLayout.BELOW, question8.getId());
@@ -485,7 +488,7 @@ public class CourseActivity extends ActionBarActivity {
                         ll.removeAllViews();
                         populateReview();
                     } else {
-                        if  (!up.isChecked()) {
+                        if (!up.isChecked()) {
                             up.setChecked(true);
                             down.setChecked(false);
                             int rate;
@@ -531,7 +534,7 @@ public class CourseActivity extends ActionBarActivity {
                         ll.removeAllViews();
                         populateReview();
                     } else {
-                        if  (!down.isChecked()) {
+                        if (!down.isChecked()) {
                             down.setChecked(true);
                             up.setChecked(false);
                             int rate;
