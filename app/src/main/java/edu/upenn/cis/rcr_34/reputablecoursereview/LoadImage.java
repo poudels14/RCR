@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

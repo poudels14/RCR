@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -18,14 +17,11 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,7 +29,6 @@ import org.json.JSONObject;
 
 public class LoginActivity extends ActionBarActivity {
     CallbackManager callbackManager;
-    LoginButton loginButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ParseAPI.init(this);
@@ -62,6 +57,7 @@ public class LoginActivity extends ActionBarActivity {
     }
 
 
+    //User has clicked sign in button
     public void signInClicked(View view){
         EditText username = (EditText)findViewById(R.id.login_email);
         EditText password = (EditText)findViewById(R.id.login_password);
@@ -74,12 +70,14 @@ public class LoginActivity extends ActionBarActivity {
         this.checkLoginDetails(name, word);
     }
 
+    //User has successfully logged in
     protected void logIn(){
         Toast.makeText(getApplicationContext(), "Signed in", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
+    //User clicked register button
     public void registerClicked(View view){
         Intent intent = new Intent(this, CreateAccountActivity.class);
         startActivity(intent);
@@ -110,6 +108,7 @@ public class LoginActivity extends ActionBarActivity {
         });
     }
 
+    //Check if hte user is logged in
     private boolean isLoggedIn(){
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
@@ -118,6 +117,7 @@ public class LoginActivity extends ActionBarActivity {
         return false;
     }
 
+    //User is trying to log in with Facebook
     public void loginWithFacebook(View v){
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"));
         LoginManager.getInstance().registerCallback(callbackManager,

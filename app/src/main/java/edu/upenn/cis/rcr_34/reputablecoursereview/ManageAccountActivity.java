@@ -6,9 +6,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.parse.Parse;
 import com.parse.ParseUser;
 
 /**
@@ -35,27 +32,27 @@ public class ManageAccountActivity extends ActionBarActivity {
         return true;
     }
 
+    //User clicked return to main button
     public void returnToMainClicked(View view){
-        Toast.makeText(getApplicationContext(), "Returning to main", Toast.LENGTH_SHORT).show();
         Intent i = new Intent();
         setResult(RESULT_OK, i);
         finish();
     }
 
+    //User clicked manage friends button
     public void manageFriendsClicked(View view) {
-        Toast.makeText(getApplicationContext(), "Manage friends", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, ManageFriendsActivity.class);
         startActivity(i);
     }
 
+    //User clicked manage future courses button
     public void manageFutureCoursesClicked(View view) {
-        Toast.makeText(getApplicationContext(), "Manage future courses", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, FutureCourses.class);
         startActivity(i);
     }
 
+    //User clicked manage past courses button
     public void managePastCoursesClicked(View view) {
-        Toast.makeText(getApplicationContext(), "Manage past courses", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, PastCourses.class);
         startActivity(i);
     }

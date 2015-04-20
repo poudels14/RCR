@@ -8,7 +8,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,12 +32,12 @@ public class User {
     private ArrayList<String> plannedCourses;
     private boolean isObjectReady;
 
-    public User(final String email) {
+    // user creation
+    public User(final String email){
         this.email = email;
         this.liteners = new ArrayList<ParseDataReceivedNotifier>();
         this.isObjectReady = false;
-
-        // Retrieve user details
+        // finds user
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("email", email);
         query.findInBackground(new FindCallback<ParseUser>() {
@@ -101,8 +100,9 @@ public class User {
         });
     }
 
-    public String getName() {
-        if (isObjectReady) {
+    // finds username of user
+    public String getName(){
+        if (isObjectReady){
             this.name = this.firstName.substring(0, 1).toUpperCase() + this.firstName.substring(1);
             this.name += " " + this.lastName.substring(0, 1).toUpperCase() + this.lastName.substring(1);
             return this.name;
@@ -111,64 +111,71 @@ public class User {
         }
     }
 
-    public String getEmail() {
-        if (isObjectReady) {
+    // finds email of user
+    public String getEmail(){
+        if(isObjectReady){
             return email;
         } else {
             return "INVALID_RETURN_OBJECT";
         }
     }
 
-    public String getYear() {
-        if (isObjectReady) {
+    // finds year of user
+    public String getYear(){
+        if(isObjectReady){
             return year;
         } else {
             return "INVALID_RETURN_OBJECT";
         }
     }
 
-    public String getMajor() {
-        if (isObjectReady) {
+    // finds major of user
+    public String getMajor(){
+        if(isObjectReady){
             return major;
         } else {
             return "INVALID_RETURN_OBJECT";
         }
     }
 
-    public ArrayList<CoursesTaken> getCoursesTaken() {
-        if (isObjectReady) {
+    // finds user's courses taken
+    public ArrayList<CoursesTaken> getCoursesTaken(){
+        if(isObjectReady){
             return this.coursesTaken;
         } else {
             return null;
         }
     }
 
-
-    public String getProfilePic() {
-        if (isObjectReady) {
+    // finds users prof pic
+    public String getProfilePic(){
+        if(isObjectReady){
             return picLink;
         } else {
             return "INVALID_RETURN_OBJECT";
         }
     }
 
-    public ArrayList<String> getFriends() {
-        if (isObjectReady) {
+    // finds users friends
+    public ArrayList<String> getFriends(){
+        if(isObjectReady){
             return this.friendEmails;
         } else {
             return null;
         }
     }
 
-    public ArrayList<String> getPendingRequests() {
-        if (isObjectReady) {
+    // finds users pending requests
+    public ArrayList<String> getPendingRequests(){
+        if(isObjectReady){
             return this.pendingRequests;
         } else {
             return null;
         }
     }
 
-    public void acceptRequest(final String sentBy) {
+    // accepts request
+    public void acceptRequest(final String sentBy){
         if (!this.isObjectReady)
             return;
 
@@ -246,6 +253,7 @@ public class User {
         }
     }
 
+    //reject friend request
     public void rejectRequest(final String email) {
         if (!this.isObjectReady)
             return;
@@ -268,7 +276,8 @@ public class User {
         }
     }
 
-    public void sendRequest(final String sendTo) {
+    // send friend request
+    public void sendRequest(final String sendTo){
         if (!this.isObjectReady)
             return;
 
@@ -303,7 +312,8 @@ public class User {
         }
     }
 
-    public void addCourse(final String course, final String semester, final String year) {
+    // add course to courses taken
+    public void addCourse(String course, String semester, String year){
         if (!this.isObjectReady) {
             return;
         }
@@ -320,13 +330,14 @@ public class User {
                 if (e != null) {
                     Log.d("PARSE", "Course added properly");
                 } else {
-                    Log.d("USER.JAVA", "Course couldn't be added properly: " + email);
+//                    Log.d("USER.JAVA", "Course couldn't be added properly: " + email);
                 }
             }
         });
     }
 
-    public void planCourse(final String course) {
+    // addplanned course
+    public void planCourse(final String course){
         if (!this.isObjectReady) {
             return;
         }
@@ -348,13 +359,15 @@ public class User {
         }
     }
 
-    public void unplanCourse(final String course) {
+    // remove course from planned list
+    public void unplanCourse(final String course){
         if (!this.isObjectReady) {
             return;
         }
         if (plannedCourses == null) {
             plannedCourses = new ArrayList<String>();
         }
+        // find course
         if (this.plannedCourses.contains(course)) {
             this.plannedCourses.remove(course);
             this.me.put("plannedCourses", plannedCourses);
@@ -370,14 +383,16 @@ public class User {
         }
     }
 
-    public void removeFriend(final String email) {
+    // remove friend from list
+    public void removeFriend(final String email){
         if (!this.isObjectReady)
             return;
-
-        if (friendEmails == null) {
+        // no email provided
+        if (friendEmails == null){
             Log.d("PARSE", "Friends couldn't be removed");
         }
 
+        // find friend and try to remove
         if (this.friendEmails.contains(email)) {
             this.friendEmails.remove(email);
             this.me.put("friends", friendEmails);

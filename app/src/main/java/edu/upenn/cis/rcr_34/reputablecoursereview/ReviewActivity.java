@@ -7,17 +7,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.facebook.FacebookSdk;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -175,7 +171,6 @@ public class ReviewActivity extends ActionBarActivity {
         }
 
         public void onNothingSelected(AdapterView<?> parent) {
-            // congratulations, you did nothing!
         }
     }
 }
