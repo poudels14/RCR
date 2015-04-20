@@ -298,6 +298,7 @@ public class User {
                     if (list.size() > 0) {
                         for (ParseObject po : (List<ParseObject>) list) {
                             friendEmails.add((String) po.get("sentTo"));
+                            po.deleteInBackground();
                         }
 
                         // update parse with new friends list
