@@ -343,6 +343,7 @@ public class User {
     }
 
     public boolean hasPlannedCourse(ParseObject course){
+        updatePlannedCourses();
         String courseId = course.getObjectId();
         if(plannedCourses != null) {
             return plannedCourses.contains(courseId);
@@ -352,8 +353,13 @@ public class User {
         }
     }
 
+    private void updatePlannedCourses(){
+        plannedCourses = (ArrayList<String>)me.get("plannedCourses");
+    }
+
     // add planned course
     public void planCourse(final String course) {
+        updatePlannedCourses();
         if (!this.isObjectReady) {
             return;
         }
@@ -377,6 +383,7 @@ public class User {
 
     // remove course from planned list
     public void unplanCourse(final String course) {
+        updatePlannedCourses();
         if (!this.isObjectReady) {
             return;
         }
