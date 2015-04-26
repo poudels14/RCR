@@ -3,6 +3,7 @@ package edu.upenn.cis.rcr_34.reputablecoursereview;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -104,6 +105,10 @@ public class FutureCourses extends ActionBarActivity {
                         if(!user.hasPlannedCourse(obj)) {
                             addToList(obj);
                             user.planCourse(obj.getObjectId());
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(), "Course already added",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), "Course not found",
