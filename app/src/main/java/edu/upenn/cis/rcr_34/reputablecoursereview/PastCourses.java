@@ -40,6 +40,19 @@ public class PastCourses extends ActionBarActivity {
                 (String) ParseUser.getCurrentUser().get("firstName") +
                 " " + (String) ParseUser.getCurrentUser().get("lastName"));
         //Display all courses taken
+        showCourses(email);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        String email = user.getEmail();
+        showCourses(email);
+    }
+
+    private void showCourses(String email){
+        LinearLayout courseListView = (LinearLayout) findViewById(R.id.courseListViewLL);
+        courseListView.removeAllViews();
         ParseQuery<ParseObject> cT = ParseQuery.getQuery("coursesTaken");
         cT.whereContains("userEmail", email);
         cT.findInBackground(new FindCallback<ParseObject>() {
