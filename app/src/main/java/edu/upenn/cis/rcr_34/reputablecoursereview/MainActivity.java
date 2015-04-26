@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -52,6 +53,8 @@ public class MainActivity extends ActionBarActivity {
         }
 
         if (id == R.id.sign_out) {
+
+            LoginManager.getInstance().logOut();
             StaticUtils.signOutClicked(this.getApplicationContext());
         }
 
