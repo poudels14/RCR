@@ -110,10 +110,7 @@ public class ManageFriendsActivity extends ActionBarActivity {
         profilePic.setId(Utils.getUniqueID());
         profilePic.setLayoutParams(lpForImage);
         profilePic.setBackgroundColor(Color.BLACK);
-        LoadImage lm = new LoadImage(this, profilePic);
-        lm.execute(u.getProfilePic()); //icon = address of image to be loaded
-
-        ll.addView(profilePic);
+        u.setProfileImage(profilePic);
 
         //Set name
         RelativeLayout.LayoutParams lpForName = new RelativeLayout.LayoutParams(
@@ -246,9 +243,7 @@ public class ManageFriendsActivity extends ActionBarActivity {
         profilePic.setBackgroundColor(Color.BLACK);
         profilePic.setId(Utils.getUniqueID());
         profilePic.setLayoutParams(lpForImage);
-        LoadImage lm = new LoadImage(this, profilePic);
-        lm.execute(u.getProfilePic()); //icon = address of image to be loaded
-        rL.addView(profilePic);
+        u.setProfileImage(profilePic);
 
         //Set name
         RelativeLayout.LayoutParams lpForName = new RelativeLayout.LayoutParams(

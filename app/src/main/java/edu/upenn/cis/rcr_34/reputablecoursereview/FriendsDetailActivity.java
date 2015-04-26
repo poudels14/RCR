@@ -94,9 +94,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
         profilePic.setBackgroundColor(Color.BLACK);
         profilePic.setId(Utils.getUniqueID());
         profilePic.setLayoutParams(lpForImage);
-        LoadImage lm = new LoadImage(this, profilePic);
-        lm.execute(u.getProfilePic()); //icon = address of image to be loaded
-        personalDetail.addView(profilePic);
+        u.setProfileImage(profilePic);
 
         //Set name
         RelativeLayout.LayoutParams lpForName = new RelativeLayout.LayoutParams(
