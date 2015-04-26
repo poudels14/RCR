@@ -3,14 +3,11 @@ package edu.upenn.cis.rcr_34.reputablecoursereview;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import java.util.ArrayList;
 import java.util.List;
-
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -59,11 +56,6 @@ public class CourseAdditionActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
-    }
-
-    //Add a review to the course
-    public void addReviewClicked(View view){
-        Toast.makeText(getApplicationContext(), "Add review", Toast.LENGTH_SHORT).show();
     }
 
     //Save the changes to the course

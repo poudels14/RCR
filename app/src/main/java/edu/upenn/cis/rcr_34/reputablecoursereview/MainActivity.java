@@ -3,7 +3,6 @@ package edu.upenn.cis.rcr_34.reputablecoursereview;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,9 +17,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
 import java.util.List;
-
 import edu.upenn.cis.rcr_34.reputablecoursereview.util.StaticUtils;
 
 public class MainActivity extends ActionBarActivity {
@@ -33,9 +30,6 @@ public class MainActivity extends ActionBarActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
 
         setContentView(R.layout.activity_main);
-
-        User u = new User("poudels@seas.upenn.edu");
-        Log.d("LOGIN ACTIVITY", "Received current user details:name" + u.getName());
     }
 
     @Override
@@ -141,7 +135,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void manageAccountClicked(){
-        Toast.makeText(getApplicationContext(), "Manage account selected", Toast.LENGTH_SHORT).show();
         Intent intent2 = new Intent(this, ManageAccountActivity.class);
         startActivity(intent2);
     }
