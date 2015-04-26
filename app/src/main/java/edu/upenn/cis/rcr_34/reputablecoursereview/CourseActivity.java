@@ -55,8 +55,11 @@ public class CourseActivity extends ActionBarActivity {
 
 
         // find the course using parsecourseid
+        Log.d("Check", "1");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Course");
-        query.whereEqualTo(property, valueOfProperty);
+        Log.d("Check", "2");
+        query.whereContains(property, valueOfProperty);
+        Log.d("Check", "3");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {

@@ -14,14 +14,20 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class FriendsDetailActivity extends ActionBarActivity {
     private String email; // this email belongs to the friend
     private boolean isFriend;
+    private LinearLayout allClassesTaken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +142,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
         personalDetail.addView(major);
 
 
-        //Set major
+        //Set email
         RelativeLayout.LayoutParams lpForEmail = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         lpForEmail.addRule(RelativeLayout.BELOW, major.getId());
@@ -155,7 +161,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
         llIn.addView(personalDetail);
 
         if(isFriend) {
-            //set decline button
+            //set unfriend button
             RelativeLayout.LayoutParams lpForRemove = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             lpForRemove.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
@@ -186,32 +192,32 @@ public class FriendsDetailActivity extends ActionBarActivity {
             personalDetail.addView(unfriend);
         }
         else{
-            //set decline button
-            RelativeLayout.LayoutParams lpForRemove = new RelativeLayout.LayoutParams(
+            //set friend request button
+            RelativeLayout.LayoutParams lpForAdd = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            lpForRemove.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
-            lpForRemove.addRule(RelativeLayout.BELOW, email.getId());
-            final Button unfriend = new Button(this);
-            unfriend.setText("Add friend");
-            unfriend.setTextSize(10);
-            unfriend.setId(Utils.getUniqueID());
-            unfriend.setLayoutParams(lpForRemove);
-            unfriend.setOnClickListener(new View.OnClickListener() {
+            lpForAdd.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
+            lpForAdd.addRule(RelativeLayout.BELOW, email.getId());
+            final Button addFriend = new Button(this);
+            addFriend.setText("Add friend");
+            addFriend.setTextSize(10);
+            addFriend.setId(Utils.getUniqueID());
+            addFriend.setLayoutParams(lpForAdd);
+            addFriend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     final User me = new User(ParseUser.getCurrentUser().getEmail());
                     me.addListener(new ParseDataReceivedNotifier() {
                         @Override
                         public void notifyListener() {
-                            if (unfriend.getText() == "Add friend") {
-                                unfriend.setText("Request Sent");
+                            if (addFriend.getText() == "Add friend") {
+                                addFriend.setText("Request Sent");
                                 me.sendRequest(u.getEmail());
                             }
                         }
                     });
                 }
             });
-            personalDetail.addView(unfriend);
+            personalDetail.addView(addFriend);
         }
 
         // End of personal details
@@ -225,14 +231,6 @@ public class FriendsDetailActivity extends ActionBarActivity {
             classesTakenDetails.setId(Utils.getUniqueID());
             classesTakenDetails.setPadding(5, 20, 0, 20);
 
-            // Add title for courses taken
-//        LinearLayout allCourseTitle = new LinearLayout(this);
-//        allCourseTitle.setLayoutParams(new RelativeLayout.LayoutParams(
-//                RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-//        allCourseTitle.setOrientation(LinearLayout.HORIZONTAL);
-//        allCourseTitle.setId(Utils.getUniqueID());
-//        allCourseTitle.setBackgroundColor(Color.LTGRAY);
-
             TextView classesTakenLabel = new TextView(this);
             RelativeLayout.LayoutParams lpForclassesTakenLabel = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -243,7 +241,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
             classesTakenDetails.addView(classesTakenLabel);
 
             //Linear layout for all holding all classes taken
-            LinearLayout allClassesTaken = new LinearLayout(this);
+            allClassesTaken = new LinearLayout(this);
             allClassesTaken.setOrientation(LinearLayout.VERTICAL);
             allClassesTaken.setId(Utils.getUniqueID());
 
@@ -255,76 +253,98 @@ public class FriendsDetailActivity extends ActionBarActivity {
                 }
             }
 
-
-            for (int i = 0; i < coursesTaken.size(); i++) {
-                CoursesTaken ct = coursesTaken.get(i);
-                String courseName = ct.getCourseCode();
-                String semseterTaken = ct.getSemesterTaken();
-                String yearTaken = ct.getYearTaken();
-                String rating = "N/A";
-                int r = ct.getRating();
-                // rating is -1 if the user hasn't rated it yet
-                if (r != -1) {
-                    rating = Integer.toString(r);
-                }
-
-                //Set course
-                LinearLayout course = new LinearLayout(this);
-                course.setLayoutParams(new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.MATCH_PARENT, 200));
-                course.setOrientation(LinearLayout.HORIZONTAL);
-                course.setId(Utils.getUniqueID());
-                if (i % 2 == 1) {
-                    course.setBackgroundColor(Color.LTGRAY);
-                }
-                final FriendsDetailActivity self = this;
-                course.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(self, CourseActivity.class);
-                        i.putExtra("property", "code");
-                        i.putExtra("name", "ABC 123");
-                        startActivity(i);
+            ParseQuery<ParseObject> cT = ParseQuery.getQuery("coursesTaken");
+            cT.whereContains("userEmail", email);
+            cT.findInBackground(new FindCallback<ParseObject>() {
+                public void done(List<ParseObject> courses, ParseException e) {
+                    if (e == null) {
+                        if (courses.size() > 0) {
+                            int index = 0;
+                            for (ParseObject ob : courses) {
+                                addCourseTaken(ob, index);
+                                index++;
+                            }
+                        }
                     }
-                });
-
-                //Set course code
-                TextView className = new TextView(this);
-                RelativeLayout.LayoutParams lpForClassName = new RelativeLayout.LayoutParams(
-                        400, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                className.setText(courseName);
-                className.setPadding(20, 0, 0, 0);
-                className.setId(Utils.getUniqueID());
-                className.setLayoutParams(lpForClassName);
-                course.addView(className);
-
-                //Set course rating
-                TextView classRating = new TextView(this);
-                RelativeLayout.LayoutParams lpForClassRating = new RelativeLayout.LayoutParams(
-                        200, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                classRating.setText(rating);
-                classRating.setPadding(20, 0, 0, 0);
-                classRating.setId(Utils.getUniqueID());
-                classRating.setLayoutParams(lpForClassRating);
-                course.addView(classRating);
-
-
-                //Set semester taken
-                TextView semester = new TextView(this);
-                RelativeLayout.LayoutParams lpForSemester = new RelativeLayout.LayoutParams(
-                        800, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                semester.setText(semseterTaken + " " + yearTaken);
-                semester.setPadding(20, 0, 0, 0);
-                semester.setId(Utils.getUniqueID());
-                semester.setLayoutParams(lpForSemester);
-                course.addView(semester);
-
-                allClassesTaken.addView(course);
-            }
+                }
+            });
 
             classesTakenDetails.addView(allClassesTaken);
 
             llIn.addView(classesTakenDetails);
         }
+    }
+
+    private void addCourseTaken(ParseObject courseTaken, int i){
+        final String courseName = (String) courseTaken.get("courseName");
+        String semseterTaken = (String) courseTaken.get("semester");
+        String yearTaken = (String) courseTaken.get("year");
+        int r = (int) courseTaken.get("rating");
+        String rating = r + "";
+        // rating is -1 if the user hasn't rated it yet
+
+        //Set course
+        LinearLayout course = new LinearLayout(this);
+        course.setLayoutParams(new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT, 200));
+        course.setOrientation(LinearLayout.HORIZONTAL);
+        course.setId(Utils.getUniqueID());
+        if (i % 2 == 1) {
+            course.setBackgroundColor(Color.LTGRAY);
+        }
+        final FriendsDetailActivity self = this;
+        course.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseQuery<ParseObject> courseSearch = ParseQuery.getQuery("Course");
+                courseSearch.whereContains("Code", courseName);
+                courseSearch.findInBackground(new FindCallback<ParseObject>() {
+                    public void done(List<ParseObject> courses, ParseException e) {
+                        if (e == null) {
+                            if (courses.size() > 0) {
+                                String id = courses.get(0).getObjectId();
+                                Intent i = new Intent(self, CourseActivity.class);
+                                i.putExtra("property", "objectId");
+                                i.putExtra("value", id);
+                                startActivity(i);
+                            }
+                        }
+                    }
+                });
+            }
+        });
+
+        //Set course code
+        TextView className = new TextView(this);
+        RelativeLayout.LayoutParams lpForClassName = new RelativeLayout.LayoutParams(
+                400, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        className.setText(courseName);
+        className.setPadding(20, 0, 0, 0);
+        className.setId(Utils.getUniqueID());
+        className.setLayoutParams(lpForClassName);
+        course.addView(className);
+
+        //Set course rating
+        TextView classRating = new TextView(this);
+        RelativeLayout.LayoutParams lpForClassRating = new RelativeLayout.LayoutParams(
+                200, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        classRating.setText(rating);
+        classRating.setPadding(20, 0, 0, 0);
+        classRating.setId(Utils.getUniqueID());
+        classRating.setLayoutParams(lpForClassRating);
+        course.addView(classRating);
+
+
+        //Set semester taken
+        TextView semester = new TextView(this);
+        RelativeLayout.LayoutParams lpForSemester = new RelativeLayout.LayoutParams(
+                800, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        semester.setText(semseterTaken + " " + yearTaken);
+        semester.setPadding(20, 0, 0, 0);
+        semester.setId(Utils.getUniqueID());
+        semester.setLayoutParams(lpForSemester);
+        course.addView(semester);
+
+        allClassesTaken.addView(course);
     }
 }
