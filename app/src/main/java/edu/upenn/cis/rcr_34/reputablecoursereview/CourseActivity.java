@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -36,7 +37,9 @@ public class CourseActivity extends ActionBarActivity {
     private String valueOfProperty;
     private String property; // this is the property of parse object
     private String parseCourseID;
-
+    private String codeStore;
+    final User user = new User(ParseUser.getCurrentUser().getEmail());
+    ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // initialize parse
@@ -48,6 +51,7 @@ public class CourseActivity extends ActionBarActivity {
         //to find course
         property = (String) getIntent().getStringExtra("property");
         valueOfProperty = (String) getIntent().getStringExtra("value");
+
 
         // find the course using parsecourseid
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Course");
@@ -63,6 +67,7 @@ public class CourseActivity extends ActionBarActivity {
                         Toast.makeText(getApplicationContext(),
                                 "Error Retrieving Course", Toast.LENGTH_SHORT).show();
                     } else {
+                        codeStore = parseObject.getString("Code");
                         Log.d("COURSE_ACTIVITY", parseObject.getString("Name"));
                         populateUI(parseObject.getDouble("Rating"),
                                 parseObject.getString("Name"),
@@ -148,6 +153,43 @@ public class CourseActivity extends ActionBarActivity {
         Intent i = new Intent(this, ReviewActivity.class);
         i.putExtra("parseID", parseCourseID);
         startActivity(i);
+    }
+
+    public void onFutureClicked(View v) {
+        final String courseCode = codeStore.toUpperCase();
+
+        // search for the course in parse
+        final ParseQuery<ParseObject> courseSearch = ParseQuery.getQuery("Course");
+        courseSearch.whereContains("Code", courseCode);
+        courseSearch.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> objList,ParseException e) {
+                if (e == null) {
+                    // initialize the course activity using Parse's ID of the course
+                    if (objList.size() > 0) {
+                        ParseObject obj = objList.get(0);
+                        Toast.makeText(getApplicationContext(), "Trying to add",
+                                Toast.LENGTH_SHORT).show();
+
+                        if(!user.hasPlannedCourse(obj)) {
+
+                            Toast.makeText(getApplicationContext(), obj.getObjectId() + " " + user.getName() + " Added",
+                                    Toast.LENGTH_SHORT).show();
+                            user.planCourse(obj.getObjectId());
+
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Course not found",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Course not found",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+        });
+
     }
 
     protected void populateUI(Double rating, String name, String code) {
