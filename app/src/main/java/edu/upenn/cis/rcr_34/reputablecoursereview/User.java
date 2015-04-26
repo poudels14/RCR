@@ -189,7 +189,10 @@ public class User {
             friendEmails = new ArrayList<String>();
         }
 
-        this.friendEmails.add(sentBy);
+        if (!friendEmails.contains(sentBy)){
+            // Only add to friends list of not already a friend
+            this.friendEmails.add(sentBy);
+        }
 
         //set accepted to true in pending list
         ParseQuery<ParseObject> setAcceptedInParse = new ParseQuery<ParseObject>("pendingFriendRequest");
@@ -255,6 +258,11 @@ public class User {
     public void sendRequest(final String sendTo) {
         if (!this.isObjectReady)
             return;
+
+        if (me.getEmail().equals(sendTo)){
+            //Cant sent request to yourself
+            return;
+        }
 
         if (this.friendEmails != null && this.friendEmails.contains(sendTo)) {
             Log.d("PARSE", sendTo + " is already your friend");
