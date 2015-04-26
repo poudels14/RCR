@@ -158,7 +158,7 @@ public class CourseActivity extends ActionBarActivity {
 
     public void populateReview() {
         // fill the reviews after finding them in parse
-        String parseCourseID = getIntent().getStringExtra("parseID");
+        String parseCourseID = getIntent().getStringExtra("name");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Review");
         query.whereEqualTo("courseID", parseCourseID);
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -185,7 +185,7 @@ public class CourseActivity extends ActionBarActivity {
             }
         } else {
 
-
+            Log.d("test1", "Made a review");
             // this is the uppermost linear layout
             LinearLayout parentLayout = new LinearLayout(this);
 
@@ -193,6 +193,7 @@ public class CourseActivity extends ActionBarActivity {
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
             parentLayout.setOrientation(LinearLayout.HORIZONTAL);
+            //parentLayout.setId(Utils.getUniqueID());
 
             if (color) {
                 parentLayout.setBackgroundColor(Color.parseColor("#CCCCFF"));
@@ -205,21 +206,24 @@ public class CourseActivity extends ActionBarActivity {
             LinearLayout reviewScoreLayout = new LinearLayout(this);
             reviewScoreLayout.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT));
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
             reviewScoreLayout.setOrientation(LinearLayout.VERTICAL);
+            reviewScoreLayout.setGravity(Gravity.CENTER);
             parentLayout.addView(reviewScoreLayout);
 
 
             TextView rstext = new TextView(this);
-            rstext.setText("Review Score:");
+            rstext.setText("Review \nScore:");
             rstext.setPadding(20, 0, 0, 0);
             rstext.setId(Utils.getUniqueID());
+            rstext.setTextSize(10);
             reviewScoreLayout.addView(rstext);
 
             TextView rsval = new TextView(this);
             rsval.setText(review.get("reviewRating").toString());
             rsval.setGravity(Gravity.CENTER);
             rsval.setId(Utils.getUniqueID());
+            rsval.setTextSize(18);
             reviewScoreLayout.addView(rsval);
 
             // create layout for radio buttons ----------------------------------------------------
@@ -229,8 +233,9 @@ public class CourseActivity extends ActionBarActivity {
             LinearLayout buttonsLayout = new LinearLayout(this);
             buttonsLayout.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT));
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
             buttonsLayout.setOrientation(LinearLayout.VERTICAL);
+            buttonsLayout.setGravity(Gravity.CENTER);
             parentLayout.addView(buttonsLayout);
 
             ArrayList<String> upv = (ArrayList<String>) review.get("upvoted");
@@ -247,8 +252,8 @@ public class CourseActivity extends ActionBarActivity {
 
             final RadioButton down = new RadioButton(this);
             final RadioButton up = new RadioButton(this);
-            up.setText("UP");
-            down.setText("DOWN");
+            up.setText("+");
+            down.setText("-");
             buttonsLayout.addView(up);
             buttonsLayout.addView(down);
 
@@ -346,7 +351,7 @@ public class CourseActivity extends ActionBarActivity {
             LinearLayout reviewTextLayout = new LinearLayout(this);
             reviewTextLayout.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT));
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
             reviewTextLayout.setOrientation(LinearLayout.VERTICAL);
             parentLayout.addView(reviewTextLayout);
 
@@ -355,6 +360,7 @@ public class CourseActivity extends ActionBarActivity {
             question1.setText("Required for major?");
             question1.setId(Utils.getUniqueID());
             question1.setSingleLine(false);
+            question1.setTextSize(10);
             reviewTextLayout.addView(question1);
 
             if ((boolean) review.get("required") == true) {
@@ -367,7 +373,8 @@ public class CourseActivity extends ActionBarActivity {
             question2.setText("Would you recommend to non-major?");
             question2.setPadding(20, 0, 0, 0);
             question2.setId(Utils.getUniqueID());
-            question1.setSingleLine(false);
+            question2.setSingleLine(false);
+            question2.setTextSize(10);
             reviewTextLayout.addView(question2);
 
             TextView answer2 = new TextView(this);
@@ -381,6 +388,7 @@ public class CourseActivity extends ActionBarActivity {
             question3.setText("Is this useful to your major?");
             question3.setPadding(20, 0, 0, 0);
             question3.setId(Utils.getUniqueID());
+            question3.setTextSize(10);
             reviewTextLayout.addView(question3);
 
             if ((boolean) review.get("recommend") == true) {
@@ -394,6 +402,7 @@ public class CourseActivity extends ActionBarActivity {
             question4.setText("Is this course a serious time commitment?");
             question4.setPadding(20, 0, 0, 0);
             question4.setId(Utils.getUniqueID());
+            question4.setTextSize(10);
             reviewTextLayout.addView(question4);
 
             if ((boolean) review.get("commitment") == true) {
@@ -404,9 +413,10 @@ public class CourseActivity extends ActionBarActivity {
 
 
             TextView question5 = new TextView(this);
-            question5.setText("Professor Name:" + (String) review.get("professor"));
+            question5.setText("Professor Name: " + (String) review.get("professor"));
             question5.setPadding(20, 0, 0, 0);
             question5.setId(Utils.getUniqueID());
+            question5.setTextSize(10);
             reviewTextLayout.addView(question5);
 
             TextView question8 = new TextView(this);
@@ -414,6 +424,7 @@ public class CourseActivity extends ActionBarActivity {
             question8.setSingleLine(false);
             question8.setPadding(20, 0, 0, 0);
             question8.setId(Utils.getUniqueID());
+            question8.setTextSize(10);
             reviewTextLayout.addView(question8);
 
             if ((String) review.get("textReview") != null &&
@@ -427,14 +438,16 @@ public class CourseActivity extends ActionBarActivity {
             LinearLayout courseScoreLayout = new LinearLayout(this);
             courseScoreLayout.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT));
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
             courseScoreLayout.setOrientation(LinearLayout.VERTICAL);
+            courseScoreLayout.setGravity(Gravity.CENTER_VERTICAL);
             parentLayout.addView(courseScoreLayout);
 
             TextView scoreText = new TextView(this);
-            scoreText.setText("Overall Course Rating:");
+            scoreText.setText("Course\nRating:");
             scoreText.setPadding(20, 0, 0, 0);
             scoreText.setId(Utils.getUniqueID());
+            scoreText.setTextSize(10);
             courseScoreLayout.addView(scoreText);
 
 
@@ -442,6 +455,7 @@ public class CourseActivity extends ActionBarActivity {
             score.setText(review.get("rating").toString());
             score.setGravity(Gravity.CENTER);
             score.setId(Utils.getUniqueID());
+            score.setTextSize(18);
             courseScoreLayout.addView(score);
 
 
