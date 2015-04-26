@@ -38,13 +38,17 @@ public class FriendsDetailActivity extends ActionBarActivity {
         email = extra.getString("email");
         isFriend = false;
         ParseUser currentUser = ParseUser.getCurrentUser();
-        ArrayList myFriends = (ArrayList)currentUser.get("friends");
-        for(Object o : myFriends){
-            String s = (String)o;
-            if(email.equals(s)){
-                isFriend = true;
+        ArrayList<String> myFriends = (ArrayList<String>)currentUser.get("friends");
+
+        // used this if statement because it returned null exception;
+        if (myFriends != null){
+            for(String s : myFriends){
+                if(email.equals(s)){
+                    isFriend = true;
+                }
             }
         }
+
 
         final LinearLayout profileDetail = (LinearLayout) findViewById(R.id.friends_detail_main_view);
         final User u = new User(email);
@@ -101,6 +105,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
         profilePic.setId(Utils.getUniqueID());
         profilePic.setLayoutParams(lpForImage);
         u.setProfileImage(profilePic);
+        personalDetail.addView(profilePic);
 
         //Set name
         RelativeLayout.LayoutParams lpForName = new RelativeLayout.LayoutParams(

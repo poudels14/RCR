@@ -23,6 +23,7 @@ import com.parse.SignUpCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -68,17 +69,7 @@ public class CreateAccountActivity extends ActionBarActivity {
 
             bitmap = BitmapFactory.decodeFile(picturePath);
 
-        } else {
-
-            Log.i("SonaSys", "resultCode: " + resultCode);
-            switch (resultCode) {
-                case 0:
-                    Log.i("SonaSys", "User cancelled");
-                    break;
-            }
-
         }
-
     }
 
 
@@ -172,6 +163,11 @@ public class CreateAccountActivity extends ActionBarActivity {
 
         user.put("major", major);
         user.put("year", year);
+
+        user.put("friends", new ArrayList<String>());
+        user.put("plannedCourses", new ArrayList<String>());
+        user.put("reviewedCourses", new ArrayList<String>());
+        user.put("facebook", false);
 
         user.setEmail(email);
         user.setUsername(email);

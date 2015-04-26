@@ -17,8 +17,6 @@ import java.util.ArrayList;
 
 
 public class ManageFriendsActivity extends ActionBarActivity {
-    //http://icons.iconarchive.com/icons/ilovecolors/easter-bunny-egg/256/easter-Bunny-icon.png
-    private String icon = "http://icons.iconarchive.com/icons/yellowicon/game-stars/256/Mario-icon.png";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +104,7 @@ public class ManageFriendsActivity extends ActionBarActivity {
         profilePic.setLayoutParams(lpForImage);
         profilePic.setBackgroundColor(Color.BLACK);
         u.setProfileImage(profilePic);
+        ll.addView(profilePic);
 
         //Set name
         RelativeLayout.LayoutParams lpForName = new RelativeLayout.LayoutParams(
@@ -239,6 +238,7 @@ public class ManageFriendsActivity extends ActionBarActivity {
         profilePic.setId(Utils.getUniqueID());
         profilePic.setLayoutParams(lpForImage);
         u.setProfileImage(profilePic);
+        rL.addView(profilePic);
 
         //Set name
         RelativeLayout.LayoutParams lpForName = new RelativeLayout.LayoutParams(
