@@ -50,7 +50,7 @@ public class FutureCourses extends ActionBarActivity {
                                 ParseObject obj = objList.get(0);
                                 addToList(obj);
                             } else {
-                                Toast.makeText(getApplicationContext(), "Error populating courses",
+                                Toast.makeText(getApplicationContext(), "No future courses",
                                         Toast.LENGTH_SHORT).show();
                                 return;
                             }
