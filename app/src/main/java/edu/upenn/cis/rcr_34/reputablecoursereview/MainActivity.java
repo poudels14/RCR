@@ -136,7 +136,7 @@ public class MainActivity extends ActionBarActivity {
     private void initializeCourse(ParseObject po) {
         Intent i = new Intent(this, CourseActivity.class);
         i.putExtra("property", "objectId");
-        i.putExtra("name", po.getObjectId());
+        i.putExtra("value", po.getObjectId());
         startActivity(i);
     }
 
