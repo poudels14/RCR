@@ -1,6 +1,7 @@
 package edu.upenn.cis.rcr_34.reputablecoursereview;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -350,8 +351,24 @@ public class User {
         });
     }
 
-    // addplanned course
+    public boolean hasPlannedCourse(ParseObject course){
+        updatePlannedCourses();
+        String courseId = course.getObjectId();
+        if(plannedCourses != null) {
+            return plannedCourses.contains(courseId);
+        }
+        else{
+            return false;
+        }
+    }
+
+    private void updatePlannedCourses(){
+        plannedCourses = (ArrayList<String>)me.get("plannedCourses");
+    }
+
+    // add planned course
     public void planCourse(final String course) {
+        updatePlannedCourses();
         if (!this.isObjectReady) {
             return;
         }
@@ -364,6 +381,7 @@ public class User {
             this.me.saveInBackground(new SaveCallback() {
                 public void done(ParseException e) {
                     if (e != null) {
+
                         Log.d("PARSE", "Course added properly");
                     } else {
                         Log.d("USER.JAVA", "Course couldn't be added properly: " + email);
@@ -375,6 +393,7 @@ public class User {
 
     // remove course from planned list
     public void unplanCourse(final String course) {
+        updatePlannedCourses();
         if (!this.isObjectReady) {
             return;
         }

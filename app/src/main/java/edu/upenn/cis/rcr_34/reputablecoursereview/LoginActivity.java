@@ -124,7 +124,6 @@ public class LoginActivity extends ActionBarActivity {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        // App code
 
                         GraphRequest request = GraphRequest.newMeRequest(
                                 AccessToken.getCurrentAccessToken(),
@@ -134,7 +133,7 @@ public class LoginActivity extends ActionBarActivity {
                                     public void onCompleted(
                                             JSONObject object,
                                             GraphResponse response) {
-                                        // Application code
+
                                         try {
                                             String a = (String) object.get("email");
                                             checkLoginDetailsFB(a);
@@ -152,13 +151,13 @@ public class LoginActivity extends ActionBarActivity {
 
                     @Override
                     public void onCancel() {
-                        // App code
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
-                        // App code
-                        Toast.makeText(getApplicationContext(), "There was an error.", Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(getApplicationContext(), "There was an error.",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -182,7 +181,4 @@ public class LoginActivity extends ActionBarActivity {
             }
         });
     }
-
-
-
 }

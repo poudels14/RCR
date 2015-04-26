@@ -40,6 +40,28 @@ public class ReviewActivity extends ActionBarActivity {
         setContentView(R.layout.activity_review);
         FacebookSdk.sdkInitialize(getApplicationContext());
 
+        // get the information of the current user and the course being reviewed
+        // these IDs will be stored in the review and allow it to be found from the user and course
+        // through the parse backend
+        userID = ParseUser.getCurrentUser().getObjectId();
+        courseID = getIntent().getStringExtra("parseID");
+
+        // check if the user has already reviewed this course
+        ArrayList<String> allReviews = (ArrayList<String>)
+                ParseUser.getCurrentUser().get("reviewedCourses");
+
+        if (allReviews == null) {
+            allReviews = new ArrayList<String>();
+        }
+        if (allReviews.contains(courseID)) {
+            Toast.makeText(getApplicationContext(),
+                    "You have already reviewed this course.", Toast.LENGTH_LONG).show();
+
+            Intent i = new Intent();
+            setResult(RESULT_OK, i);
+            finish();
+        }
+
         // drop down menu
         Spinner spinner;
 
@@ -57,11 +79,7 @@ public class ReviewActivity extends ActionBarActivity {
         SpinListener sl = new SpinListener();
         spinner.setOnItemSelectedListener(sl);
 
-        // get the information of the current user and the course being reviewed
-        // these IDs will be stored in the review and allow it to be found from the user and course
-        // through the parse backend
-        userID = ParseUser.getCurrentUser().getObjectId();
-        courseID = getIntent().getStringExtra("parseID");
+
 
         // make sure that the scroll view starts at the top of the screen and not midway
         // (why is this not done by default?)
@@ -146,6 +164,19 @@ public class ReviewActivity extends ActionBarActivity {
             review.put("upvoted", upvAndDownv);
             review.put("downvoted", upvAndDownv);
             review.saveInBackground();
+
+            // add this to the user's list of courses reviewed
+            // this will be used to prohibit the user from submitting a duplicate review and
+            // ensure that the user can only see reviews after submitting a certain amount
+
+            ArrayList<String> allReviews = (ArrayList<String>)
+                    ParseUser.getCurrentUser().get("reviewedCourses");
+            if (allReviews == null) {
+                allReviews = new ArrayList<String>();
+            }
+            allReviews.add(courseID);
+            ParseUser.getCurrentUser().put("reviewedCourses", allReviews);
+            ParseUser.getCurrentUser().saveInBackground();
 
             Toast.makeText(getApplicationContext(),
                     "Review Submitted.", Toast.LENGTH_LONG).show();
