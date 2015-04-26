@@ -40,7 +40,7 @@ public class CourseActivity extends ActionBarActivity {
     private String parseCourseID;
     private String codeStore;
     final User user = new User(ParseUser.getCurrentUser().getEmail());
-    ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // initialize parse
