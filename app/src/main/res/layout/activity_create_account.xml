@@ -1,94 +1,148 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="edu.upenn.cis.rcr_34.reputablecoursereview.CreateAccountActivity">
 
     <!-- Login progress -->
-    <ProgressBar android:id="@+id/login_progress" style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp" android:visibility="gone" />
+    <ProgressBar
+        android:id="@+id/login_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
 
-    <ScrollView android:id="@+id/login_form" android:layout_width="match_parent"
+    <ScrollView
+        android:id="@+id/login_form"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="false">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout android:id="@+id/email_login_form" android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:orientation="vertical">
 
-                <EditText android:id="@+id/createaccount_email"
-                    android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/email_login_form"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <EditText
+                android:id="@+id/createaccount_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="pennkey@school.upenn.edu"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/createaccount_firstname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="First Name"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/createaccount_lastname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last Name"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/createaccount_major"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Major"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/createaccount_year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Year of Graduation"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/createaccount_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_password"
+                android:imeActionId="@+id/login"
+                android:imeActionLabel="@string/action_sign_in"
+                android:imeOptions="actionUnspecified"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/createaccount_passwordconfirmation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password Confirmation"
+                android:imeActionId="@+id/login"
+                android:imeActionLabel="@string/action_sign_in"
+                android:imeOptions="actionUnspecified"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/createaccount_profile_pic_label"
+                    android:layout_width="157dp"
                     android:layout_height="wrap_content"
-                    android:hint="pennkey@school.upenn.edu"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true" />
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:text="Profile Picture"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_gravity="center_vertical" />
 
-                <EditText android:id="@+id/createaccount_firstname"
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/createaccount_profile_pic_button"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="First Name"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
-                <EditText android:id="@+id/createaccount_lastname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Last Name"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
-                <EditText android:id="@+id/createaccount_major"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Major"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
-                <EditText android:id="@+id/createaccount_year"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Year of Graduation"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
-                <EditText android:id="@+id/createaccount_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:hint="@string/prompt_password"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_in"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
-                    android:maxLines="1" android:singleLine="true" />
-
-                <EditText android:id="@+id/createaccount_passwordconfirmation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:hint="Password Confirmation"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_in"
-                    android:imeOptions="actionUnspecified" android:inputType="textPassword"
-                    android:maxLines="1" android:singleLine="true" />
-
-                <Button android:id="@+id/createaccount_register_button"
-                    style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp" android:text="@string/action_register"
-                    android:textStyle="bold" android:onClick="registerClicked"/>
-
-                <Button android:id="@+id/createaccount_cancel_button"
-                    style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp" android:text="Cancel Registration"
-                    android:textStyle="bold" android:onClick="cancelClicked"/>
-
+                    android:layout_gravity="right"
+                    android:onClick="selectImageClicked"
+                    android:text="Select" />
             </LinearLayout>
+
+
+            <Button
+                android:id="@+id/createaccount_register_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:onClick="registerClicked"
+                android:text="@string/action_register"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/createaccount_cancel_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:onClick="cancelClicked"
+                android:text="Cancel Registration"
+                android:textStyle="bold" />
+
         </LinearLayout>
     </ScrollView>
 

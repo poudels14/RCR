@@ -17,12 +17,9 @@ import android.widget.Toast;
 import com.facebook.FacebookSdk;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
-
 import java.util.ArrayList;
 
-
 public class ReviewActivity extends ActionBarActivity {
-
 
     private int rating = 1;
     private boolean required = false;

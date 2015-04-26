@@ -3,7 +3,6 @@ package edu.upenn.cis.rcr_34.reputablecoursereview;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,14 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PastCourses extends ActionBarActivity {
@@ -40,6 +36,19 @@ public class PastCourses extends ActionBarActivity {
                 (String) ParseUser.getCurrentUser().get("firstName") +
                 " " + (String) ParseUser.getCurrentUser().get("lastName"));
         //Display all courses taken
+        showCourses(email);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        String email = user.getEmail();
+        showCourses(email);
+    }
+
+    private void showCourses(String email){
+        LinearLayout courseListView = (LinearLayout) findViewById(R.id.courseListViewLL);
+        courseListView.removeAllViews();
         ParseQuery<ParseObject> cT = ParseQuery.getQuery("coursesTaken");
         cT.whereContains("userEmail", email);
         cT.findInBackground(new FindCallback<ParseObject>() {

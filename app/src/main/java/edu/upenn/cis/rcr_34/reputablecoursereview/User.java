@@ -1,10 +1,15 @@
 package edu.upenn.cis.rcr_34.reputablecoursereview;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
+import com.parse.GetDataCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -22,6 +27,8 @@ public class User {
     private ParseUser me;
     private String email;
     private String name;
+    private Bitmap profilePic;
+    private ImageView profilePicView;
     private String firstName;
     private String lastName;
     private String picLink;
@@ -53,8 +60,21 @@ public class User {
                         firstName = (String) user.get("firstName");
                         lastName = (String) user.get("lastName");
                         major = (String) user.get("major");
-                        picLink = (String) user.get("profilePic");
                         friendEmails = (ArrayList) user.getList("friends");
+                        ParseFile imgFile = (ParseFile) user.getList("profilePic");
+                        if (imgFile != null){
+                            imgFile.getDataInBackground(new GetDataCallback() {
+                                public void done(byte[] data, ParseException e) {
+                                    if (e == null) {
+                                        profilePic = BitmapFactory.decodeByteArray(data, 0, data.length);
+                                        profilePicView.setImageBitmap(profilePic);
+                                    } else {
+                                        // something went wrong
+                                    }
+                                }
+                            });
+                        }
+
 
                         // retrieve pending request
                         ParseQuery<ParseObject> friendRequest = new ParseQuery<ParseObject>("pendingFriendRequest");
@@ -119,6 +139,14 @@ public class User {
             return "INVALID_RETURN_OBJECT";
         }
     }
+
+    /*
+    * This will set the profile image once loaded
+    * */
+    public void setProfileImage(ImageView view){
+        this.profilePicView = view;
+    }
+
 
     // finds user's courses taken
     public void retrieveCoursesTaken(final ParseDataReceivedNotifier not) {
@@ -189,7 +217,10 @@ public class User {
             friendEmails = new ArrayList<String>();
         }
 
-        this.friendEmails.add(sentBy);
+        if (!friendEmails.contains(sentBy)){
+            // Only add to friends list of not already a friend
+            this.friendEmails.add(sentBy);
+        }
 
         //set accepted to true in pending list
         ParseQuery<ParseObject> setAcceptedInParse = new ParseQuery<ParseObject>("pendingFriendRequest");
@@ -255,6 +286,11 @@ public class User {
     public void sendRequest(final String sendTo) {
         if (!this.isObjectReady)
             return;
+
+        if (me.getEmail().equals(sendTo)){
+            //Cant sent request to yourself
+            return;
+        }
 
         if (this.friendEmails != null && this.friendEmails.contains(sendTo)) {
             Log.d("PARSE", sendTo + " is already your friend");

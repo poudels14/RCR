@@ -1,19 +1,35 @@
 package edu.upenn.cis.rcr_34.reputablecoursereview;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import com.parse.FindCallback;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+
+import java.io.ByteArrayOutputStream;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class CreateAccountActivity extends ActionBarActivity {
+    private static int RESULT_LOAD_IMAGE = 1;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +37,41 @@ public class CreateAccountActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
     }
+
+    /*
+    * This method will help choosing a profile image from gallery
+    * */
+    public void selectImageClicked(View c){
+        String path = Environment.getExternalStorageDirectory()
+                + "/images/imagename.jpg";
+        Intent i = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, RESULT_LOAD_IMAGE);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK
+                && null != data) {
+
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+            Cursor cursor = getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            bitmap = BitmapFactory.decodeFile(picturePath);
+
+        }
+    }
+
 
     public void registerClicked(View v) {
 
@@ -31,6 +82,7 @@ public class CreateAccountActivity extends ActionBarActivity {
         EditText majorField = (EditText) findViewById(R.id.createaccount_major);
         EditText passwordField = (EditText) findViewById(R.id.createaccount_password);
         EditText passwordConfirmField = (EditText) findViewById(R.id.createaccount_passwordconfirmation);
+
 
         String firstName = firstNameField.getText().toString();
         String lastName = lastNameField.getText().toString();
@@ -111,7 +163,12 @@ public class CreateAccountActivity extends ActionBarActivity {
 
         user.put("major", major);
         user.put("year", year);
+
+        user.put("friends", new ArrayList<String>());
+        user.put("plannedCourses", new ArrayList<String>());
+        user.put("reviewedCourses", new ArrayList<String>());
         user.put("facebook", false);
+
         user.setEmail(email);
         user.setUsername(email);
         user.setPassword(password);
@@ -129,6 +186,21 @@ public class CreateAccountActivity extends ActionBarActivity {
                         user.signUpInBackground(new SignUpCallback() {
                             @Override
                             public void done(com.parse.ParseException e) {
+                                // Now upload image
+                                if (bitmap != null){
+                                    //Save profile image
+                                    int bitmapSize = bitmap.getByteCount();
+
+                                    ByteBuffer buffer = ByteBuffer.allocate(bitmapSize); //Create a new buffer
+                                    bitmap.copyPixelsToBuffer(buffer); //Move the byte data to the buffer
+
+                                    byte[] bitmapArray = buffer.array();
+
+                                    ParseFile profilePic = new ParseFile(email + "_profilepic",bitmapArray);
+                                    user.put("profilePic", profilePic);
+                                    user.saveInBackground();
+                                }
+
                                 Toast.makeText(getApplicationContext(), "Account Created!",
                                         Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent();
