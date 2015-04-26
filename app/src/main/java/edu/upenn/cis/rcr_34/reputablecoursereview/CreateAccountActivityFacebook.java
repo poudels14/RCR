@@ -1,44 +1,47 @@
 package edu.upenn.cis.rcr_34.reputablecoursereview;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.parse.FindCallback;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+
 import java.util.List;
 
 
-public class CreateAccountActivity extends ActionBarActivity {
+public class CreateAccountActivityFacebook extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("Came", "didnt crash 10");
         ParseAPI.init(this);
+        Log.d("Came", "didnt crash 11");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_account);
+        Log.d("Came", "didnt crash 12");
+        setContentView(R.layout.activity_create_account_facebook);
+        Log.d("Came", "didnt crash 13");
     }
 
     public void registerClicked(View v) {
 
-        EditText firstNameField = (EditText) findViewById(R.id.createaccount_firstname);
-        EditText lastNameField = (EditText) findViewById(R.id.createaccount_lastname);
-        EditText emailField = (EditText) findViewById(R.id.createaccount_email);
-        EditText yearField = (EditText) findViewById(R.id.createaccount_year);
-        EditText majorField = (EditText) findViewById(R.id.createaccount_major);
-        EditText passwordField = (EditText) findViewById(R.id.createaccount_password);
-        EditText passwordConfirmField = (EditText) findViewById(R.id.createaccount_passwordconfirmation);
+        EditText emailField = (EditText) findViewById(R.id.createaccountFB_email);
+        EditText yearField = (EditText) findViewById(R.id.createaccountFB_year);
+        EditText majorField = (EditText) findViewById(R.id.createaccountFB_major);
 
-        String firstName = firstNameField.getText().toString();
-        String lastName = lastNameField.getText().toString();
+
+        String firstName = getIntent().getStringExtra("first");
+        String lastName = getIntent().getStringExtra("last");
         String email = emailField.getText().toString();
         String year = yearField.getText().toString();
         String major = majorField.getText().toString();
-        String password = passwordField.getText().toString();
-        String passwordConfirm = passwordConfirmField.getText().toString();
+        String password = "password";
 
         //Make sure valid email used and the email is from upenn
         if(!email.equals("")){
@@ -76,21 +79,7 @@ public class CreateAccountActivity extends ActionBarActivity {
                     Toast.LENGTH_SHORT).show();
         }
         else{
-            // Check if password matches
-            if (password.length() < 5) {
-                Toast.makeText(getApplicationContext(),
-                        "Password should be at least 5 characters long", Toast.LENGTH_SHORT).show();
-                passwordField.setText("");
-                passwordConfirmField.setText("");
-            }
-            else if (!password.equals(passwordConfirm)) {
-                Toast.makeText(getApplicationContext(), "Password doesn't match!",
-                        Toast.LENGTH_SHORT).show();
-                passwordField.setText("");
-                passwordConfirmField.setText("");
-            }else {
-                createNewUser(firstName, lastName, email, major, year, password);
-            }
+             createNewUser(firstName, lastName, email, major, year, password);
         }
     }
 
@@ -111,9 +100,10 @@ public class CreateAccountActivity extends ActionBarActivity {
 
         user.put("major", major);
         user.put("year", year);
-        user.put("facebook", false);
+        user.put("facebook", true);
         user.setEmail(email);
-        user.setUsername(email);
+        ////////////////////////////////////////////////////////
+        user.setUsername(getIntent().getStringExtra("email"));
         user.setPassword(password);
 
         ParseQuery<ParseUser> query = ParseUser.getQuery();
