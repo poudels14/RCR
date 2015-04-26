@@ -61,11 +61,6 @@ public class CourseAdditionActivity extends ActionBarActivity {
         return true;
     }
 
-    //Add a review to the course
-    public void addReviewClicked(View view){
-        Toast.makeText(getApplicationContext(), "Add review", Toast.LENGTH_SHORT).show();
-    }
-
     //Save the changes to the course
     public void saveCourseClicked(View view){
         //Get the name and semester
