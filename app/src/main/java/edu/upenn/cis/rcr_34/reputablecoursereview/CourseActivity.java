@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -162,6 +163,33 @@ public class CourseActivity extends ActionBarActivity {
     }
 
     public void populateReview() {
+        // first check if the user has reviewed a minimum number of courses
+        // if not, add a text view notifying them to review courses first, then return
+        ArrayList<String> userReviews = (ArrayList<String>)
+                ParseUser.getCurrentUser().get("reviewedCourses");
+
+        if (userReviews == null) {
+            userReviews = new ArrayList<String>();
+        }
+
+        if (userReviews.size() < 2) {
+            final LinearLayout reviewList = (LinearLayout) findViewById(R.id.course_reviewLL);
+
+            TextView errorText = new TextView(this);
+            errorText.setText("You have less than two course reviews. " +
+                    "\nYou may not have submitted enough reviews, " +
+                    "or one of your reviews may have been removed for a low score." +
+                    "\nIf you wish to see the reviews for this course, " +
+                    "please submit more reviews.");
+            errorText.setPadding(20, 0, 20, 0);
+            errorText.setId(Utils.getUniqueID());
+            errorText.setSingleLine(false);
+            errorText.setTextSize(18);
+            reviewList.addView(errorText);
+            return;
+        }
+
+
         // fill the reviews after finding them in parse
         String parseCourseID = getIntent().getStringExtra("value");
 
@@ -170,7 +198,8 @@ public class CourseActivity extends ActionBarActivity {
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> objects, com.parse.ParseException e) {
                 if (e == null) {
-                    final LinearLayout reviewList = (LinearLayout) findViewById(R.id.course_reviewLL);
+                    final LinearLayout reviewList = (LinearLayout)
+                            findViewById(R.id.course_reviewLL);
                     for (int i = 0; i < objects.size(); i++) {
                         boolean colorHelp = ((i % 2) == 1);
                         addReview(reviewList, objects.get(i), colorHelp);
@@ -245,34 +274,43 @@ public class CourseActivity extends ActionBarActivity {
             buttonsLayout.setGravity(Gravity.CENTER);
             parentLayout.addView(buttonsLayout);
 
-            ArrayList<String> upv = (ArrayList<String>) review.get("upvoted");
-            ArrayList<String> downv = (ArrayList<String>) review.get("downvoted");
-            boolean hasUp = false;
-            boolean hasDown = false;
-            if (upv.contains(ParseUser.getCurrentUser().getObjectId())) {
-                hasUp = true;
-            }
 
-            if (downv.contains(ParseUser.getCurrentUser().getObjectId())) {
-                hasDown = true;
-            }
+
+
 
             final RadioButton down = new RadioButton(this);
             final RadioButton up = new RadioButton(this);
             up.setText("+");
             down.setText("-");
-            buttonsLayout.addView(up);
-            buttonsLayout.addView(down);
 
-            if (hasUp) {
+            // group the radio buttons
+            RadioGroup rg = new RadioGroup(this);
+            rg.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
+            rg.setOrientation(LinearLayout.VERTICAL);
+            rg.setGravity(Gravity.CENTER);
+            parentLayout.addView(rg);
+            rg.addView(up);
+            rg.addView(down);
+            rg.clearCheck();
+
+
+            // if the user has upvoted or downvoted this review, retrieve information
+            ArrayList<String> upv = (ArrayList<String>) review.get("upvoted");
+            ArrayList<String> downv = (ArrayList<String>) review.get("downvoted");
+            boolean hasUp = false;
+            boolean hasDown = false;
+            if (upv.contains(ParseUser.getCurrentUser().getObjectId())) {
                 up.setChecked(true);
                 down.setChecked(false);
             }
 
-            if (hasDown) {
+            if (downv.contains(ParseUser.getCurrentUser().getObjectId())) {
                 down.setChecked(true);
                 up.setChecked(false);
             }
+
 
             up.setOnClickListener(new View.OnClickListener() {
                 @Override
