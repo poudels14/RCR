@@ -1,6 +1,7 @@
 package edu.upenn.cis.rcr_34.reputablecoursereview;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -372,6 +373,7 @@ public class User {
             this.me.saveInBackground(new SaveCallback() {
                 public void done(ParseException e) {
                     if (e != null) {
+
                         Log.d("PARSE", "Course added properly");
                     } else {
                         Log.d("USER.JAVA", "Course couldn't be added properly: " + email);

@@ -141,7 +141,8 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="10dp"
-            android:text="Add to Future Courses" />
+            android:text="Add to Future Courses"
+            android:onClick = "onFutureClicked"/>
 
         <Button
             android:id="@+id/course_add_review"
