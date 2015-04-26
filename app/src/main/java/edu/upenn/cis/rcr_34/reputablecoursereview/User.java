@@ -342,7 +342,17 @@ public class User {
         });
     }
 
-    // addplanned course
+    public boolean hasPlannedCourse(ParseObject course){
+        String courseId = course.getObjectId();
+        if(plannedCourses != null) {
+            return plannedCourses.contains(courseId);
+        }
+        else{
+            return false;
+        }
+    }
+
+    // add planned course
     public void planCourse(final String course) {
         if (!this.isObjectReady) {
             return;
