@@ -16,6 +16,7 @@
     <string name="return_manage">Return to manage account</string>
     <string name="sign_out">Sign out</string>
     <string name="prompt_course">Course ID</string>
+    <string name="prompt_year">Year taken</string>
     <string name="prompt_professor">Professor name</string>
     <string name="prompt_semester">Semester taken</string>
     <string name="add_course">Add course</string>
