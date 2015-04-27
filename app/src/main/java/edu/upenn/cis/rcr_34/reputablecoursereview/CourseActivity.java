@@ -90,37 +90,6 @@ public class CourseActivity extends ActionBarActivity {
             }
         });
 
-
-        /*query.whereEqualTo(property, valueOfProperty);
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List list, com.parse.ParseException e) {
-                if (e == null) {
-                    if (list.size() > 0) {
-                        ParseObject parseObject = (ParseObject) list.get(0);
-                        // pass the object's info into the interface
-                        if (parseObject == null) {
-                            Toast.makeText(getApplicationContext(),
-                                    "Error Retrieving Course", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.d("COURSE_ACTIVITY", parseObject.getString("Name"));
-                            parseCourseID = parseObject.getObjectId();
-                            populateUI(parseObject.getDouble("Rating"),
-                                    parseObject.getString("Name"),
-                                    parseObject.getString("Code"));
-                        }
-
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(),
-                            "Error Retrieving Course", Toast.LENGTH_SHORT).show();
-                    // quit this activity
-                    Intent i = new Intent();
-                    setResult(RESULT_CANCELED, i);
-                    finish();
-                }
-            }
-        });*/
     }
 
     @Override
