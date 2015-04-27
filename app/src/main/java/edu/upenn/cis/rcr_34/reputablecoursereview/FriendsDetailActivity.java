@@ -52,6 +52,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
 
         final LinearLayout profileDetail = (LinearLayout) findViewById(R.id.friends_detail_main_view);
         final User u = new User(email);
+
         u.addListener(new ParseDataReceivedNotifier() {
             @Override
             public void notifyListener() {
@@ -283,7 +284,10 @@ public class FriendsDetailActivity extends ActionBarActivity {
         String semseterTaken = (String) courseTaken.get("semester");
         String yearTaken = (String) courseTaken.get("year");
         int r = (int) courseTaken.get("rating");
-        String rating = r + "";
+        String rating = "N/A";
+        if(r != -1){
+            rating = "" + r;
+        }
         // rating is -1 if the user hasn't rated it yet
 
         //Set course
