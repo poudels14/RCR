@@ -335,8 +335,6 @@ public class CourseActivity extends ActionBarActivity {
             rg.setGravity(Gravity.CENTER_VERTICAL);
             rg.setId(Utils.getUniqueID());
             parentLayout.addView(rg);
-            rg.addView(up);
-            rg.addView(down);
             rg.clearCheck();
 
             LinearLayout.LayoutParams layoutParams = new RadioGroup.LayoutParams(
@@ -371,14 +369,16 @@ public class CourseActivity extends ActionBarActivity {
                             ll.removeAllViews();
                             populateReview();
                         } else {
-                            upv.add(ParseUser.getCurrentUser().getObjectId());
-                            review.put("upvoted", upv);
-                            int rate = (Integer) review.get("reviewRating") + 1;
-                            review.put("reviewRating", rate);
-                            review.saveInBackground();
-                            final LinearLayout ll = (LinearLayout) findViewById(R.id.course_reviewLL);
-                            ll.removeAllViews();
-                            populateReview();
+                            if (!upv.contains(ParseUser.getCurrentUser().getObjectId())) {
+                                upv.add(ParseUser.getCurrentUser().getObjectId());
+                                review.put("upvoted", upv);
+                                int rate = (Integer) review.get("reviewRating") + 1;
+                                review.put("reviewRating", rate);
+                                review.saveInBackground();
+                                final LinearLayout ll = (LinearLayout) findViewById(R.id.course_reviewLL);
+                                ll.removeAllViews();
+                                populateReview();
+                            }
                         }
                     }
 
@@ -398,15 +398,17 @@ public class CourseActivity extends ActionBarActivity {
                             ll.removeAllViews();
                             populateReview();
                         } else {
-                            downv.add(ParseUser.getCurrentUser().getObjectId());
-                            review.put("upvoted", upv);
-                            int rate = (Integer) review.get("reviewRating") - 1;
-                            review.put("reviewRating", rate);
-                            review.saveInBackground();
-                            final LinearLayout ll = (LinearLayout) findViewById(
-                                    R.id.course_reviewLL);
-                            ll.removeAllViews();
-                            populateReview();
+                            if (!downv.contains(ParseUser.getCurrentUser().getObjectId())) {
+                                downv.add(ParseUser.getCurrentUser().getObjectId());
+                                review.put("upvoted", upv);
+                                int rate = (Integer) review.get("reviewRating") - 1;
+                                review.put("reviewRating", rate);
+                                review.saveInBackground();
+                                final LinearLayout ll = (LinearLayout) findViewById(
+                                        R.id.course_reviewLL);
+                                ll.removeAllViews();
+                                populateReview();
+                            }
                         }
                     }
                 }
