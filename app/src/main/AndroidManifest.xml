@@ -40,6 +40,10 @@
             android:label="@string/title_activity_create_account" >
         </activity>
         <activity
+            android:name=".CreateAccountActivityFacebook"
+            android:label="title_activity_create_account_facebook" >
+        </activity>
+        <activity
             android:name=".PastCourses"
             android:label="Past Courses" >
         </activity>
