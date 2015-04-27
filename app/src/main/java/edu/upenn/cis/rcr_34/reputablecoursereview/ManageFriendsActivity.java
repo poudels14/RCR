@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +24,7 @@ public class ManageFriendsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_friends);
 
-        //No add all accepted friends to friends list
+        //Now add all accepted friends to friends list
         final User f1 = new User(ParseUser.getCurrentUser().getEmail());
         f1.addListener(new ParseDataReceivedNotifier() {
             @Override
@@ -40,6 +41,10 @@ public class ManageFriendsActivity extends ActionBarActivity {
         loadAllPendingRequest(pendingList);
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -80,10 +85,8 @@ public class ManageFriendsActivity extends ActionBarActivity {
 
                 for (int i = 0; i < pendingList.size(); i++){
                     final User f = new User(f1.getPendingRequests().get(i));
-                    f.addListener(new ParseDataReceivedNotifier() {
-                        @Override
+                    f.addListener(new ParseDataReceivedNotifier(){
                         public void notifyListener() {
-
                             populatePendingRequest(mainListLayout, f);
                         }
                     });
@@ -95,6 +98,7 @@ public class ManageFriendsActivity extends ActionBarActivity {
     //Display pending friend requests
     private void populatePendingRequest(final LinearLayout llIn, final User u) {
         final RelativeLayout ll = new RelativeLayout(this);
+        ll.setId(Utils.getUniqueID());
         ll.setPadding(0, 0, 0, 20);
 
         RelativeLayout.LayoutParams lpForImage = new RelativeLayout.LayoutParams(200, 250);
@@ -150,7 +154,7 @@ public class ManageFriendsActivity extends ActionBarActivity {
                         me.acceptRequest(u.getEmail(), new ParseDataReceivedNotifier() {
                             @Override
                             public void notifyListener() {
-                                llIn.removeView(ll);
+                                llIn.removeView((findViewById(ll.getId())));
                             }
                         });
                     }

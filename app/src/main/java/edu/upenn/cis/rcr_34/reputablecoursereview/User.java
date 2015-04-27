@@ -62,23 +62,16 @@ public class User {
                         major = (String) user.get("major");
                         friendEmails = (ArrayList) user.getList("friends");
                         ParseFile imgFile = (ParseFile) user.get("profilePic");
-                        Log.d("LOADING PROFIEL", "before loading imgFile");
                         if (imgFile != null){
-                            Log.d("LOADING PROFIEL", "imgFile not null");
                             imgFile.getDataInBackground(new GetDataCallback() {
                                 public void done(byte[] data, ParseException e) {
                                     if (e == null) {
-                                        Log.d("LOADING PROFIEL", "imaged loaded without errors");
                                         BitmapFactory.Options options = new BitmapFactory.Options();
                                         options.inJustDecodeBounds = true;
 
                                         profilePic = BitmapFactory.decodeByteArray(data, 0, data.length, options);
-                                        Log.d("LOAGIN PROFILE", "length of pic = " + data.length);
                                         if (profilePic != null){
                                             profilePicView.setImageBitmap(profilePic);
-                                        }
-                                        else{
-                                            Log.d("LOAGIN PROFILE", "Profile pic is null");
                                         }
 
                                     } else {
@@ -99,7 +92,9 @@ public class User {
                                 if (e == null) {
                                     if (list.size() > 0) {
                                         pendingRequests = new ArrayList<String>();
-                                        for (ParseObject po : (List<ParseObject>) list) {
+                                        List<ParseObject> pList =  (List<ParseObject>) list;
+                                        for (int i = 0; i < pList.size(); i++) {
+                                            ParseObject po = pList.get(i);
                                             pendingRequests.add((String) po.get("sentBy"));
                                         }
                                     }
@@ -108,7 +103,7 @@ public class User {
                                 notifyListeners();
                             }
                         });
-//                        plannedCourses = (ArrayList) user.getList("plannedCourses");
+                        plannedCourses = (ArrayList) user.getList("plannedCourses");
                     }
                 }
             }
@@ -248,7 +243,7 @@ public class User {
                         pendingRequest.put("accepted", true);
                         pendingRequest.saveInBackground(new SaveCallback() {
                             public void done(ParseException e) {
-                                if (e != null) {
+                                if (e == null) {
                                     listener.notifyListener();
                                 }
                             }
