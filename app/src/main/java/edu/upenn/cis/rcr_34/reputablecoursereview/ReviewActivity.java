@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.facebook.FacebookSdk;
 import com.parse.FindCallback;
@@ -47,6 +49,23 @@ public class ReviewActivity extends ActionBarActivity {
         // through the parse backend
         userID = ParseUser.getCurrentUser().getObjectId();
         courseID = getIntent().getStringExtra("parseID");
+
+        final ParseQuery<ParseObject> courseSearch = ParseQuery.getQuery("Course");
+        Log.d("Code", courseID);
+        courseSearch.whereContains("objectId", courseID);
+        courseSearch.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> objList,ParseException e) {
+                if (e == null) {
+                    // initialize the course activity using Parse's ID of the course
+                    if (objList.size() > 0) {
+                        ParseObject obj = objList.get(0);
+                        TextView a = (TextView) findViewById(R.id.review_course_id);
+                        a.setText((String) obj.get("Code"));
+                    }
+                }
+            }
+        });
+
 
         // check if the user has already reviewed this course
         ArrayList<String> allReviews = (ArrayList<String>)
