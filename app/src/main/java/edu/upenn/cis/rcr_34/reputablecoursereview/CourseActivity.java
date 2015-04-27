@@ -73,7 +73,7 @@ public class CourseActivity extends ActionBarActivity {
                     } else {
                         codeStore = parseObject.getString("Code");
                         Log.d("COURSE_ACTIVITY", parseObject.getString("Name"));
-                        populateUI(parseObject.getDouble("Rating"),
+                        populateUI(parseObject.getDouble("rating"),
                                 parseObject.getString("Name"),
                                 parseObject.getString("Code"));
                     }
@@ -197,6 +197,9 @@ public class CourseActivity extends ActionBarActivity {
             errorText.setSingleLine(false);
             errorText.setTextSize(18);
             reviewList.addView(errorText);
+
+            TextView t = (TextView) findViewById(R.id.course_avg_rating);
+            t.setText("N/A");
             return;
         }
 
@@ -211,9 +214,21 @@ public class CourseActivity extends ActionBarActivity {
                 if (e == null) {
                     final LinearLayout reviewList = (LinearLayout)
                             findViewById(R.id.course_reviewLL);
+
+                    TextView t = (TextView) findViewById(R.id.course_avg_rating);
+                    double numReviews = (double) objects.size();
+                    double totalRating = 0.0;
                     for (int i = 0; i < objects.size(); i++) {
                         boolean colorHelp = ((i % 2) == 1);
                         addReview(reviewList, objects.get(i), colorHelp);
+                        totalRating += objects.get(i).getDouble("rating");
+                    }
+
+                    if (numReviews == 0) {
+                        t.setText("N/A");
+                    } else {
+                        Double avgReview = totalRating / numReviews;
+                        t.setText(avgReview.toString().toCharArray(), 0, 3);
                     }
                 }
             }
