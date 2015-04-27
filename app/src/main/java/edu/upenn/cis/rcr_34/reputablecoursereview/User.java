@@ -61,13 +61,26 @@ public class User {
                         lastName = (String) user.get("lastName");
                         major = (String) user.get("major");
                         friendEmails = (ArrayList) user.getList("friends");
-                        ParseFile imgFile = (ParseFile) user.getList("profilePic");
+                        ParseFile imgFile = (ParseFile) user.get("profilePic");
+                        Log.d("LOADING PROFIEL", "before loading imgFile");
                         if (imgFile != null){
+                            Log.d("LOADING PROFIEL", "imgFile not null");
                             imgFile.getDataInBackground(new GetDataCallback() {
                                 public void done(byte[] data, ParseException e) {
                                     if (e == null) {
-                                        profilePic = BitmapFactory.decodeByteArray(data, 0, data.length);
-                                        profilePicView.setImageBitmap(profilePic);
+                                        Log.d("LOADING PROFIEL", "imaged loaded without errors");
+                                        BitmapFactory.Options options = new BitmapFactory.Options();
+                                        options.inJustDecodeBounds = true;
+
+                                        profilePic = BitmapFactory.decodeByteArray(data, 0, data.length, options);
+                                        Log.d("LOAGIN PROFILE", "length of pic = " + data.length);
+                                        if (profilePic != null){
+                                            profilePicView.setImageBitmap(profilePic);
+                                        }
+                                        else{
+                                            Log.d("LOAGIN PROFILE", "Profile pic is null");
+                                        }
+
                                     } else {
                                         // something went wrong
                                     }
