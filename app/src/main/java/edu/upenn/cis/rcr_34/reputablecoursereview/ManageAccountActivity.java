@@ -34,9 +34,8 @@ public class ManageAccountActivity extends ActionBarActivity {
 
     //User clicked return to main button
     public void returnToMainClicked(View view){
-        Intent i = new Intent();
-        setResult(RESULT_OK, i);
-        finish();
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 
     //User clicked manage friends button
