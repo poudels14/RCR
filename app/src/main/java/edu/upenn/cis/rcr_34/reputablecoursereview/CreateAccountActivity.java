@@ -189,10 +189,12 @@ public class CreateAccountActivity extends ActionBarActivity {
                                 // Now upload image
                                 if (bitmap != null){
                                     //Save profile image
-                                    int bitmapSize = bitmap.getByteCount();
+                                    Bitmap reducedSize = Bitmap.createScaledBitmap(bitmap, 320, 400, false);
+
+                                    int bitmapSize = reducedSize.getByteCount();
 
                                     ByteBuffer buffer = ByteBuffer.allocate(bitmapSize); //Create a new buffer
-                                    bitmap.copyPixelsToBuffer(buffer); //Move the byte data to the buffer
+                                    reducedSize.copyPixelsToBuffer(buffer); //Move the byte data to the buffer
 
                                     byte[] bitmapArray = buffer.array();
 
