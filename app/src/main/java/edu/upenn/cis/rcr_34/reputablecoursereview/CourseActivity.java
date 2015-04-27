@@ -320,122 +320,112 @@ public class CourseActivity extends ActionBarActivity {
             parentLayout.addView(buttonsLayout);
 
 
-
-
-
             final RadioButton down = new RadioButton(this);
             final RadioButton up = new RadioButton(this);
             up.setText("+");
             down.setText("-");
+            final int upID = Utils.getUniqueID();
+            final int downID = Utils.getUniqueID();
+            down.setId(downID);
+            up.setId(upID);
 
             // group the radio buttons
-            RadioGroup rg = new RadioGroup(this);
+            final RadioGroup rg = new RadioGroup(this);
             rg.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
             rg.setOrientation(LinearLayout.VERTICAL);
-            rg.setGravity(Gravity.CENTER);
+            rg.setGravity(Gravity.CENTER_VERTICAL);
+            rg.setId(Utils.getUniqueID());
             parentLayout.addView(rg);
             rg.addView(up);
             rg.addView(down);
             rg.clearCheck();
 
+            LinearLayout.LayoutParams layoutParams = new RadioGroup.LayoutParams(
+                    RadioGroup.LayoutParams.WRAP_CONTENT,
+                    RadioGroup.LayoutParams.WRAP_CONTENT);
+
+            rg.addView(up, 0, layoutParams);
+            rg.addView(down, 1, layoutParams);
+
+            rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    ArrayList<String> upv = (ArrayList<String>) review.get("upvoted");
+                    ArrayList<String> downv = (ArrayList<String>) review.get("downvoted");
+                    int radiobuttonID = rg.getCheckedRadioButtonId();
+
+                    // check which button was pressed
+                    if (radiobuttonID == upID) {
+                        if (downv.contains(ParseUser.getCurrentUser().getObjectId())) {
+                            // unclick the downvote
+                            downv.remove(ParseUser.getCurrentUser().getObjectId());
+                            upv.add(ParseUser.getCurrentUser().getObjectId());
+                            review.put("upvoted", upv);
+                            review.put("downvoted", downv);
+                            int rate = (Integer) review.get("reviewRating") + 2;
+                            review.put("reviewRating", rate);
+                            review.saveInBackground();
+                            // janky refresh
+                            final LinearLayout ll = (LinearLayout) findViewById(
+                                    R.id.course_reviewLL);
+                            ll.removeAllViews();
+                            populateReview();
+                        } else {
+                            upv.add(ParseUser.getCurrentUser().getObjectId());
+                            review.put("upvoted", upv);
+                            int rate = (Integer) review.get("reviewRating") + 1;
+                            review.put("reviewRating", rate);
+                            review.saveInBackground();
+                            final LinearLayout ll = (LinearLayout) findViewById(R.id.course_reviewLL);
+                            ll.removeAllViews();
+                            populateReview();
+                        }
+                    }
+
+                    else if (radiobuttonID == downID) {
+                        if (upv.contains(ParseUser.getCurrentUser().getObjectId())) {
+                            // unclick the upvote
+                            upv.remove(ParseUser.getCurrentUser().getObjectId());
+                            downv.add(ParseUser.getCurrentUser().getObjectId());
+                            review.put("upvoted", upv);
+                            review.put("downvoted", downv);
+                            int rate = (Integer) review.get("reviewRating") - 2;
+                            review.put("reviewRating", rate);
+                            review.saveInBackground();
+                            // janky refresh
+                            final LinearLayout ll = (LinearLayout) findViewById(
+                                    R.id.course_reviewLL);
+                            ll.removeAllViews();
+                            populateReview();
+                        } else {
+                            downv.add(ParseUser.getCurrentUser().getObjectId());
+                            review.put("upvoted", upv);
+                            int rate = (Integer) review.get("reviewRating") - 1;
+                            review.put("reviewRating", rate);
+                            review.saveInBackground();
+                            final LinearLayout ll = (LinearLayout) findViewById(
+                                    R.id.course_reviewLL);
+                            ll.removeAllViews();
+                            populateReview();
+                        }
+                    }
+                }
+            });
 
             // if the user has upvoted or downvoted this review, retrieve information
             ArrayList<String> upv = (ArrayList<String>) review.get("upvoted");
             ArrayList<String> downv = (ArrayList<String>) review.get("downvoted");
-            boolean hasUp = false;
-            boolean hasDown = false;
+
             if (upv.contains(ParseUser.getCurrentUser().getObjectId())) {
-                up.setChecked(true);
-                down.setChecked(false);
+                rg.check(upID);
             }
 
             if (downv.contains(ParseUser.getCurrentUser().getObjectId())) {
-                down.setChecked(true);
-                up.setChecked(false);
+                rg.check(downID);
             }
-
-
-            up.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    ArrayList<String> upv = (ArrayList<String>) review.get("upvoted");
-                    ArrayList<String> downv = (ArrayList<String>) review.get("downvoted");
-
-                    if (down.isChecked()) {
-                        up.setChecked(true);
-                        down.setChecked(false);
-                        downv.remove(ParseUser.getCurrentUser().getObjectId());
-                        upv.add(ParseUser.getCurrentUser().getObjectId());
-                        review.put("upvoted", upv);
-                        review.put("downvoted", downv);
-
-                        int rate;
-                        rate = (Integer) review.get("reviewRating") + 2;
-                        review.put("reviewRating", rate);
-                        review.saveInBackground();
-                        final LinearLayout ll = (LinearLayout) findViewById(R.id.course_reviewLL);
-                        ll.removeAllViews();
-                        populateReview();
-                    } else {
-                        if (!up.isChecked()) {
-                            up.setChecked(true);
-                            down.setChecked(false);
-                            int rate;
-                            upv.add(ParseUser.getCurrentUser().getObjectId());
-                            review.put("upvoted", upv);
-                            rate = (Integer) review.get("reviewRating") + 1;
-                            review.put("reviewRating", rate);
-                            review.saveInBackground();
-                            final LinearLayout ll = (LinearLayout) findViewById(R.id.course_reviewLL);
-                            ll.removeAllViews();
-                            populateReview();
-                        }
-                    }
-                }
-            });
-
-            down.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ArrayList<String> upv = (ArrayList<String>) review.get("upvoted");
-                    ArrayList<String> downv = (ArrayList<String>) review.get("downvoted");
-
-                    if (up.isChecked()) {
-                        down.setChecked(true);
-                        up.setChecked(false);
-                        int rate;
-
-                        upv.remove(ParseUser.getCurrentUser().getObjectId());
-                        downv.add(ParseUser.getCurrentUser().getObjectId());
-                        review.put("upvoted", upv);
-                        review.put("downvoted", downv);
-
-                        rate = (Integer) review.get("reviewRating") - 2;
-                        review.put("reviewRating", rate);
-                        review.saveInBackground();
-                        final LinearLayout ll = (LinearLayout) findViewById(R.id.course_reviewLL);
-                        ll.removeAllViews();
-                        populateReview();
-                    } else {
-                        if (!down.isChecked()) {
-                            down.setChecked(true);
-                            up.setChecked(false);
-                            int rate;
-                            downv.add(ParseUser.getCurrentUser().getObjectId());
-                            review.put("downvoted", downv);
-                            rate = (Integer) review.get("reviewRating") - 1;
-                            review.put("reviewRating", rate);
-                            review.saveInBackground();
-                            final LinearLayout ll = (LinearLayout) findViewById(R.id.course_reviewLL);
-                            ll.removeAllViews();
-                            populateReview();
-                        }
-                    }
-                }
-            });
 
             // create linear layout for the review content text -----------------------------------
             LinearLayout reviewTextLayout = new LinearLayout(this);
