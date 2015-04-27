@@ -1,10 +1,15 @@
 package edu.upenn.cis.rcr_34.reputablecoursereview;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
+import com.parse.GetDataCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -22,6 +27,8 @@ public class User {
     private ParseUser me;
     private String email;
     private String name;
+    private Bitmap profilePic;
+    private ImageView profilePicView;
     private String firstName;
     private String lastName;
     private String picLink;
@@ -53,8 +60,34 @@ public class User {
                         firstName = (String) user.get("firstName");
                         lastName = (String) user.get("lastName");
                         major = (String) user.get("major");
-                        picLink = (String) user.get("profilePic");
                         friendEmails = (ArrayList) user.getList("friends");
+                        ParseFile imgFile = (ParseFile) user.get("profilePic");
+                        Log.d("LOADING PROFIEL", "before loading imgFile");
+                        if (imgFile != null){
+                            Log.d("LOADING PROFIEL", "imgFile not null");
+                            imgFile.getDataInBackground(new GetDataCallback() {
+                                public void done(byte[] data, ParseException e) {
+                                    if (e == null) {
+                                        Log.d("LOADING PROFIEL", "imaged loaded without errors");
+                                        BitmapFactory.Options options = new BitmapFactory.Options();
+                                        options.inJustDecodeBounds = true;
+
+                                        profilePic = BitmapFactory.decodeByteArray(data, 0, data.length, options);
+                                        Log.d("LOAGIN PROFILE", "length of pic = " + data.length);
+                                        if (profilePic != null){
+                                            profilePicView.setImageBitmap(profilePic);
+                                        }
+                                        else{
+                                            Log.d("LOAGIN PROFILE", "Profile pic is null");
+                                        }
+
+                                    } else {
+                                        // something went wrong
+                                    }
+                                }
+                            });
+                        }
+
 
                         // retrieve pending request
                         ParseQuery<ParseObject> friendRequest = new ParseQuery<ParseObject>("pendingFriendRequest");
@@ -119,6 +152,14 @@ public class User {
             return "INVALID_RETURN_OBJECT";
         }
     }
+
+    /*
+    * This will set the profile image once loaded
+    * */
+    public void setProfileImage(ImageView view){
+        this.profilePicView = view;
+    }
+
 
     // finds user's courses taken
     public void retrieveCoursesTaken(final ParseDataReceivedNotifier not) {

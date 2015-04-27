@@ -171,18 +171,15 @@ public class CourseActivity extends ActionBarActivity {
                     // initialize the course activity using Parse's ID of the course
                     if (objList.size() > 0) {
                         ParseObject obj = objList.get(0);
-                        Toast.makeText(getApplicationContext(), "Trying to add",
-                                Toast.LENGTH_SHORT).show();
-
                         if(!user.hasPlannedCourse(obj)) {
 
-                            Toast.makeText(getApplicationContext(), obj.getObjectId() + " " + user.getName() + " Added",
+                            Toast.makeText(getApplicationContext(), "Added to future courses",
                                     Toast.LENGTH_SHORT).show();
                             user.planCourse(obj.getObjectId());
 
                         }
                     } else {
-                        Toast.makeText(getApplicationContext(), "Course not found",
+                        Toast.makeText(getApplicationContext(), "Course already added",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }

@@ -11,18 +11,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import com.facebook.FacebookSdk;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
 import java.util.ArrayList;
-
+import java.util.List;
 
 public class ReviewActivity extends ActionBarActivity {
-
 
     private int rating = 1;
     private boolean required = false;
@@ -146,6 +148,50 @@ public class ReviewActivity extends ActionBarActivity {
                     "Please assign a rating to this course.", Toast.LENGTH_SHORT).show();
             return;
         } else {
+            final ParseQuery<ParseObject> courseSearch = ParseQuery.getQuery("Course");
+            courseSearch.whereContains("objectId", courseID);
+            final String userIDCode = userID;
+            courseSearch.findInBackground(new FindCallback<ParseObject>() {
+                public void done(List<ParseObject> objList, ParseException e) {
+                    if (e == null) {
+                        // initialize the course activity using Parse's ID of the course
+                        if (objList.size() > 0) {
+                            ParseObject course = objList.get(0);
+                            final String courseName = (String) course.get("Code");
+                            final int actualRating = rating;
+                            // no course found, check to see if it's a person
+                            final ParseQuery<ParseUser> personSearch = ParseUser.getQuery();
+                            personSearch.whereContains("objectId", userIDCode);
+                            personSearch.findInBackground(new FindCallback<ParseUser>() {
+                                @Override
+                                public void done(List list, com.parse.ParseException e) {
+                                    if (e == null) {
+                                        if (list.size() > 0) {
+                                            ParseUser u = (ParseUser) list.get(0);
+                                            final ParseQuery<ParseObject> takenSearch = ParseQuery.getQuery("coursesTaken");
+                                            takenSearch.whereContains("userEmail", u.getEmail());
+                                            takenSearch.whereContains("courseName", courseName);
+                                            takenSearch.findInBackground(new FindCallback<ParseObject>() {
+                                                public void done(List<ParseObject> objList, ParseException e) {
+                                                    if (e == null) {
+                                                        // initialize the course activity using Parse's ID of the course
+                                                        if (objList.size() > 0) {
+                                                            ParseObject obj = objList.get(0);
+                                                            obj.put("rating", actualRating);
+                                                            obj.saveInBackground();
+                                                        }
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+
             // there is sufficient information to create the review
             ParseObject review = new ParseObject("Review");
 

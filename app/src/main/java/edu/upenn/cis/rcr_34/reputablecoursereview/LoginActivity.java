@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
+import com.facebook.FacebookActivity;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
@@ -83,8 +84,11 @@ public class LoginActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
+
     // try to log the user in when 'sign in' is pressed
     private void checkLoginDetails(final String email, final String password){
+        Log.d("Came", "didnt crash 99");
+
         ParseUser.logInInBackground(email, password, new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
@@ -133,10 +137,10 @@ public class LoginActivity extends ActionBarActivity {
                                     public void onCompleted(
                                             JSONObject object,
                                             GraphResponse response) {
-
                                         try {
                                             String a = (String) object.get("email");
-                                            checkLoginDetailsFB(a);
+                                            String first = (String) object.get("name");
+                                            checkLoginDetailsFB(a, first);
                                         } catch (Exception e) {
 
                                         }
@@ -163,22 +167,57 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     // try to log the user in when 'sign in' is pressed
-    private void checkLoginDetailsFB(final String email){
+    private void checkLoginDetailsFB(final String email, final String name){
         final ParseUser user = new ParseUser();
         ParseQuery<ParseUser> query = ParseUser.getQuery();
-        query.whereEqualTo("email", email);
+        query.whereEqualTo("username", email);
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List list, com.parse.ParseException e) {
                 if (e == null) {
                     if (list.size() > 0) {
-                        logIn();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Email Address does not match",
+                        Log.d("Came", "didnt crash 1");
+                        ParseUser a = (ParseUser) list.get(0);
+                        Toast.makeText(getApplicationContext(), "checking boolean",
                                 Toast.LENGTH_SHORT).show();
+
+                        Log.d("Came", "didnt crash 2");
+                        if ((boolean) a.get("facebook") == true) {
+                            Log.d("Came", "didnt crash 3");
+                            checkLoginDetails(email, "password");
+                        } else {
+                            Log.d("Came", "didnt crash 4");
+                            Toast.makeText(getApplicationContext(), "Account not created through Facebook",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                    } else {
+                        Log.d("Came", "didnt crash 5");
+                        Toast.makeText(getApplicationContext(), "Account creating through Facebook",
+                                Toast.LENGTH_SHORT).show();
+                        registerWithFB(email, name);
                     }
                 }
             }
         });
     }
+
+    //User clicked register button
+    public void registerWithFB(String email, String name){
+        Intent intent = new Intent(this, CreateAccountActivityFacebook.class);
+        intent.putExtra("email", email);
+        String[] nameStore = name.split(" ");
+        Log.d("Came", name);
+
+        intent.putExtra("first", nameStore[0]);
+        if (nameStore.length == 1) {
+            intent.putExtra("last", " ");
+        } else {
+            intent.putExtra("last", nameStore[nameStore.length - 1]);
+        }
+        startActivity(intent);
+        LoginManager.getInstance().logOut();
+
+    }
+
 }
