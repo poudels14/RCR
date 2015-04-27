@@ -76,6 +76,8 @@ public class LoginActivity extends ActionBarActivity {
         Toast.makeText(getApplicationContext(), "Signed in", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+
+        finish();
     }
 
     //User clicked register button

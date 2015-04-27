@@ -56,6 +56,7 @@ public class MainActivity extends ActionBarActivity {
 
             LoginManager.getInstance().logOut();
             StaticUtils.signOutClicked(this.getApplicationContext());
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
