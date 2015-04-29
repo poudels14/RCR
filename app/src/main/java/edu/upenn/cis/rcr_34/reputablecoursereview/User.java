@@ -56,12 +56,18 @@ public class User {
                         major = (String) user.get("major");
                         friendEmails = (ArrayList) user.getList("friends");
                         ParseFile imgFile = (ParseFile) user.get("profilePic");
-                        try {
-                            byte[] data = imgFile.getData();
-                            profilePic = BitmapFactory.decodeByteArray(data, 0, data.length);
-                        } catch (ParseException e1) {
-                            e1.printStackTrace();
+                        if (imgFile != null){
+                            try {
+                                byte[] data = imgFile.getData();
+                                if (data != null){
+                                    profilePic = BitmapFactory.decodeByteArray(data, 0, data.length);
+                                }
+
+                            } catch (ParseException e1) {
+                                e1.printStackTrace();
+                            }
                         }
+
 
                         // retrieve pending request
                         ParseQuery<ParseObject> friendRequest = new ParseQuery<ParseObject>("pendingFriendRequest");
