@@ -55,7 +55,11 @@ public class User {
                         lastName = (String) user.get("lastName");
                         major = (String) user.get("major");
                         friendEmails = (ArrayList) user.getList("friends");
-                        ParseFile imgFile = (ParseFile) user.get("profilePic");
+                        ParseFile imgFile = null;
+                        if (user.containsKey("profilePic")){
+                            imgFile = (ParseFile) user.get("profilePic");
+                        }
+
                         if (imgFile != null){
                             try {
                                 byte[] data = imgFile.getData();
