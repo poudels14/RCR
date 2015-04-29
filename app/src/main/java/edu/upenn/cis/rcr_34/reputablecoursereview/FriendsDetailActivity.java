@@ -93,6 +93,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     private void populateFriend(LinearLayout llIn, final User u){
         RelativeLayout personalDetail = new RelativeLayout(this);
         RelativeLayout.LayoutParams lpforPersonalDetail = new RelativeLayout.LayoutParams(
@@ -116,10 +117,8 @@ public class FriendsDetailActivity extends ActionBarActivity {
         RelativeLayout.LayoutParams lpForName = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         lpForName.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
-        TextView name = new TextView(this);
-        name.setText(u.getName());
-        name.setPadding(20, 0, 0, 0);
-        name.setId(Utils.getUniqueID());
+
+        TextView name = newTextView(u.getName(), lpForName);
         name.setLayoutParams(lpForName);
         personalDetail.addView(name);
 
@@ -129,11 +128,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
         lpForYear.addRule(RelativeLayout.BELOW, name.getId());
         lpForYear.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
 
-        TextView year = new TextView(this);
-        year.setText("Year: " + u.getYear());
-        year.setPadding(20, 0, 0, 0);
-        year.setLayoutParams(lpForYear);
-        year.setId(Utils.getUniqueID());
+        TextView year = newTextView("Year: " + u.getYear(), lpForYear);
         personalDetail.addView(year);
 
         //Set major
@@ -142,11 +137,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
         lpForMajor.addRule(RelativeLayout.BELOW, year.getId());
         lpForMajor.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
 
-        TextView major = new TextView(this);
-        major.setText("Major: " + u.getMajor());
-        major.setPadding(20, 0, 0, 0);
-        major.setLayoutParams(lpForMajor);
-        major.setId(Utils.getUniqueID());
+        TextView major = newTextView("Major: " + u.getMajor(), lpForMajor);
         personalDetail.addView(major);
 
 
@@ -156,14 +147,13 @@ public class FriendsDetailActivity extends ActionBarActivity {
         lpForEmail.addRule(RelativeLayout.BELOW, major.getId());
         lpForEmail.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
 
-        TextView email = new TextView(this);
-        email.setText("Email: Only friends can see this");
+        TextView email;
         if(isFriend || isCurrentUser) {
-            email.setText("Email: " + u.getEmail());
+            email = newTextView("Email: " + u.getEmail(), lpForEmail);
         }
-        email.setPadding(20, 0, 0, 0);
-        email.setLayoutParams(lpForEmail);
-        email.setId(Utils.getUniqueID());
+        else{
+            email = newTextView("Email: Only friends can see this", lpForEmail);
+        }
         personalDetail.addView(email);
 
         llIn.addView(personalDetail);
@@ -227,7 +217,6 @@ public class FriendsDetailActivity extends ActionBarActivity {
             });
             personalDetail.addView(addFriend);
         }
-
         // End of personal details
     }
 
@@ -276,7 +265,6 @@ public class FriendsDetailActivity extends ActionBarActivity {
                     }
                 }
             });
-
             classesTakenDetails.addView(allClassesTaken);
 
             llIn.addView(classesTakenDetails);
@@ -326,36 +314,38 @@ public class FriendsDetailActivity extends ActionBarActivity {
         });
 
         //Set course code
-        TextView className = new TextView(this);
         RelativeLayout.LayoutParams lpForClassName = new RelativeLayout.LayoutParams(
                 400, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        className.setText(courseName);
-        className.setPadding(20, 0, 0, 0);
-        className.setId(Utils.getUniqueID());
-        className.setLayoutParams(lpForClassName);
+        TextView className = newTextView(courseName, lpForClassName);
         course.addView(className);
 
         //Set course rating
-        TextView classRating = new TextView(this);
         RelativeLayout.LayoutParams lpForClassRating = new RelativeLayout.LayoutParams(
                 200, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        classRating.setText(rating);
-        classRating.setPadding(20, 0, 0, 0);
-        classRating.setId(Utils.getUniqueID());
-        classRating.setLayoutParams(lpForClassRating);
+        TextView classRating = newTextView(rating, lpForClassRating);
         course.addView(classRating);
 
-
         //Set semester taken
-        TextView semester = new TextView(this);
         RelativeLayout.LayoutParams lpForSemester = new RelativeLayout.LayoutParams(
                 800, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        semester.setText(semseterTaken + " " + yearTaken);
-        semester.setPadding(20, 0, 0, 0);
-        semester.setId(Utils.getUniqueID());
-        semester.setLayoutParams(lpForSemester);
+
+        TextView semester = newTextView(semseterTaken + " " + yearTaken, lpForSemester);
         course.addView(semester);
 
         allClassesTaken.addView(course);
+    }
+
+
+    /**
+     * This method will be used to create a textview with similar properties
+     *
+     * */
+    private TextView newTextView(String text, RelativeLayout.LayoutParams lp){
+        TextView newView = new TextView(this);
+        newView.setText(text);
+        newView.setPadding(20, 0, 0, 0);
+        newView.setLayoutParams(lp);
+        newView.setId(Utils.getUniqueID());
+        return newView;
     }
 }

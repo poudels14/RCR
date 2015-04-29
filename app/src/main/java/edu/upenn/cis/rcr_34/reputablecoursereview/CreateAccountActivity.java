@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import com.parse.FindCallback;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
@@ -45,7 +46,7 @@ public class CreateAccountActivity extends ActionBarActivity {
     /*
     * This method will help choosing a profile image from gallery
     * */
-    public void selectImageClicked(View c){
+    public void selectImageClicked(View c) {
         String path = Environment.getExternalStorageDirectory()
                 + "/images/imagename.png";
         Intent i = new Intent(Intent.ACTION_PICK,
@@ -61,7 +62,7 @@ public class CreateAccountActivity extends ActionBarActivity {
                 && null != data) {
 
             Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
             Cursor cursor = getContentResolver().query(selectedImage,
                     filePathColumn, null, null, null);
@@ -96,54 +97,42 @@ public class CreateAccountActivity extends ActionBarActivity {
         String passwordConfirm = passwordConfirmField.getText().toString();
 
         //Make sure valid email used and the email is from upenn
-        if(!email.equals("")){
+        if (!email.equals("")) {
             String[] emailSplitatAt = email.split("@");
-            if (emailSplitatAt.length < 2){
+            if (emailSplitatAt.length < 2) {
                 Toast.makeText(getApplicationContext(), "Please enter a valid email!",
                         Toast.LENGTH_SHORT).show();
-            }
-            else{
+            } else {
                 String[] emailSplitAtDot = emailSplitatAt[1].split("\\.");
                 int length = emailSplitAtDot.length;
 
-                if (length < 2 || !emailSplitAtDot[length - 1].equals("edu") || !emailSplitAtDot[length - 2].equals("upenn")){
+                if (length < 2 || !emailSplitAtDot[length - 1].equals("edu") || !emailSplitAtDot[length - 2].equals("upenn")) {
                     Toast.makeText(getApplicationContext(), "Only Penn emails are accepted!",
                             Toast.LENGTH_SHORT).show();
                 }
             }
         }
 
-        if (email.equals("")){
-            Toast.makeText(getApplicationContext(), "Please Enter Email",
-                    Toast.LENGTH_SHORT).show();
-        }
-        else if (firstName.equals("")){
-            Toast.makeText(getApplicationContext(), "Please Enter First Name",
-                    Toast.LENGTH_SHORT).show();
-        } else if (lastName.equals("")){
-            Toast.makeText(getApplicationContext(), "Please Enter Last Name",
-                    Toast.LENGTH_SHORT).show();
-        }else if (major.equals("")){
-            Toast.makeText(getApplicationContext(), "Please Enter Major",
-                    Toast.LENGTH_SHORT).show();
-        }  else if (year.equals("")){
-            Toast.makeText(getApplicationContext(), "Please Enter Year of Graduation",
-                    Toast.LENGTH_SHORT).show();
-        }
-        else{
+        boolean isFormValid = true;
+        isFormValid = isFormValid && checkIfFieldIsValid(email, "Please Enter Email");
+        isFormValid = isFormValid && checkIfFieldIsValid(firstName, "Please Enter First Name");
+        isFormValid = isFormValid && checkIfFieldIsValid(lastName, "Please Enter Last Name");
+        isFormValid = isFormValid && checkIfFieldIsValid(major, "Please Enter Major");
+        isFormValid = isFormValid && checkIfFieldIsValid(year, "Please Enter Year of Graduation");
+
+        if (isFormValid) {
             // Check if password matches
             if (password.length() < 5) {
                 Toast.makeText(getApplicationContext(),
                         "Password should be at least 5 characters long", Toast.LENGTH_SHORT).show();
                 passwordField.setText("");
                 passwordConfirmField.setText("");
-            }
-            else if (!password.equals(passwordConfirm)) {
+            } else if (!password.equals(passwordConfirm)) {
                 Toast.makeText(getApplicationContext(), "Password doesn't match!",
                         Toast.LENGTH_SHORT).show();
                 passwordField.setText("");
                 passwordConfirmField.setText("");
-            }else {
+            } else {
                 createNewUser(firstName, lastName, email, major, year, password);
             }
         }
@@ -190,7 +179,7 @@ public class CreateAccountActivity extends ActionBarActivity {
                             @Override
                             public void done(com.parse.ParseException e) {
                                 // Now upload image
-                                if (bitmap != null){
+                                if (bitmap != null) {
                                     //Save profile image
                                     Bitmap reducedSize = Bitmap.createScaledBitmap(bitmap, 320, 400, true);
 
@@ -199,7 +188,7 @@ public class CreateAccountActivity extends ActionBarActivity {
                                     bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, blob);
                                     byte[] bitmapArray = blob.toByteArray();
 
-                                    ParseFile profilePic = new ParseFile(email + "_profilepic",bitmapArray);
+                                    ParseFile profilePic = new ParseFile(email + "_profilepic", bitmapArray);
                                     user.put("profilePic", profilePic);
                                     user.saveInBackground();
                                 }
@@ -215,5 +204,18 @@ public class CreateAccountActivity extends ActionBarActivity {
                 }
             }
         });
+    }
+
+    /**
+     * This method will check the sign up form
+     */
+    private boolean checkIfFieldIsValid(String val, String msg) {
+        if (val.equals("")) {
+            Toast.makeText(getApplicationContext(), msg,
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            return true;
+        }
+        return false;
     }
 }

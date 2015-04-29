@@ -1,0 +1,1053 @@
+commit 17925c1df85d69984f10562112e1dce515b94728
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Mon Apr 27 12:43:59 2015 -0400
+
+    course reviews ratings are averaged
+
+commit 715aee9e68ef5d4b1d10fb780d0b62863f88e586
+Merge: 39d71c8 3d324fd
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Apr 26 23:30:17 2015 -0400
+
+    Merge branch 'master' of github.com:cis-upenn/34-RCR
+
+commit 39d71c82ea52b3c2dfd3fbc8c60a6df79148a63f
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Apr 26 23:29:56 2015 -0400
+
+    request will disapper once request is accepted
+
+commit 3d324fd38866a659d40fd04dd8b8298d4cff2b5c
+Merge: d65beeb b4b918a
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Apr 26 22:21:01 2015 -0400
+
+    Merge branch 'master' of https://github.com/cis-upenn/34-RCR
+
+commit d65beebcf7a44c5b1d13a2929cee4d29b04c5103
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Apr 26 22:20:39 2015 -0400
+
+    stashing local changes
+
+commit b4b918aeed48031183f099bc4bba0bbc883d139e
+Merge: 38704ac 01e2d8c
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Apr 26 22:20:07 2015 -0400
+
+    Mergt pushe branch 'master' of github.com:cis-upenn/34-RCR
+
+commit 38704ac75452a1cd2abea960976d1826974dd0e8
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Apr 26 22:19:57 2015 -0400
+
+    login activity won't appear when back button is clicked; goto main bug fixed
+
+commit 01e2d8cb9f90a2fe098d790a3c57a8b6e7771d71
+Merge: 5144bbb e029785
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sun Apr 26 21:32:08 2015 -0400
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 511f1f577c33c70d1216573a0acd80ef2a84b12c
+Merge: 84b06bc e029785
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Apr 26 21:32:00 2015 -0400
+
+    Merge branch 'master' of https://github.com/cis-upenn/34-RCR
+
+commit 5144bbbb9c951ee691442df536ae8d16f379d963
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sun Apr 26 21:31:55 2015 -0400
+
+    Removed BS 101
+
+commit 84b06bccde1cff8c870864666fd62ec70fb35367
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Apr 26 21:31:48 2015 -0400
+
+    stashing local changes
+
+commit e029785d002f88dee371a088f8eb014606f4dc41
+Merge: 9e97a07 16b960a
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Apr 26 21:29:36 2015 -0400
+
+    Merge branch 'master' of github.com:cis-upenn/34-RCR
+
+commit 9e97a07c3620a7ab2b3fd9ce0be0cdec1158604b
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Apr 26 21:29:29 2015 -0400
+
+    image can't be loaded otherwise everything working
+
+commit 16b960adb396144870c9c3626bb3984091e5eec7
+Merge: 579478d 55b2fcb
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 26 20:29:48 2015 -0400
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 579478d04adb826ebdcc269830af17f1e467f4fa
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 26 20:29:14 2015 -0400
+
+    Fixed review numbers on friends pages
+
+commit 55b2fcb9f2b7ff6ca467b503d66e79a653873b82
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sun Apr 26 19:40:04 2015 -0400
+
+    Merge remote-tracking branch 'origin/master'
+    
+    Conflicts:
+    	app/src/main/java/edu/upenn/cis/rcr_34/reputablecoursereview/CreateAccountActivity.java
+    	app/src/main/java/edu/upenn/cis/rcr_34/reputablecoursereview/MainActivity.java
+
+commit daf04913bd04a7e88d9bb0fc34853fd1e54e5b4c
+Merge: 99a4ce2 b9181b4
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sun Apr 26 19:39:34 2015 -0400
+
+    Merge remote-tracking branch 'origin/master'
+    
+    Conflicts:
+    	app/src/main/java/edu/upenn/cis/rcr_34/reputablecoursereview/CreateAccountActivity.java
+    	app/src/main/java/edu/upenn/cis/rcr_34/reputablecoursereview/MainActivity.java
+
+commit 99a4ce2a167e2bd6b0f60d69ad44c5abc6931cc1
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sun Apr 26 19:34:08 2015 -0400
+
+    Facebook bug fix
+
+commit b9181b45618dca10547bc9ec4e64b26b2d41e728
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Apr 26 18:55:39 2015 -0400
+
+    profile pic can be added; nth crashing
+
+commit 3edd0b2a70faefdf3413ee4887ff0469379ca51e
+Merge: 1f56891 c584fd7
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Apr 26 18:22:25 2015 -0400
+
+    mergrge branch 'master' of github.com:cis-upenn/34-RCR
+
+commit 1f56891a496da133ba3747d18b5a6c796245c971
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Apr 26 18:22:15 2015 -0400
+
+    user profile pic working:
+
+commit c584fd7dcb6da1443a677316127772d7626f715a
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 26 17:55:00 2015 -0400
+
+    Cleaned up the code a bit
+
+commit eeb3d0f7058ef8e2cd1ed25ecf4cd28af4c17381
+Merge: e15099d 6c2c7c6
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Apr 26 17:35:05 2015 -0400
+
+    Merge branch 'master' of https://github.com/cis-upenn/34-RCR
+
+commit e15099d11b5bbd6924f3670de57036e5f38db931
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Apr 26 17:34:48 2015 -0400
+
+    removed erroneous syntax
+
+commit 6c2c7c622d01d3a21170d545b6802fef5643e63b
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 26 17:32:56 2015 -0400
+
+    Friends details now show the courses they took
+
+commit cec3e9795ffb4f01562191c9b7cc27439cd1faaf
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 26 16:38:00 2015 -0400
+
+    Past courses refreshes when you add or remove courses taken
+
+commit 964387310d6385bce9eb7c9d1536a8aa6ae68ac8
+Merge: f99fc36 3284c96
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 26 16:16:34 2015 -0400
+
+    Merge remote-tracking branch 'origin/master'
+
+commit f99fc36704c73003a8d84d930b4b7f4cd4b252d8
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 26 16:16:25 2015 -0400
+
+    Fixed bug with adding reviews
+
+commit 3284c96ad5deecb5b914dede95de5db693432d09
+Merge: 20edddc fac6174
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Apr 26 16:14:04 2015 -0400
+
+    Merge branch 'master' of github.com:cis-upenn/34-RCR
+
+commit 20edddc6e5b0e82771ed071dd55039a5467036f1
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Apr 26 16:13:58 2015 -0400
+
+    user can
+    't add herself as friend and can't sent request to friend
+
+commit fac6174729050ebdaf56c7d1a8fded8fddbc2f4a
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sun Apr 26 16:10:27 2015 -0400
+
+    Add to future courses from course activity page
+
+commit 906dcb8e592220d165f6d7b8afd982cc2cc3d131
+Merge: 4b812d5 ca081c6
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sun Apr 26 16:08:54 2015 -0400
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 4b812d585de0c4ef71b517f344fdbc209881321b
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sun Apr 26 16:08:37 2015 -0400
+
+    Add to future courses from course activity page
+
+commit ca081c6b3da410209d865f6400c393bc7f000ed8
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 26 16:03:13 2015 -0400
+
+    Fixed trouble with removing future courses
+
+commit 398246b1a1e3434cb3c0df279163e9e50b6876dd
+Merge: 086661a 2a7a503
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sun Apr 26 15:59:26 2015 -0400
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 086661aa36d1f90a3caa347fe6548e4d86f95f61
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sun Apr 26 15:59:03 2015 -0400
+
+    Add to future courses from course activity page
+
+commit 2a7a503340314b544ba31c9a845c66d5c1a203a8
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 26 15:35:58 2015 -0400
+
+    Fixed past course page and editing added courses
+
+commit ca4f3f8b9a807815297f9d0425bd42970d6a8b96
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Apr 26 15:28:51 2015 -0400
+
+    cant review same twice, min review requirement
+
+commit a0080f8dc7815b65e0baa0d1623bf027e86ad8f4
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 26 13:46:25 2015 -0400
+
+    Future courses page now links to the course, fixed some bugs with storing courses
+
+commit 601124d5c4d24e394d31dc530fe78ba1ec4108c6
+Merge: c159b10 3551a11
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Apr 26 12:42:33 2015 -0400
+
+    review user interface layout changed
+
+commit c159b10aa4980b1f5614b65e6eb4b92626e89b25
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Apr 26 12:27:26 2015 -0400
+
+    local copy
+
+commit 3551a11d7d34c230703894e9ef1bea1bd1456490
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Mon Apr 20 15:02:18 2015 -0400
+
+    Fixed problem with username not being capitalized when you register
+
+commit 0e7f43de463e7c64b1b1007a3bd6bfe55d58dae3
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Apr 20 01:28:13 2015 -0400
+
+    course review fixed
+
+commit f03d2a9811bf5fdfba90bc1b8ec0be7c801bf393
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Apr 20 01:11:22 2015 -0400
+
+    friend request now working
+
+commit 8c97a299b57a850b699e770de036239d051d6767
+Merge: 0c61b31 35ad542
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Mon Apr 20 00:44:19 2015 -0400
+
+    Merge branch 'master' of https://github.com/cis-upenn/34-RCR
+
+commit f2fe8b3d601ffbe2381095b2c021bec15c3ea9fe
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Apr 20 00:44:07 2015 -0400
+
+    friend request working; pending list will be dropped
+
+commit 0c61b31afdad0e394254cbcfac7ae215c9848113
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Mon Apr 20 00:44:03 2015 -0400
+
+    refactoring review layout
+
+commit 35ad5420d6467a3fbd0609add622d8006edffa6c
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Apr 20 00:40:46 2015 -0400
+
+    now person should be in friends list if s/he accepts request
+
+commit 7f3c6f83c8018d2627ded753e22080bf01ac8ac0
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Apr 20 00:26:31 2015 -0400
+
+    friend request should be fixed"
+
+commit f4e79a47b1109435b1ff358120da4b3cd5bd5ffb
+Merge: bbea73a efd2e3e
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Apr 20 00:22:09 2015 -0400
+
+    t Merge branch 'master' of github.com:cis-upenn/34-RCR
+
+commit bbea73afb191715430ae5351ebea17cc5e1a078a
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Apr 20 00:21:58 2015 -0400
+
+    dont show in pending list of request accepted
+
+commit efd2e3ed97d8ab9b801102345e0167c00320985e
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Mon Apr 20 00:15:27 2015 -0400
+
+    Fixed problem with course search
+
+commit f32d72934218fc704f0619b261f32154b6527ce2
+Merge: d0d83f3 6cbc63c
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Apr 20 00:05:38 2015 -0400
+
+    Merge conflit fixed
+
+commit d0d83f38a540b466b0b12bb6496e578952ab1a3d
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Apr 20 00:01:47 2015 -0400
+
+    friend request send/accept should be workingh
+
+commit 6cbc63cbe09118f64843715afacd3d87dec0492b
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 19 23:49:15 2015 -0400
+
+    Fixed problems with non-friend page
+
+commit dccea845dc13a5e1967b52ffe92c3e870c530223
+Merge: 3772704 f379e0a
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 19 23:39:34 2015 -0400
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 3772704333739deace3cf1ef296355deb86fad80
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 19 23:39:18 2015 -0400
+
+    Fixed problems with search
+
+commit f379e0a62ea123244a85d0ff0af19311f2de1696
+Merge: e2878cd 49f2b06
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Apr 19 23:28:51 2015 -0400
+
+    merged
+
+commit e2878cd60e3d4c6db6e76f6952d9dad568e4fe60
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Apr 19 23:23:00 2015 -0400
+
+    Courses taken will be retrieved from Parse now:
+
+commit 49f2b06e1ff61ac502e065acaca1cb770e7dc73c
+Merge: 321d019 8f097e9
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sun Apr 19 22:47:15 2015 -0400
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 321d0195cc2316b666390ee000ed127c9c91cfb9
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sun Apr 19 22:47:00 2015 -0400
+
+    radiobuttons
+
+commit 8f097e94e38eb63a580c090c086d1361a25aa2bc
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 19 22:39:35 2015 -0400
+
+    Added non-friends page
+
+commit d9a1af914c0d5f241e49d7481cb17d2f4adc88f1
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 19 22:06:28 2015 -0400
+
+    Added person search
+
+commit e115247ab41a618c7e2482c6c8429f276841746b
+Merge: 9cbc952 1fe85ca
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Apr 19 21:23:17 2015 -0400
+
+    merge conflict fixed
+
+commit 9cbc952981499ee9e66c65646cafc371acc70ad3
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Apr 19 21:01:10 2015 -0400
+
+    Merged
+
+commit 9275b459ea7d04111c82a73b6e593c07a3df0b2c
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Apr 19 21:00:33 2015 -0400
+
+    Friend request sending and accepting working; can click on past courses
+
+commit 1fe85ca1dfa748e448406e1b75ad16b36d1a6633
+Merge: b400907 0f30e2b
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Thu Apr 16 14:29:45 2015 -0400
+
+    Merge remote-tracking branch 'origin/master'
+
+commit b40090748046bbeeb2d8a74fc5002637322a43fc
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Thu Apr 16 14:29:32 2015 -0400
+
+    comment code
+
+commit 0f30e2b3b1bba50175257d6bc0ab547accf57092
+Merge: 635ef73 4fe432d
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Thu Apr 16 14:26:15 2015 -0400
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 635ef73f6e0e3709223b641dca170ce32aa5fdcd
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Thu Apr 16 14:25:42 2015 -0400
+
+    Fixed variable names and added comments
+
+commit 4fe432dd9780cf09825b6d3ceba41fdb83ad5e4c
+Merge: 5456b76 a6c5ac1
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Thu Apr 16 14:05:06 2015 -0400
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 5456b767e15e588481f9cd5966b0cc2517d2a4b0
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Thu Apr 16 14:04:40 2015 -0400
+
+    Pre comment commit
+
+commit a6c5ac1a99718bb64c198675d14a2320b67c2459
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Thu Apr 16 13:49:50 2015 -0400
+
+    Cleaned up unused code
+
+commit 8ca19c181f48feb7bd8bc22dc0fd6ab442738f45
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Mon Apr 13 14:43:55 2015 -0400
+
+    Bug fixes for course addition
+
+commit d86c0ac95e5305161ff87422b878951352f25758
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Mon Apr 13 13:16:36 2015 -0400
+
+    Fixed bug where you can add courses that don't exist in future courses
+
+commit 9ef9d5a8686928c24d271ccb485dbdbd5adc9f31
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Apr 13 02:37:05 2015 -0400
+
+    SecondIter file commited
+
+commit 595f4d178b595314d1e583375d993a7fc8806ebd
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Apr 13 02:36:29 2015 -0400
+
+    Fixed bug caused by merge
+
+commit 6bd0f843c5df9867233696c0c668677e41fafd12
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Apr 13 02:16:32 2015 -0400
+
+    Remove friend button added
+
+commit f9fda67df911d4b70a1fca1e05470308be4b5069
+Merge: 82fcbff fd6a421
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sun Apr 12 22:52:07 2015 -0400
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 82fcbffe050f26d9961cf31e7f1136ddf3283865
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sun Apr 12 22:51:49 2015 -0400
+
+    Upvote + Downvote
+
+commit fd6a4217bd658db214396f5e1f1acf595f7ffd88
+Merge: 8edeebb d500122
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Apr 12 22:36:56 2015 -0400
+
+    course review page
+
+commit 8edeebb2c26f962aea9a8ceb6ca72cf1ae272477
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Apr 12 22:32:45 2015 -0400
+
+    course review page
+
+commit d50012236eae8bd9eace0c2bb07f975e900ac566
+Merge: 658d8b2 2482c7a
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sun Apr 12 21:52:32 2015 -0400
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 658d8b2aa9b712ff1039f59fb0853db58fb372e8
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sun Apr 12 21:52:06 2015 -0400
+
+    Course page review display
+
+commit 2482c7a0662bbad0b56ad11d28abe549de1ce9c8
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 12 20:28:13 2015 -0400
+
+    Finished future courses page.
+
+commit 316315351d13135dbae4ed0a4684b01e437f7f31
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 12 17:48:11 2015 -0400
+
+    Added ability to add courses taken.
+
+commit eedace0053fdf75669578439dc6b832b28b77fa9
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 12 13:44:26 2015 -0400
+
+    Changes to user
+
+commit 2bd09c8075293fc0d4f90d4b71d56a06e017203f
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Apr 12 13:36:45 2015 -0400
+
+    added course page to android manifest
+
+commit c442c7358d8710a1c6324ce192fec7925bbe9f17
+Merge: 50f3df3 9ed75fb
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Apr 12 13:29:11 2015 -0400
+
+    Merge branch 'master' of https://github.com/cis-upenn/34-RCR
+    
+    Conflicts:
+    	app/src/main/AndroidManifest.xml
+
+commit 50f3df38dc6283e48e5147aeedaab1ca27c5d46c
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Apr 12 13:27:42 2015 -0400
+
+    local copy
+
+commit 9ed75fbf5c3c4d454464a621f26181c3223b7ad6
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 12 13:25:08 2015 -0400
+
+    Fixed bugs in the last push
+
+commit d8fc3801c1ac748254a5f29fffe060cc078d4c6e
+Merge: 0a1d9d7 4492660
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 12 13:21:21 2015 -0400
+
+    Merge remote-tracking branch 'origin/master'
+    
+    Conflicts:
+    	app/src/main/res/values/strings.xml
+
+commit 0a1d9d75f5bdcb1731c8ffdf76fa9eec5795dc1b
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 12 13:20:47 2015 -0400
+
+    Added course addition page
+
+commit 4492660804aa1a4090baddb0e66a950ebf2ae17f
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sun Apr 12 13:00:56 2015 -0400
+
+    Future Courses
+
+commit 9f570193dc9c66836b158b4243f04217b797287c
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sun Apr 12 13:00:29 2015 -0400
+
+    Future Courses
+
+commit cd5fe728da52abda9daa1998ef88d491576731ab
+Merge: 287e507 00b2a9a
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sat Apr 11 23:48:59 2015 -0400
+
+    Merge remote-tracking branch 'origin/master'
+    
+    Conflicts:
+    	app/src/main/AndroidManifest.xml
+    	app/src/main/res/values/strings.xml
+
+commit 287e507d3174d8939f3b59c8964062511c97db02
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sat Apr 11 23:48:03 2015 -0400
+
+    Future Courses
+
+commit 00b2a9ae5792fdee0bd28ef49a4ce0464f982072
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Wed Apr 8 18:52:45 2015 -0400
+
+    Daniel's bug fixed; now course details can be seen
+
+commit 7dd6b34e0ed0319a5a8909390265e3e5f10d5361
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Wed Apr 8 17:13:54 2015 -0400
+
+    fixed utils
+
+commit 74591ca612acc6990956c0a3fce1a9d92a0168a2
+Merge: 5201fe9 c8938d9
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Wed Apr 8 17:13:14 2015 -0400
+
+    Merge branch 'master' of https://github.com/cis-upenn/34-RCR
+
+commit 5201fe9c22a9551c9c6d779a8bd413d71093660f
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Wed Apr 8 17:12:35 2015 -0400
+
+    fixed utils
+
+commit c8938d96219431703fc72ba41b482e6b5f9371ae
+Merge: 381bf22 556251c
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Wed Apr 8 17:02:05 2015 -0400
+
+    Merged daniel's and sagar's commit on Manifest and strings
+
+commit 381bf224cf007a2cb84e7c64fd522428edae9689
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Wed Apr 8 16:58:44 2015 -0400
+
+    Loding friends and pending request qorking
+
+commit 556251c91d017700643d22e9651e0a869f783895
+Merge: 5b838ff e1d320f
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Wed Apr 8 11:36:17 2015 -0400
+
+    Merge branch 'master' of https://github.com/cis-upenn/34-RCR
+
+commit 5b838ff503223dcd93396a968da97df1397b41a3
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Wed Apr 8 11:35:04 2015 -0400
+
+    added course activity, layout, static utils
+    :q
+
+commit 97d80a38fa521ee2b0404f24060a44f23237d84c
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Wed Apr 8 11:29:56 2015 -0400
+
+    mostly complete course activity, static utils started
+
+commit e1d320f4e102dfc7af9901490cdece04f6bf4ba4
+Merge: 19f01b8 84ed101
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Tue Apr 7 14:05:47 2015 -0400
+
+    Merged my commit with tahmid's?
+
+commit 19f01b890cf0fc63f78e6ea3d76f26e2e4e8475b
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Tue Apr 7 14:03:50 2015 -0400
+
+    no bugs; can retrive friends from background and populate once it receives data
+
+commit 84ed1011b538c053a2e26ac525c5c4fdc8ab703b
+Merge: fdf1758 3a79417
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sun Apr 5 20:00:50 2015 -0400
+
+    Merge remote-tracking branch 'origin/master'
+
+commit fdf1758468e372cb8627a78212968f5f965b8dd7
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Sun Apr 5 20:00:13 2015 -0400
+
+    Fixed more bugs on Facebook
+
+commit 3a79417b461d05cebb24a56020413b94f315dd4d
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Apr 5 18:54:43 2015 -0400
+
+    Fixed past course xml
+
+commit 165584f695c6a8951de2551d98f4ddcbd0511752
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sat Apr 4 18:46:20 2015 -0400
+
+    Added past courses page v1
+
+commit e0fadee0f7e6dd6529b24d3eda89bbe5b7c01b75
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sat Apr 4 15:58:26 2015 -0400
+
+    added header to manage account: programatically uses parse info for textview text
+
+commit e4b34475ac4fa77d6bc3d15410c06636b655c2e0
+Merge: 22e946f 957487c
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Tue Mar 31 22:12:02 2015 -0400
+
+    Merge remote-tracking branch 'origin/master'
+    
+    Conflicts:
+    	app/src/main/java/edu/upenn/cis/rcr_34/reputablecoursereview/LoginActivity.java
+
+commit 957487c3f11db30eb2995a455fca1446c1f04f8f
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Tue Mar 31 22:03:24 2015 -0400
+
+    Working on adding friends -not workign
+
+commit 22e946f0473836e994445d5901a5638b0059fd5f
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Tue Mar 31 22:02:17 2015 -0400
+
+    Fixed more bugs on Facebook
+
+commit 3649cd581dd8e5746aa91f4e19ae844688d33027
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Tue Mar 31 16:33:23 2015 -0400
+
+    Manage friends activity finished, should integrate with Parse
+
+commit cc59313afc69770dabc835363732b837704de3ab
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Mar 30 17:21:30 2015 -0400
+
+    User should verify email to sign in and penn email should be used to signup
+
+commit 4efcf2e9d90e1ee711734473d169e1e7566e6832
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Mar 30 16:34:39 2015 -0400
+
+    Removed dead code in Main activity
+
+commit 6fce3ba5a923ed54fa651db292ad28d4cefed17f
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Mar 30 13:45:51 2015 -0400
+
+    See friends as button
+
+commit 16258475d1b61e4930788144804afcc57d72664b
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Mar 30 12:30:26 2015 -0400
+
+    Facebook auto prompt bug fixed
+
+commit 8f1e7e33bc5e15e05b9448416215e286b1b03832
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Mar 30 12:22:28 2015 -0400
+
+    firstIter.txt updated now
+
+commit d65343ba541db82ebf1c1bafe79b3d7fef1aba9a
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Mar 30 12:20:58 2015 -0400
+
+    firstIter.txt updated
+
+commit 28ab3c86553fa9b1956fd48a8c2c738c6357076e
+Merge: 0e1d211 6916257
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Mar 30 12:20:19 2015 -0400
+
+    Merged sagar's and tahmid's work
+
+commit 0e1d2117c3d04cbdc231692a6e82bfc24f5b1dc4
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Mar 30 12:04:03 2015 -0400
+
+    ParseAPI class added, auto login after signup
+
+commit 691625705a965193ab65eabcc5af6bf479aeb84c
+Merge: 54693b3 68dc649
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Mon Mar 30 11:47:06 2015 -0400
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 54693b3dcff9c59f8476cd12346ae5f6542629ac
+Author: tahmidshahriar <tahmids@seas.upenn.edu>
+Date:   Mon Mar 30 11:46:37 2015 -0400
+
+    Added Facebook stuff
+
+commit 68dc64941685022fccafa5cae235a4ac68e4f91c
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Mon Mar 30 11:11:17 2015 -0400
+
+    Fixed bug that showed all activity in launcher
+
+commit e8adbf1b672596577166dddd9683dc2cc80b333c
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Mar 29 21:20:11 2015 -0400
+
+    refactoring to parseuser instead of parseobject
+
+commit da1e013567d131b18bcddc17120b2d44fa5e1f2a
+Merge: bde054d faf9af6
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Mar 29 21:16:49 2015 -0400
+
+    Merge branch 'master' of https://github.com/cis-upenn/34-RCR
+
+commit bde054d5a49fa4305c413a13ee29df012f41c554
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Mar 29 21:16:32 2015 -0400
+
+    refactoring to parseuser instead of parseobject
+
+commit faf9af6da493c93dc4be20f55b84dcb883d86173
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Mar 29 20:55:55 2015 -0400
+
+    Added more friends.
+
+commit 9e07642a887ef5c6d20c83160112af3071024b52
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 17:43:31 2015 -0400
+
+    LOgin and logout perfectly working
+
+commit be6b6bd65281a10bd95e9f618760bfdcbf2f2d18
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 17:16:17 2015 -0400
+
+    Main view edited
+
+commit 32d6ba5851c873387c7f7ca8cb41542b39134f9c
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 17:15:18 2015 -0400
+
+    Sign out and manage account in setting menu
+
+commit 1f3e5be93624709eb0d290ab2d2fe7e18eb9cab3
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 16:52:05 2015 -0400
+
+    Password field shouldnt be empty
+
+commit 3dbcac815901c5f4cd46f409e094415dc9baea43
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 16:50:12 2015 -0400
+
+    merged bug fixed in Createaccount
+
+commit 7c837b53b9e8e5a6d4fcdba0d95868dabafb367f
+Merge: e1469d0 191189b
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 16:47:37 2015 -0400
+
+    merged
+
+commit e1469d0b0a5dc6e696ec9e8b4a016fe1ca97a95d
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 16:45:55 2015 -0400
+
+    Form verification added
+
+commit 191189b8f9f9fe8f2a3fcfd61da83f01ee1cc69e
+Merge: ab458bc b17009c
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Mar 29 16:39:35 2015 -0400
+
+    committing the return to login again
+
+commit ab458bcdf7a1221221986724dfa34dc483a06b2b
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Mar 29 16:36:41 2015 -0400
+
+    can cancel registration, registration returns to login screen
+
+commit b17009ca8cc559f18dc9d2c5c5f7c236d269ce31
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 16:35:52 2015 -0400
+
+    Sign in fixed
+
+commit 1393f78ab5a73e1a0c4352dc748c0550b3e05176
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 16:25:14 2015 -0400
+
+    Check existing user account
+
+commit c4f392bcd73206e2586ca4600eb3be74ed9e25dc
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 16:22:56 2015 -0400
+
+    register account working:
+
+commit e64e1c9d17f670ce773084e8886728a761094d94
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 16:17:57 2015 -0400
+
+    Create account activity changed- bug fixed
+
+commit 64323b0d465c855afee04b00790fc4c625fb4b73
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 16:17:24 2015 -0400
+
+    Create account activity changed
+
+commit 9ddb6334f08ac8f7cd7802b2dfc080dccd8c5725
+Merge: 3a1c11c e9a13fe
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 15:57:18 2015 -0400
+
+    Merge branch 'master' of github.com:cis-upenn/34-RCR
+
+commit 3a1c11ccfb9573cca85c305d014b9890307a3b9a
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 15:57:14 2015 -0400
+
+    create account activity
+
+commit e9a13fed45a2d1080e60019d850a80c519f28294
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Mar 29 15:56:51 2015 -0400
+
+    register button correctly moves activities
+
+commit 58e02f28e2df1e1f9fa272bcb22e46808ca932fc
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Mar 29 15:51:14 2015 -0400
+
+    updating xml file for account registration again
+
+commit f6d0018cf8a08109ac5761ed118bba32c7ba155e
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Mar 29 15:48:31 2015 -0400
+
+    updating xml file for account registration
+
+commit e6478b907e8469067131754dbd474fb25691198c
+Merge: ae9431b 4976499
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Mar 29 15:35:05 2015 -0400
+
+    Merge branch 'master' of https://github.com/cis-upenn/34-RCR
+
+commit ae9431b4b7d95b6a23035c626ea2d29de07ed4ff
+Author: Dan McCann <mccannd@seas.upenn.edu>
+Date:   Sun Mar 29 15:34:12 2015 -0400
+
+    adding xml for registration
+
+commit 497649992a3a875b8b3ee59373a52a642e0bd3a5
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 15:33:40 2015 -0400
+
+    create account java activity created
+
+commit fe1cfaa9c3699dbc5016a52800daa04623627242
+Merge: adc82b8 2d8fcd0
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 14:56:10 2015 -0400
+
+    Merge branch 'master' of github.com:cis-upenn/34-RCR
+
+commit adc82b80a704283cfb938aeba8f6785584f6a9d2
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 14:54:24 2015 -0400
+
+    added .xml for xml files
+
+commit 2d8fcd0511bb7829b2fdcb2dd07554d02b913bcb
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Mar 29 13:10:31 2015 -0400
+
+    Added in friends list.
+
+commit c6c433821e81c1103db9ce0babaf27717f88a46d
+Merge: e88682a 0bff8bd
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 03:44:51 2015 -0400
+
+    Merge branch 'master' of github.com:cis-upenn/34-RCR
+
+commit e88682a5867cb986d95d2f8ca47598ef18e24805
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 03:44:46 2015 -0400
+
+    App can query parse for login details and put new user account details
+
+commit 0bff8bd7def2dee8fbe26e7c160c1a10694de1fa
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sun Mar 29 00:52:18 2015 -0400
+
+    Added in the manage account page, the manage account button in main takes you there, and the return to main button takes you back to main.
+
+commit db7cbd1eb9c558e343ea9bc48977031a62f7f9e3
+Merge: 165e13e 8b5a07e
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sun Mar 29 00:08:43 2015 -0400
+
+    Merged with Andrews and ssagars
+
+commit 165e13e548ca154e622e4e0356c119c29f19f44e
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sat Mar 28 23:54:46 2015 -0400
+
+    Login and session checking class added
+
+commit 8b5a07e8783decbbc366b76330c76ef6621c996c
+Author: AndrewRemec <AndrewRemec@gmail.com>
+Date:   Sat Mar 28 23:39:15 2015 -0400
+
+    Updates
+
+commit 3f0366a03465d50e0e2f7b5287da0431ec9ca752
+Author: Sagar Poudel <poudels14@gmail.com>
+Date:   Sat Mar 28 20:05:27 2015 -0400
+
+    Andrew's initial work

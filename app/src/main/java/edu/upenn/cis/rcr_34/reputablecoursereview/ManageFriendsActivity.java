@@ -117,11 +117,7 @@ public class ManageFriendsActivity extends ActionBarActivity {
         RelativeLayout.LayoutParams lpForName = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         lpForName.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
-        TextView name = new TextView(this);
-        name.setText(u.getName());
-        name.setPadding(20, 0, 0, 0);
-        name.setId(Utils.getUniqueID());
-        name.setLayoutParams(lpForName);
+        TextView name = newTextView(u.getName(), lpForName);
         ll.addView(name);
 
         //Set year
@@ -130,11 +126,7 @@ public class ManageFriendsActivity extends ActionBarActivity {
         lpForYear.addRule(RelativeLayout.BELOW, name.getId());
         lpForYear.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
 
-        TextView year = new TextView(this);
-        year.setText("Year: " + u.getYear());
-        year.setPadding(20, 0, 0, 0);
-        year.setLayoutParams(lpForYear);
-        year.setId(Utils.getUniqueID());
+        TextView year = newTextView("Year: " + u.getYear(), lpForYear);
         ll.addView(year);
 
         //Set accept button
@@ -252,11 +244,7 @@ public class ManageFriendsActivity extends ActionBarActivity {
         RelativeLayout.LayoutParams lpForName = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         lpForName.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
-        TextView name = new TextView(this);
-        name.setText(u.getName());
-        name.setPadding(20, 0, 0, 0);
-        name.setId(Utils.getUniqueID());
-        name.setLayoutParams(lpForName);
+        TextView name = newTextView(u.getName(), lpForName);
         rL.addView(name);
 
         //Set year
@@ -265,11 +253,7 @@ public class ManageFriendsActivity extends ActionBarActivity {
         lpForYear.addRule(RelativeLayout.BELOW, name.getId());
         lpForYear.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
 
-        TextView year = new TextView(this);
-        year.setText("Year: " + u.getYear());
-        year.setPadding(20, 0, 0, 0);
-        year.setLayoutParams(lpForYear);
-        year.setId(Utils.getUniqueID());
+        TextView year = newTextView("Year: " + u.getYear(), lpForYear);
         rL.addView(year);
 
         //Set major
@@ -278,12 +262,9 @@ public class ManageFriendsActivity extends ActionBarActivity {
         lpForMajor.addRule(RelativeLayout.BELOW, year.getId());
         lpForMajor.addRule(RelativeLayout.RIGHT_OF, profilePic.getId());
 
-        TextView major = new TextView(this);
-        major.setText("Major: " + u.getMajor());
-        major.setPadding(20, 0, 0, 0);
-        major.setLayoutParams(lpForMajor);
-        major.setId(Utils.getUniqueID());
+        TextView major = newTextView("Major: " + u.getMajor(), lpForMajor);
         rL.addView(major);
+
         Intent intent = new Intent(this, FriendsDetailActivity.class);
 
         rL.setOnClickListener(new View.OnClickListener() {
@@ -293,9 +274,6 @@ public class ManageFriendsActivity extends ActionBarActivity {
             }
         });
 
-
-
-
         llIn.addView(rL);
     }
 
@@ -304,5 +282,18 @@ public class ManageFriendsActivity extends ActionBarActivity {
         Intent intent = new Intent(this, FriendsDetailActivity.class);
         intent.putExtra("email", email);
         startActivity(intent);
+    }
+
+    /**
+     * This method will be used to create a textview with similar properties
+     *
+     * */
+    private TextView newTextView(String text, RelativeLayout.LayoutParams lp){
+        TextView newView = new TextView(this);
+        newView.setText(text);
+        newView.setPadding(20, 0, 0, 0);
+        newView.setLayoutParams(lp);
+        newView.setId(Utils.getUniqueID());
+        return newView;
     }
 }
