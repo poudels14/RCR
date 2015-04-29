@@ -27,6 +27,7 @@ import java.util.List;
 public class FriendsDetailActivity extends ActionBarActivity {
     private String email; // this email belongs to the friend
     private boolean isFriend;
+    private boolean isCurrentUser;
     private LinearLayout allClassesTaken;
 
     @Override
@@ -36,6 +37,9 @@ public class FriendsDetailActivity extends ActionBarActivity {
 
         Bundle extra = getIntent().getExtras();
         email = extra.getString("email");
+        if (email.equals(ParseUser.getCurrentUser().getEmail())){
+            isCurrentUser = true;
+        }
         isFriend = false;
         ParseUser currentUser = ParseUser.getCurrentUser();
         ArrayList<String> myFriends = (ArrayList<String>)currentUser.get("friends");
@@ -105,7 +109,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
         profilePic.setBackgroundColor(Color.BLACK);
         profilePic.setId(Utils.getUniqueID());
         profilePic.setLayoutParams(lpForImage);
-        u.setProfileImage(profilePic);
+        profilePic.setImageBitmap(u.getProfileImage());
         personalDetail.addView(profilePic);
 
         //Set name
@@ -154,7 +158,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
 
         TextView email = new TextView(this);
         email.setText("Email: Only friends can see this");
-        if(isFriend) {
+        if(isFriend || isCurrentUser) {
             email.setText("Email: " + u.getEmail());
         }
         email.setPadding(20, 0, 0, 0);
@@ -195,7 +199,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
             });
             personalDetail.addView(unfriend);
         }
-        else{
+        else if (!isCurrentUser) {
             //set friend request button
             RelativeLayout.LayoutParams lpForAdd = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -229,7 +233,7 @@ public class FriendsDetailActivity extends ActionBarActivity {
 
     //Add class details
     private void populateCoursesTaken(LinearLayout llIn, ArrayList<CoursesTaken> coursesTaken){
-        if(isFriend) {
+        if(isFriend || isCurrentUser) {
             LinearLayout classesTakenDetails = new LinearLayout(this);
             classesTakenDetails.setOrientation(LinearLayout.VERTICAL);
             classesTakenDetails.setId(Utils.getUniqueID());

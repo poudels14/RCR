@@ -22,6 +22,10 @@ import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +47,7 @@ public class CreateAccountActivity extends ActionBarActivity {
     * */
     public void selectImageClicked(View c){
         String path = Environment.getExternalStorageDirectory()
-                + "/images/imagename.jpg";
+                + "/images/imagename.png";
         Intent i = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, RESULT_LOAD_IMAGE);
@@ -68,7 +72,6 @@ public class CreateAccountActivity extends ActionBarActivity {
             cursor.close();
 
             bitmap = BitmapFactory.decodeFile(picturePath);
-
         }
     }
 
@@ -189,14 +192,12 @@ public class CreateAccountActivity extends ActionBarActivity {
                                 // Now upload image
                                 if (bitmap != null){
                                     //Save profile image
-                                    Bitmap reducedSize = Bitmap.createScaledBitmap(bitmap, 320, 400, false);
+                                    Bitmap reducedSize = Bitmap.createScaledBitmap(bitmap, 320, 400, true);
 
-                                    int bitmapSize = reducedSize.getByteCount();
-
-                                    ByteBuffer buffer = ByteBuffer.allocate(bitmapSize); //Create a new buffer
-                                    reducedSize.copyPixelsToBuffer(buffer); //Move the byte data to the buffer
-
-                                    byte[] bitmapArray = buffer.array();
+                                    //copied from stackoverflow
+                                    ByteArrayOutputStream blob = new ByteArrayOutputStream();
+                                    bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, blob);
+                                    byte[] bitmapArray = blob.toByteArray();
 
                                     ParseFile profilePic = new ParseFile(email + "_profilepic",bitmapArray);
                                     user.put("profilePic", profilePic);

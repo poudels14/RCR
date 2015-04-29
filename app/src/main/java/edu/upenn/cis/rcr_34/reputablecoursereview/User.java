@@ -3,18 +3,13 @@ package edu.upenn.cis.rcr_34.reputablecoursereview;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
-import android.widget.ImageView;
-import android.widget.Toast;
-
 import com.parse.FindCallback;
-import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,10 +23,8 @@ public class User {
     private String email;
     private String name;
     private Bitmap profilePic;
-    private ImageView profilePicView;
     private String firstName;
     private String lastName;
-    private String picLink;
     private String year;
     private String major;
     private ArrayList<String> friendEmails;
@@ -46,6 +39,7 @@ public class User {
         this.email = email;
         this.liteners = new ArrayList<ParseDataReceivedNotifier>();
         this.isObjectReady = false;
+
         // finds user
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("email", email);
@@ -62,25 +56,12 @@ public class User {
                         major = (String) user.get("major");
                         friendEmails = (ArrayList) user.getList("friends");
                         ParseFile imgFile = (ParseFile) user.get("profilePic");
-                        if (imgFile != null){
-                            imgFile.getDataInBackground(new GetDataCallback() {
-                                public void done(byte[] data, ParseException e) {
-                                    if (e == null) {
-                                        BitmapFactory.Options options = new BitmapFactory.Options();
-                                        options.inJustDecodeBounds = true;
-
-                                        profilePic = BitmapFactory.decodeByteArray(data, 0, data.length, options);
-                                        if (profilePic != null){
-                                            profilePicView.setImageBitmap(profilePic);
-                                        }
-
-                                    } else {
-                                        // something went wrong
-                                    }
-                                }
-                            });
+                        try {
+                            byte[] data = imgFile.getData();
+                            profilePic = BitmapFactory.decodeByteArray(data, 0, data.length);
+                        } catch (ParseException e1) {
+                            e1.printStackTrace();
                         }
-
 
                         // retrieve pending request
                         ParseQuery<ParseObject> friendRequest = new ParseQuery<ParseObject>("pendingFriendRequest");
@@ -151,8 +132,11 @@ public class User {
     /*
     * This will set the profile image once loaded
     * */
-    public void setProfileImage(ImageView view){
-        this.profilePicView = view;
+    public Bitmap getProfileImage(){
+        if (isObjectReady){
+            return this.profilePic;
+        }
+        return null;
     }
 
 
@@ -186,15 +170,6 @@ public class User {
             return null;
         } else {
             return this.coursesTaken;
-        }
-    }
-
-    // finds users prof pic
-    public String getProfilePic() {
-        if (isObjectReady) {
-            return picLink;
-        } else {
-            return "INVALID_RETURN_OBJECT";
         }
     }
 
@@ -301,7 +276,7 @@ public class User {
         }
 
         if (this.friendEmails != null && this.friendEmails.contains(sendTo)) {
-            Log.d("PARSE", sendTo + " is already your friend");
+            // He/she is already user's friend
         } else {
             ParseQuery<ParseObject> friendRequest = new ParseQuery<ParseObject>("pendingFriendRequest");
             friendRequest.whereContains("sentTo", sendTo);
@@ -355,7 +330,7 @@ public class User {
                         me.saveInBackground(new SaveCallback() {
                             public void done(ParseException e) {
                                 if (e == null) {
-                                    //Log.d("PARSE", "Friends saved properly");
+                                    // Friends saved properly
                                 }
                             }
                         });
@@ -417,7 +392,6 @@ public class User {
             this.me.saveInBackground(new SaveCallback() {
                 public void done(ParseException e) {
                     if (e != null) {
-
                         Log.d("PARSE", "Course added properly");
                     } else {
                         Log.d("USER.JAVA", "Course couldn't be added properly: " + email);

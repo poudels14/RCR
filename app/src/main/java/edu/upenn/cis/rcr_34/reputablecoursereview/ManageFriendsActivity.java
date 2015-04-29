@@ -14,11 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.parse.ParseUser;
+
+import java.io.File;
 import java.util.ArrayList;
 
 
 public class ManageFriendsActivity extends ActionBarActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,8 +108,10 @@ public class ManageFriendsActivity extends ActionBarActivity {
         profilePic.setId(Utils.getUniqueID());
         profilePic.setLayoutParams(lpForImage);
         profilePic.setBackgroundColor(Color.BLACK);
-        u.setProfileImage(profilePic);
+        profilePic.setImageBitmap(u.getProfileImage());
+
         ll.addView(profilePic);
+
 
         //Set name
         RelativeLayout.LayoutParams lpForName = new RelativeLayout.LayoutParams(
@@ -241,8 +244,9 @@ public class ManageFriendsActivity extends ActionBarActivity {
         profilePic.setBackgroundColor(Color.BLACK);
         profilePic.setId(Utils.getUniqueID());
         profilePic.setLayoutParams(lpForImage);
-        u.setProfileImage(profilePic);
+        profilePic.setImageBitmap(u.getProfileImage());
         rL.addView(profilePic);
+
 
         //Set name
         RelativeLayout.LayoutParams lpForName = new RelativeLayout.LayoutParams(
