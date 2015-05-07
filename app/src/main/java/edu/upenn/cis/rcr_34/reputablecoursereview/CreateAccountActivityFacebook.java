@@ -20,13 +20,9 @@ public class CreateAccountActivityFacebook extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("Came", "didnt crash 10");
         ParseAPI.init(this);
-        Log.d("Came", "didnt crash 11");
         super.onCreate(savedInstanceState);
-        Log.d("Came", "didnt crash 12");
         setContentView(R.layout.activity_create_account_facebook);
-        Log.d("Came", "didnt crash 13");
     }
 
     public void registerClicked(View v) {
